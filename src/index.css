@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap');
+
+:root {
+  --light: #EDF6FC; /* Alice Blue */
+  --light-2: #CBE5F6; /* Columbia Blue*/
+  --dark: #061523; /* Rich Black FOGRA 29*/
+  --dark-2: #030B12; /* Rich Black FOGRA 29 */
+
+  /* PRIMARY COLOR IS YALE BLUE */
+  --primary: #124E78;  /* Yale Blue */
+  --primary-dark1: #0D3959;  /* Indigo Dye*/
+  --primary-dark2: #082235;  /* Prussian Blue */
+
+  --primary-light1: #1867A0; /* Sapphire Blue */
+  --primary-light2: #1B73B1; /* Spanish Blue */
+
+  /* SECONDARY COLOR IS BOTTLE GREEN*/
+
+  --secondary: #106A54;  /* Bottle Green */
+  --secondary-dark1: #0A4738;  /* Brunswick Green */
+  --secondary-dark2: #08362A;  /* Phthalo Green */
+
+  --secondary-light1: #168D6F; /* Illuminating Emerald */
+  --secondary-light2: #1CB08B; /* Jungle Green */
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--light);
+}
+
+.slide-in-left-enter {
+  transform: translateX(-100%);
+}
+
+.slide-in-left-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 200ms;
+}
+
+.slide-in-left-exit {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.slide-in-left-exit-active {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: all 200ms;
+}
+
+.center {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
