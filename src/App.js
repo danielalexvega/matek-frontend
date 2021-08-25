@@ -1,20 +1,31 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch,
+} from "react-router-dom";
 
-import Homepage from "./homepage/page/homepage";
+import Homepage from "./homepage/page/Homepage";
 import Users from "./user/pages/Users";
+import NewProblem from "./problems/pages/NewProblem";
 
 const App = () => {
   return (
     <Router>
-      <Route path="/" exact>
-        <Homepage />
-      </Route>
-      <Route path="/users">
-        <Users />
-      </Route>
+      <Switch>
+        <Route path="/" exact>
+          <Homepage />
+        </Route>
+        <Route path="/problems/new" exact>
+          <NewProblem />
+        </Route>
+        <Route path="/users">
+          <Users />
+        </Route>
 
-      <Redirect to="/" />
+        <Redirect to="/" />
+      </Switch>
     </Router>
   );
 };
