@@ -22,6 +22,12 @@
 
   --secondary-light1: #168D6F; /* Illuminating Emerald */
   --secondary-light2: #1CB08B; /* Jungle Green */
+
+  --max-width: 1440px;
+
+  /* MAIN NAVIGATION VARIABLES  */
+  --navigation-height: 4rem;
+
 }
 
 
@@ -30,8 +36,27 @@
 }
 
 html {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Quicksand', sans-serif;
 }
+
+h1 {
+  font-size: 60px;
+  line-height: 72px;
+  
+}
+
+h2 {
+  font-size: 56px;
+  line-height: 67.2px;
+
+}
+h3 {
+  font-size: 48px;
+  line-height: 57.6px;
+
+}
+
+
 
 body {
   margin: 0;

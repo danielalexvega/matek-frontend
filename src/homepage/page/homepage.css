@@ -1,0 +1,4 @@
+.page-container {
+    display: grid;
+    grid-template-columns: 1fr var(--max-width) 1fr;
+}

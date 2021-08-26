@@ -6,7 +6,7 @@ import "./Homepage.css";
 
 const homepage = () => {
     return (
-        <div>
+        <div className="page-container">
             <HomepageHero />
             HOME
         </div>

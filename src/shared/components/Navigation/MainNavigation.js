@@ -28,21 +28,27 @@ const MainNavigation = (props) => {
         </nav>
       </SideDrawer>
       <MainHeader>
-        <button
-          className="main-navigation__menu-btn"
-          onClick={openDrawerHandler}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-        <Link to="/">
-          <img src="./matek-logo-header-transparent.png" alt="Matek logo" />
-        </Link>
+        <div className="header-container">
+          <button
+            className="main-navigation__menu-btn"
+            onClick={openDrawerHandler}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+          <Link className="main-navigation__logo-container" to="/">
+            <img
+              src="./matek-logo-header-transparent.png"
+              alt="Matek logo"
+              className="logo"
+            />
+          </Link>
 
-        <nav className="main-navigation__header-nav">
-          <NavLinks />
-        </nav>
+          <nav className="main-navigation__header-nav">
+            <NavLinks />
+          </nav>
+        </div>
       </MainHeader>
     </React.Fragment>
   );

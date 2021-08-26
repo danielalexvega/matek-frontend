@@ -1,3 +1,11 @@
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  max-width:var(--max-width);
+  margin: 0 auto;
+}
+
 .main-navigation__menu-btn {
     width: 3rem;
     height: 3rem;
@@ -16,18 +24,19 @@
     height: 2.5px;
     background: white;
   }
-  
-  .main-navigation__title {
-    color: white;
+   
+  .main-navigation__logo-container {
+    height: var(--navigation-height);
   }
-  
-  .main-navigation__title a {
-    text-decoration: none;
-    color: white;
-  }
-  
+
   .main-navigation__header-nav {
     display: none;
+  }
+
+  .logo {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
   }
   
   .main-navigation__drawer-nav {
@@ -41,5 +50,9 @@
   
     .main-navigation__header-nav {
       display: block;
+    }
+
+    .header-container {
+      justify-content: space-between;
     }
   }
