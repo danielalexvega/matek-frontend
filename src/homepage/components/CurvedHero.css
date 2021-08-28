@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap');
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper h1 {
+    /* I think this works for centering? */
+    font-size: 100px;
+    /* font-family: 'Anonymous Pro', monospace; */
+    top: calc(50% - 64px);
+    -webkit-transform: translate(-50%, calc(-50% - 64px));
+    -ms-transform: translate(-50%, calc(-50% - 64px));
+    transform: translate(-50%, calc(-50% - 64px));
+  }
+  
+  .wrapper h1 span {
+    position: absolute;
+  }

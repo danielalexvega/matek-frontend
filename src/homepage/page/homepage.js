@@ -8,7 +8,7 @@ const homepage = () => {
     return (
         <div className="page-container">
             <HomepageHero />
-            HOME
+    
         </div>
     )
 }
