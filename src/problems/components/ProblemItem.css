@@ -2,6 +2,10 @@
   margin: 1rem;
 }
 
+.problem__content {
+  margin-top: 0;
+}
+
 .problem-item__choices {
   list-style: lower-alpha;
   display: flex;
@@ -10,6 +14,14 @@
   margin-top: 1rem;
   font-size: 18px;
   line-height: 32px;
+}
+
+.info__author {
+  font-size: 14px;
+}
+
+.info__rating {
+  font-size: 14px;
 }
 
 .info__courses-container {

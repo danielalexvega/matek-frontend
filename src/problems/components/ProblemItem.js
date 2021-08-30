@@ -35,8 +35,8 @@ const ProblemItem = ({
         </ul>
         <div className="problem-item__solution"></div>
         <div className="problem-item__info">
-          <h4 className="info__author">{author}</h4>
-          <p class="info__rating">{rating}</p>
+          <p className="info__author">Written by {author}</p>
+          <p class="info__rating"> Rating: {rating}</p>
           <div className="info__courses-container">
             Courses:
             <ul class="info__courses">
