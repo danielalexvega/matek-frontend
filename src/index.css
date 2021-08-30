@@ -23,6 +23,9 @@
   --secondary-light1: #168D6F; /* Illuminating Emerald */
   --secondary-light2: #1CB08B; /* Jungle Green */
 
+  --danger: #6A1710;   /* Blood Red*/
+  --danger-dark: #59140D;   /* Blood Red*/
+
   --max-width: 1440px;
 
   /* MAIN NAVIGATION VARIABLES  */

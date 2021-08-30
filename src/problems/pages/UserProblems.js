@@ -7,8 +7,11 @@ const DUMMY_PROBLEMS = [
   {
     id: "p1",
     image: "",
-    katex: `Solve the following system of equation.
-    `,
+    katex: `\\text{Solve the following system of equation.}\\\\
+    \\begin{cases}
+    6x & {} - {} & 12y & {}={} & 24 \\\\
+    -x & {} - {} & 6y & {}={} & 4 
+    \\end{cases}`,
     author: "Daniel Vega",
     authorId: "a1",
     rating: "5.0",
