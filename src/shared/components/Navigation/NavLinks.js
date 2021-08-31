@@ -13,11 +13,14 @@ const NavLinks = (props) => {
     <ul className="nav-links">
       <li>
         <NavLink to="/problems" exact>
-          View Problems
+          View All Problems
         </NavLink>
       </li>
       <li>
         <NavLink to="/a1/problems">Your Desk</NavLink>
+      </li>
+      <li>
+        <NavLink to="/problems/new">Add Problem</NavLink>
       </li>
       <li>
         <NavLink to="/auth">Login</NavLink>
