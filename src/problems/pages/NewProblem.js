@@ -1,4 +1,5 @@
 import React, { useCallback, useReducer } from "react";
+import { Tex } from "react-tex";
 
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
@@ -22,26 +23,26 @@ const formReducer = (state, action) => {
 
       return {
         ...state,
-        input: {
+        inputs: {
           ...state.inputs,
           [action.inputId]: {
             value: action.value,
             isValid: action.isValid,
           },
         },
-        isValid: formIsValid
+        isValid: formIsValid,
       };
 
-      default:
-          return state;
+    default:
+      return state;
   }
 };
 
 const NewProblem = () => {
-  const [formState, dispatch ] = useReducer(formReducer, {
+  const [formState, dispatch] = useReducer(formReducer, {
     inputs: {
-      title: {
-        value: "",
+      katex: {
+        value: " ",
         isValid: false,
       },
       description: {
@@ -53,30 +54,50 @@ const NewProblem = () => {
   });
 
   const InputHandler = useCallback((id, value, isValid) => {
-      dispatch({type: "INPUT_CHANGE", value: value, isValid: isValid, inputId: id});
+    dispatch({
+      type: "INPUT_CHANGE",
+      value: value,
+      isValid: isValid,
+      inputId: id,
+    });
   }, []);
 
   return (
-    <form className="problem-form">
-      <Input
-        element="input"
-        id="title"
-        type="text"
-        label="Title"
-        validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid title"
-        onInput={InputHandler}
-      />
-      <Input
-        element="textarea"
-        id="description"
-        label="Description"
-        validators={[VALIDATOR_MINLENGTH(5)]}
-        errorText="Please enter a valid description"
-        onInput={InputHandler}
-      />
-      <Button type="submit" disabled={!formState.isValid}>Add Problem</Button>
-    </form>
+    <div className="new-problem-container">
+      <h1 className="new-problem__title">Add a new problem to your desk.</h1>
+      <p className="new-problem__description">
+        If you need help with KaTeX syntax, you can check out the <a href="https://katex.org/" target="_blank" rel="noreferrer" className="description__link">documentation.</a>
+      </p>
+      <form className="problem-form">
+        <Input
+          element="textarea"
+          id="katex"
+          label="Katex"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid problem"
+          onInput={InputHandler}
+        />
+        <div className="problem-form__katex-display-container">
+          <p className="katex-display-container__title">KaTex Preview</p>
+          <Tex
+            className="katex-display-container__katex"
+            texContent={formState.inputs.katex.value}
+          />
+        </div>
+
+        <Input
+          element="textarea"
+          id="description"
+          label="Description"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid problem"
+          onInput={InputHandler}
+        />
+        <Button type="submit" disabled={!formState.isValid}>
+          Add Problem
+        </Button>
+      </form>
+    </div>
   );
 };
 
