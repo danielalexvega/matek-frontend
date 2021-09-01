@@ -1,25 +1,12 @@
 import React from "react";
 
-// import button
-import HeroButton from "./HeroButton";
-// import CurvedHero from "./CurvedHero";
-
 import "./HomepageHero.css";
 
 const HomepageHero = () => {
   return (
-    <div className="hero-container">
-      {/* <CurvedHero curvedText="MATEK"/> */}
-      <h1>Welcome to Matek.</h1>
-      <h2>An online problem set for teachers.</h2>
-
-
-
-      <div className="hero-container__button-container">
-        <HeroButton to="/" buttonText="Button 1" />
-        <HeroButton to="/" buttonText="Button 2" />
-        <HeroButton to="/" buttonText="Button 3" />
-      </div>
+    <div className="hero-container" style={{backgroundImage: "url(/gradient2.png)"}}>
+      <h1 className="hero-title">Welcome to Matek.</h1>
+      <h2 className="hero-copy">An online problem set generator for teachers.</h2>
     </div>
   );
 };

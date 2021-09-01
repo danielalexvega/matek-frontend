@@ -3,8 +3,8 @@ import { Tex } from "react-tex";
 
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
+// Add validators here
 import {
-  VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from "../../shared/util/validators";
 import "./NewProblem.css";

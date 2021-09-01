@@ -5,4 +5,23 @@
     margin: var(--navigation-height) auto;
     display: flex;
     flex-flow: column;
+    background-position: right;
+    background-repeat: no-repeat;
+    min-height: 500px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.hero-title {
+    margin-bottom: 0;
+    font-size: 72px;
+    line-height: 80px;
+    letter-spacing: 1px;
+}
+
+.hero-copy {
+    font-size: 36px;
+    line-height: 43px;
+    margin-top: 1rem;
 }
