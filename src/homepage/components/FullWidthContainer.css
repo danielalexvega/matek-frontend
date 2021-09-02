@@ -12,3 +12,8 @@
     margin-bottom: 0;
 }
 
+.full-width-container__body {
+    font-size: 24px;
+    line-height: 34px;
+}
+
