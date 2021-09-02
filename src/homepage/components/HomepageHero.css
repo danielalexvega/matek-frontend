@@ -2,7 +2,7 @@
     grid-column: 2/-2;
     margin-top: var(--navigation-height);
     width: var(--max-width);
-    margin: var(--navigation-height) auto;
+    margin: var(--navigation-height) auto 0;
     display: flex;
     flex-flow: column;
     background-position: right;

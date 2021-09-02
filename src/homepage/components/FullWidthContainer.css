@@ -1,0 +1,14 @@
+.full-width-container {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: inherit;
+}
+
+.full-width-container__content {
+    grid-column: 2/-2;
+}
+
+.full-width-container__title {
+    margin-bottom: 0;
+}
+
