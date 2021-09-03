@@ -1,11 +1,12 @@
 .full-width-container {
     grid-column: 1/-1;
     display: grid;
-    grid-template-columns: inherit;
+    grid-template-columns: 10rem 1fr 10rem;
 }
 
 .full-width-container__content {
     grid-column: 2/-2;
+    margin: 3rem 0;
 }
 
 .full-width-container__title {

@@ -2,3 +2,7 @@
     display: grid;
     grid-template-columns: 1fr var(--max-width) 1fr;
 }
+
+.katex-logo {
+    font-family: serif;
+}
