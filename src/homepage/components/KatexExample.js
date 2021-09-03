@@ -3,6 +3,9 @@ import { Tex } from "react-tex";
 
 import "./KatexExample.css";
 
+// FIX THIS LATER 
+// props.children is the header of this component 
+
 const KatexExample = (props) => {
   return (
     <div className="katex-example-container">

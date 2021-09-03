@@ -3,11 +3,17 @@ import { Tex } from "react-tex";
 
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
+import Select from "../../shared/components/FormElements/Select";
 // Add validators here
-import {
-  VALIDATOR_REQUIRE,
-} from "../../shared/util/validators";
+import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
 import "./NewProblem.css";
+
+const options = [
+  { id: 1, value: "option1", title: "Option 1" },
+  { id: 2, value: "option2", title: "Option 2" },
+  { id: 3, value: "option3", title: "Option 3" },
+  { id: 4, value: "option4", title: "Option 4" },
+];
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -66,9 +72,23 @@ const NewProblem = () => {
     <div className="new-problem-container">
       <h1 className="new-problem__title">Add a new problem to your desk.</h1>
       <p className="new-problem__description">
-        If you need help with KaTeX syntax, you can check out the <a href="https://katex.org/" target="_blank" rel="noreferrer" className="description__link">documentation.</a>
+        If you need help with KaTeX syntax, you can check out the{" "}
+        <a
+          href="https://katex.org/"
+          target="_blank"
+          rel="noreferrer"
+          className="description__link"
+        >
+          documentation.
+        </a>
       </p>
       <form className="problem-form">
+        <Select
+          id="subjectContent"
+          selectName="subjectContent"
+          label="Please select a subject content."
+          options={options}
+        />
         <Input
           element="textarea"
           id="katex"

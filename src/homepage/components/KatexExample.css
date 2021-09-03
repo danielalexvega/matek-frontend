@@ -32,7 +32,12 @@
     padding: 20px;
 }
 
-.katex {
+.katex-example__display-katex {
+    margin-bottom: 3rem;
+}
+
+.katex-example__display-katex .katex {
     font-size: 28px;
     line-height: 38px;
+    margin-left: 1rem;
 }
