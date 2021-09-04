@@ -5,7 +5,7 @@ const Select = ({id, selectName, label, options}) => {
     <React.Fragment>
       <label for={id}>{label}</label>
       <select name={selectName} id={id}>
-        {options.forEach((option) => (
+        {options.map((option) => (
            <option value={option.value}>{option.title} </option>
         ))}
       </select>
