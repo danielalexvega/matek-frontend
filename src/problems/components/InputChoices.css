@@ -1,0 +1,31 @@
+.input-choices__title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input-choices__choices-container {
+    display: flex;
+}
+
+.choices-container__left-container {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+}
+
+
+.choices-container__left-container .form-control label {
+    float: left;
+    margin-right: 1rem;
+    display: flex;
+    justify-content: center;
+    width: 30px;
+    height: 26px;
+    margin-bottom: 0;
+    align-items: center;
+}
+
+.choices-container__left-container .form-control input {
+    width: 50%;
+}

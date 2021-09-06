@@ -22,14 +22,25 @@
   }
   
   .button--inverse {
-    background: transparent;
-    color: #ff0055;
+    background: var(--primary);
+    color: var(--light);
   }
   
   .button--inverse:hover,
   .button--inverse:active {
-    color: white;
-    background: #ff0055;
+    background: var(--primary-dark1);
+  }
+
+  .button--round {
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    border-radius: 50px;
+    font-size: 24px;
+    font-weight: 600;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .button--danger {

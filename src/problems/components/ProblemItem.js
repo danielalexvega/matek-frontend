@@ -47,7 +47,7 @@ const ProblemItem = ({
           </div>
         </div>
         <div className="problem-item__actions">
-          <Button>Add to desk</Button>
+          <Button inverse>Add to desk</Button>
           <Button to={`/problems/${id}`}>Edit</Button>
           <Button danger>Delete</Button>
         </div>

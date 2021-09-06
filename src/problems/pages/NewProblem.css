@@ -53,4 +53,13 @@
     border-radius: 6px;
     background: white;
   }
+
+  .multipleChoiceSelection {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .multipleChoiceSelection input {
+      margin-left: 1rem;
+  }
   
