@@ -13,6 +13,7 @@ import NewProblem from "./problems/pages/NewProblem";
 import UserProblems from "./problems/pages/UserProblems";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import LearnMore from "./learn-more/pages/LearnMore";
+import UpdateProblem from "./problems/pages/UpdateProblem";
 
 const App = () => {
   return (
@@ -30,6 +31,9 @@ const App = () => {
         </Route>
         <Route path="/problems/new" exact>
           <NewProblem />
+        </Route>
+        <Route path="/problems/:problemId">
+          <UpdateProblem />
         </Route>
         <Route path="/users">
           <Users />

@@ -242,6 +242,12 @@ const NewProblem = () => {
     });
   };
 
+  const problemSubmitHandler = event => {
+    event.preventDefault();
+    console.log(formState.inputs) //send to backend
+
+  }
+
   return (
     <div className="new-problem-container">
       <h1 className="new-problem__title">Add a new problem to your desk.</h1>
@@ -257,7 +263,7 @@ const NewProblem = () => {
           documentation.
         </a>
       </p>
-      <form className="problem-form">
+      <form className="problem-form" onSubmit={problemSubmitHandler}>
         {/* Subject Content  */}
         <InputList
           id="subjectContent"
@@ -318,6 +324,7 @@ const NewProblem = () => {
             removeChoiceHandler={removeChoiceHandler}
           />
         )}
+
 
         {/* Description  */}
         <Input
