@@ -12,6 +12,8 @@ const InputChoices = ({
   inputHandler,
   addChoiceHandler,
   removeChoiceHandler,
+  value,
+  valid
 }) => {
   return (
     <React.Fragment>
@@ -37,6 +39,8 @@ const InputChoices = ({
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please enter a valid problem"
               onInput={inputHandler}
+              value={value}
+              valid={valid}
             />
           ))}
         </div>

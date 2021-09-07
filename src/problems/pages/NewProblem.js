@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useEffect } from "react";
+import React from "react";
 import { Tex } from "react-tex";
 
 import Input from "../../shared/components/FormElements/Input";
@@ -7,12 +7,13 @@ import Button from "../../shared/components/FormElements/Button";
 import InputList from "../../shared/components/FormElements/InputList";
 import InputChoices from "../components/InputChoices";
 import KatexPreview from "../components/KatexPreview";
+import { useForm } from "../../shared/hooks/form-hook";
 // Add validators here
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MATCH,
 } from "../../shared/util/validators";
-import "./NewProblem.css";
+import "./ProblemForm.css";
 
 const options = [
   { id: 1, value: "exponent-rules", title: "Exponent Rules" },
@@ -68,121 +69,24 @@ const options = [
     value: "polynomial-key-features",
     title: "Polynomial Key Features",
   },
-];
-
-const choiceLetterArray = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
+  {
+    id: 18,
+    value: "solving-the-square",
+    title: "Solving the Square",
+  },
 ];
 
 const optionsTitles = options.map((option) => option.title);
 
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case "INPUT_CHANGE":
-      let formIsValid = true;
-      for (const inputId in state.inputs) {
-        if (inputId !== "choices" && inputId === action.inputId) {
-          formIsValid = formIsValid && action.isValid;
-        } else if (inputId === "choices" && state.inputs.isMultipleChoice.value && action.inputId.includes("choice")){
-          formIsValid = formIsValid && action.isValid;
-        }else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.inputId]: {
-            value: action.value,
-            isValid: action.isValid,
-          },
-        },
-        isValid: formIsValid,
-      };
-
-    case "ADD_CHOICE":
-      let choiceIndex = state.inputs.choices.value.length;
-      let newChoice = {
-        id: `choice${choiceLetterArray[choiceIndex]}`,
-        label: choiceLetterArray[choiceIndex],
-        value: "",
-        isValid: false,
-      };
-
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          choices: {
-            value: [...state.inputs.choices.value, newChoice],
-          },
-        },
-      };
-
-    case "REMOVE_CHOICE":
-      let updatedChoices = [...state.inputs.choices.value];
-      updatedChoices.pop();
-
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          subjectContent: {
-            ...state.inputs.subjectContent
-          },
-          katex: {
-            ...state.inputs.katex
-          },
-          solution: {
-            ...state.inputs.solution
-          },
-          isMultipleChoice: { ...state.inputs.isMultipleChoice },
-          choices: {
-            value: [...updatedChoices],
-          },
-          description: {
-            ...state.inputs.description
-          }
-        },
-      };
-
-    case "SELECT_MULTIPLE_CHOICE":
-      let updatedChoice = !state.inputs.isMultipleChoice.value;
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          isMultipleChoice: {
-            value: updatedChoice,
-            isValid: true
-          },
-        },
-      };
-
-    default:
-      return state;
-  }
-};
-
 const NewProblem = () => {
-  const [formState, dispatch] = useReducer(formReducer, {
-    inputs: {
+  const [
+    formState,
+    inputHandler,
+    addChoiceHandler,
+    removeChoiceHandler,
+    multipleChoiceHandler,
+  ] = useForm(
+    {
       subjectContent: {
         value: "",
         isValid: false,
@@ -197,10 +101,7 @@ const NewProblem = () => {
       },
       isMultipleChoice: { value: null, isValid: true },
       choices: {
-        value: [
-          // { id: "choiceA", label: "A", value: "", isValid: false },
-          // { id: "choiceB", label: "B", value: "", isValid: false },
-        ],
+        value: [],
         isValid: true,
       },
       description: {
@@ -208,50 +109,20 @@ const NewProblem = () => {
         isValid: true,
       },
     },
-    isValid: false,
-  });
+    false
+  );
 
-  useEffect(()=> {}, [formState.inputs.choices.value]);
-
-  const InputHandler = useCallback((id, value, isValid) => {
-    dispatch({
-      type: "INPUT_CHANGE",
-      value: value,
-      isValid: isValid,
-      inputId: id,
-    });
-  }, []);
-
-  const addChoiceHandler = (event) => {
+  const problemSubmitHandler = (event) => {
     event.preventDefault();
-    dispatch({
-      type: "ADD_CHOICE",
-    });
+    console.log(formState.inputs); //send to backend
   };
-
-  const removeChoiceHandler = (event) => {
-    event.preventDefault();
-    dispatch({
-      type: "REMOVE_CHOICE",
-    });
-  };
-
-  const multipleChoiceHandler = () => {
-    dispatch({
-      type: "SELECT_MULTIPLE_CHOICE",
-    });
-  };
-
-  const problemSubmitHandler = event => {
-    event.preventDefault();
-    console.log(formState.inputs) //send to backend
-
-  }
 
   return (
-    <div className="new-problem-container">
-      <h1 className="new-problem__title">Add a new problem to your desk.</h1>
-      <p className="new-problem__description">
+    <div className="problem-container">
+      <h1 className="problem-container__title">
+        Add a new problem to your desk.
+      </h1>
+      <p className="problem-container__description">
         If you need help with <Tex texContent="\KaTeX" /> syntax, you can check
         out the{" "}
         <a
@@ -272,7 +143,7 @@ const NewProblem = () => {
           options={options}
           validators={[VALIDATOR_MATCH(optionsTitles)]}
           errorText="Please enter a valid content section"
-          onInput={InputHandler}
+          onInput={inputHandler}
           type="text"
           placeholder="Exponent Rules"
           listTitle="contentList"
@@ -284,7 +155,7 @@ const NewProblem = () => {
           label="Problem - Written in Katex"
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid problem"
-          onInput={InputHandler}
+          onInput={inputHandler}
         />
         <KatexPreview
           title="KaTex Preview"
@@ -299,13 +170,16 @@ const NewProblem = () => {
           label="Solution - Written in Katex"
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid problem"
-          onInput={InputHandler}
+          onInput={inputHandler}
         />
         <KatexPreview
           title="Katex Preview for Solution"
           texContent={formState.inputs.solution.value}
         />
-        <label htmlFor="multipleChoiceSelection" className="multipleChoiceSelection">
+        <label
+          htmlFor="multipleChoiceSelection"
+          className="multipleChoiceSelection"
+        >
           Is this a multiple choice question?
           <input
             type="checkbox"
@@ -319,12 +193,11 @@ const NewProblem = () => {
         {formState.inputs.isMultipleChoice.value && (
           <InputChoices
             choicesArray={formState.inputs.choices.value}
-            inputHandler={InputHandler}
+            inputHandler={inputHandler}
             addChoiceHandler={addChoiceHandler}
             removeChoiceHandler={removeChoiceHandler}
           />
         )}
-
 
         {/* Description  */}
         <Input
@@ -333,7 +206,7 @@ const NewProblem = () => {
           label="Description"
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid problem"
-          onInput={InputHandler}
+          onInput={inputHandler}
         />
         <Button type="submit" disabled={!formState.isValid}>
           Add Problem
