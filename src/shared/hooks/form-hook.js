@@ -1,25 +1,23 @@
 import { useCallback, useReducer } from "react";
 
 const choiceLetterArray = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-  ];
-  
-
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+];
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -31,9 +29,40 @@ const formReducer = (state, action) => {
         } else if (
           inputId === "choices" &&
           state.inputs.isMultipleChoice.value &&
+          action.inputId &&
           action.inputId.includes("choice")
         ) {
           formIsValid = formIsValid && action.isValid;
+
+          let updateIndex = state.inputs.choices.value.forEach(
+            (choice, index) => {
+              if (choice.id === action.id) {
+                return index;
+              }
+            }
+          );
+
+          let updatedChoice = {
+            id: action.id || "choiceA",
+            label: action.id || "A",
+            value: action.value,
+            isValid: action.isValid,
+          };
+
+          let updatedChoicesArray = [...state.inputs.choices.value];
+          updatedChoicesArray.splice(updateIndex, 1, updatedChoice);
+
+          return {
+            ...state,
+            inputs: {
+              ...state.inputs,
+              choices: {
+                value: updatedChoicesArray,
+                isValid: true,
+              },
+            },
+            isValid: formIsValid,
+          };
         } else {
           formIsValid = formIsValid && state.inputs[inputId].isValid;
         }
@@ -97,16 +126,33 @@ const formReducer = (state, action) => {
 
     case "SELECT_MULTIPLE_CHOICE":
       let updatedChoice = !state.inputs.isMultipleChoice.value;
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          isMultipleChoice: {
-            value: updatedChoice,
-            isValid: true,
+      if (updatedChoice) {
+        return {
+          ...state,
+          inputs: {
+            ...state.inputs,
+            isMultipleChoice: {
+              value: updatedChoice,
+              isValid: true,
+            },
           },
-        },
-      };
+        };
+      } else {
+        return {
+          ...state,
+          inputs: {
+            ...state.inputs,
+            isMultipleChoice: {
+              value: updatedChoice,
+              isValid: true,
+            },
+            choices: {
+              value: [],
+              isValid: true,
+            },
+          },
+        };
+      }
 
     default:
       return state;
@@ -131,6 +177,7 @@ export const useForm = (initialInputs, initialFormValidity) => {
   const addChoiceHandler = (event) => {
     event.preventDefault();
     let choiceIndex = formState.inputs.choices.value.length;
+    console.log(choiceLetterArray[choiceIndex]);
     dispatch({
       type: "ADD_CHOICE",
       id: `choice${choiceLetterArray[choiceIndex]}`,
@@ -151,5 +198,11 @@ export const useForm = (initialInputs, initialFormValidity) => {
     });
   };
 
-  return [formState, inputHandler, addChoiceHandler, removeChoiceHandler, multipleChoiceHandler]
+  return [
+    formState,
+    inputHandler,
+    addChoiceHandler,
+    removeChoiceHandler,
+    multipleChoiceHandler,
+  ];
 };

@@ -15,6 +15,7 @@ const InputChoices = ({
   value,
   valid
 }) => {
+  
   return (
     <React.Fragment>
       <div className="input-choices__title-container">
@@ -29,7 +30,6 @@ const InputChoices = ({
       <div className="input-choices__choices-container">
         <div className="choices-container__left-container">
           {choicesArray.map((choice) => (
-            // <input id={choice.id} type="text" />
             <Input
               key={choice.id}
               element="input"
@@ -43,7 +43,7 @@ const InputChoices = ({
               valid={valid}
             />
           ))}
-        </div>
+      </div>
       </div>
     </React.Fragment>
   );
