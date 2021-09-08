@@ -31,7 +31,7 @@ const InputChoices = ({
         <div className="choices-container__left-container">
           {choicesArray.map((choice) => (
             <Input
-              key={choice.id}
+              key={choice.label}
               element="input"
               type="text"
               id={choice.id}

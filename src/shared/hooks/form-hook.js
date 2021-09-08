@@ -32,19 +32,23 @@ const formReducer = (state, action) => {
           action.inputId &&
           action.inputId.includes("choice")
         ) {
+
           formIsValid = formIsValid && action.isValid;
 
-          let updateIndex = state.inputs.choices.value.forEach(
+          let updateIndex;
+          state.inputs.choices.value.forEach(
             (choice, index) => {
-              if (choice.id === action.id) {
-                return index;
+              if (choice.id === action.inputId) {
+                updateIndex = index;
               }
             }
           );
 
+          console.log(updateIndex);
+
           let updatedChoice = {
-            id: action.id || "choiceA",
-            label: action.id || "A",
+            id: action.inputId || "choiceA",
+            label: state.inputs.choices.value[updateIndex].label || "A",
             value: action.value,
             isValid: action.isValid,
           };
@@ -177,7 +181,6 @@ export const useForm = (initialInputs, initialFormValidity) => {
   const addChoiceHandler = (event) => {
     event.preventDefault();
     let choiceIndex = formState.inputs.choices.value.length;
-    console.log(choiceLetterArray[choiceIndex]);
     dispatch({
       type: "ADD_CHOICE",
       id: `choice${choiceLetterArray[choiceIndex]}`,
