@@ -16,38 +16,7 @@ import {
 
 import "./ProblemForm.css";
 
-const DUMMY_PROBLEMS = [
-  {
-    id: "p1",
-    image: "",
-    katex: "int_{a}^{b} f(x)dx = F(b) - F(a)",
-    author: "Daniel Vega",
-    authorId: "a1",
-    rating: "5.0",
-    solution: "(-1, 2)",
-    isMultipleChoice: true,
-    choices: ["(-1, 2)", "(-2, 1)", "(-1, -2)", "(1, 2)"],
-    content: "Solving the Square",
-    courses: ["Algebra 1", "Algebra 2"],
-    description: "I couldn't even tell you.",
-  },
-  {
-    id: "p2",
-    image: "",
-    katex: `\\begin{cases} 3x + 5y + z  \\\\ 7x – 2y + 4z \\\\ 
-        -6x + 3y + 2z \\end{cases}`,
-    author: "Daniel Vega",
-    authorId: "a2",
-    rating: "5.0",
-    solution: "(2, -1)",
-    isMultipleChoice: true,
-    choices: ["(-1, 2)", "(2, -1)", "(-1, -2)", "(2, 1)"],
-    content: "Solving the Square",
-    courses: ["Algebra 1", "Algebra 2"],
-    description:
-      "A problem for solving systems of equations with three variables.",
-  },
-];
+import DUMMY_PROBLEMS from "../../shared/DUMMY_PROBLEMS";
 
 const options = [
   { id: 1, value: "exponent-rules", title: "Exponent Rules" },
@@ -129,23 +98,23 @@ const UpdateProblem = () => {
         isValid: true,
       },
       katex: {
-        value: identifiedProblem.katex,
+        value: identifiedProblem.katex.value,
         isValid: true,
       },
       solution: {
-        value: identifiedProblem.solution,
+        value: identifiedProblem.solution.value,
         isValid: true,
       },
       isMultipleChoice: {
-        value: identifiedProblem.isMultipleChoice,
+        value: identifiedProblem.isMultipleChoice.value,
         isValid: true,
       },
       choices: {
-        value: identifiedProblem.choices,
+        value: identifiedProblem.choices.value,
         isValid: true,
       },
       description: {
-        value: identifiedProblem.description,
+        value: identifiedProblem.description.value,
         isValid: true,
       },
     },

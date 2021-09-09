@@ -25,12 +25,11 @@ const ProblemList = ({ problems }) => {
           key={problem.id}
           id={problem.id}
           image={problem.imgUrl}
-          katex={problem.katex}
+          katex={problem.katex.value}
           author={problem.author}
           authorId={problem.authorId}
-          rating={problem.rating}
-          solution={problem.solution}
-          choices={problem.choices}
+          solution={problem.solution.value}
+          choices={problem.choices.value} //array of choice objects
           content={problem.content}
           courses={problem.courses}
         />

@@ -11,7 +11,6 @@ const ProblemItem = ({
   image,
   katex,
   author,
-  authorId,
   rating,
   solution,
   choices,
@@ -30,13 +29,13 @@ const ProblemItem = ({
         </div>
         <ul className="problem-item__choices">
           {choices.map((choice, index) => (
-            <li key={index}>{choice}</li>
+            <li key={index}>{choice.value}</li>
           ))}
         </ul>
         <div className="problem-item__solution"></div>
         <div className="problem-item__info">
           <p className="info__author">Written by {author}</p>
-          <p className="info__rating"> Rating: {rating}</p>
+          {/* <p className="info__rating"> Rating: {rating}</p> */}
           <div className="info__courses-container">
             Courses:
             <ul className="info__courses">
