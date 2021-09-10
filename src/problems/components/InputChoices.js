@@ -42,8 +42,8 @@ const InputChoices = ({
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter a valid problem"
                 onInput={inputHandler}
-                value={choice.value}
-                valid={choice.isValid}
+                initialValue={choice.value}
+                initialValid={choice.isValid}
               />
               <KatexPreview texContent={choice.value} />
             </div>

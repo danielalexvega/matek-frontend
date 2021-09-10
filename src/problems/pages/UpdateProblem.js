@@ -121,6 +121,11 @@ const UpdateProblem = () => {
     true
   );
 
+  const problemUpdateSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(formState.inputs);
+  };
+
   if (!identifiedProblem) {
     return (
       <div className="center">
@@ -143,7 +148,7 @@ const UpdateProblem = () => {
           documentation.
         </a>
       </p>
-      <form className="problem-form">
+      <form className="problem-form" onSubmit={problemUpdateSubmitHandler}>
         <InputList
           id="subjectContent"
           selectName="subjectContent"
@@ -155,8 +160,8 @@ const UpdateProblem = () => {
           type="text"
           placeholder="Exponent Rules"
           listTitle="contentList"
-          value={formState.inputs.subjectContent.value}
-          valid={true}
+          initialValue={formState.inputs.subjectContent.value}
+          initialValid={true}
         />
         {/* Problem  */}
         <Input
@@ -166,8 +171,8 @@ const UpdateProblem = () => {
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid problem"
           onInput={inputHandler}
-          value={formState.inputs.katex.value}
-          valid={true}
+          initialValue={formState.inputs.katex.value}
+          initialValid={true}
         />
         <KatexPreview
           title="KaTex Preview"
@@ -182,8 +187,8 @@ const UpdateProblem = () => {
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid problem"
           onInput={inputHandler}
-          value={formState.inputs.solution.value}
-          valid={true}
+          initialValue={formState.inputs.solution.value}
+          initialValid={true}
         />
         <KatexPreview
           title="Katex Preview for Solution"
@@ -221,8 +226,8 @@ const UpdateProblem = () => {
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid problem"
           onInput={inputHandler}
-          value={formState.inputs.description.value}
-          valid={true}
+          initialValue={formState.inputs.description.value}
+          initialValid={true}
         />
         <Button type="submit" disabled={!formState.isValid}>
           Update Problem
