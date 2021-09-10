@@ -2,6 +2,7 @@ import React from "react";
 
 import Card from "../../shared/components/UIElements/Card";
 import ProblemItem from "./ProblemItem";
+import Button from "../../shared/components/FormElements/Button";
 import "./ProblemList.css";
 
 const ProblemList = ({ problems }) => {
@@ -12,7 +13,7 @@ const ProblemList = ({ problems }) => {
       <div className="problem-list center">
         <Card>
           <h2>No problems found. Maybe create one?</h2>
-          <button>Create Problem</button>
+          <Button to="/problems/new">Create Problem</Button>
         </Card>
       </div>
     );

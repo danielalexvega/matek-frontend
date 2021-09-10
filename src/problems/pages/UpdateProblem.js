@@ -5,6 +5,7 @@ import { Tex } from "react-tex";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import InputList from "../../shared/components/FormElements/InputList";
+import Card from "../../shared/components/UIElements/Card";
 import InputChoices from "../components/InputChoices";
 import KatexPreview from "../components/KatexPreview";
 import { useForm } from "../../shared/hooks/form-hook";
@@ -125,35 +126,37 @@ const UpdateProblem = () => {
   const identifiedProblem = DUMMY_PROBLEMS.find((p) => p.id === problemId);
 
   useEffect(() => {
-    setFormData(
-      {
-        subjectContent: {
-          value: identifiedProblem.content,
-          isValid: true,
+    if (identifiedProblem) {
+      setFormData(
+        {
+          subjectContent: {
+            value: identifiedProblem.content,
+            isValid: true,
+          },
+          katex: {
+            value: identifiedProblem.katex.value,
+            isValid: true,
+          },
+          solution: {
+            value: identifiedProblem.solution.value,
+            isValid: true,
+          },
+          isMultipleChoice: {
+            value: identifiedProblem.isMultipleChoice.value,
+            isValid: true,
+          },
+          choices: {
+            value: identifiedProblem.choices.value,
+            isValid: true,
+          },
+          description: {
+            value: identifiedProblem.description.value,
+            isValid: true,
+          },
         },
-        katex: {
-          value: identifiedProblem.katex.value,
-          isValid: true,
-        },
-        solution: {
-          value: identifiedProblem.solution.value,
-          isValid: true,
-        },
-        isMultipleChoice: {
-          value: identifiedProblem.isMultipleChoice.value,
-          isValid: true,
-        },
-        choices: {
-          value: identifiedProblem.choices.value,
-          isValid: true,
-        },
-        description: {
-          value: identifiedProblem.description.value,
-          isValid: true,
-        },
-      },
-      true
-    );
+        true
+      );
+    }
     setIsLoading(false);
   }, [setFormData, identifiedProblem]);
 
@@ -165,7 +168,9 @@ const UpdateProblem = () => {
   if (!identifiedProblem) {
     return (
       <div className="center">
-        <h2>Could not find a problem.</h2>
+        <Card>
+          <h2>Could not find a problem.</h2>
+        </Card>
       </div>
     );
   }
@@ -245,7 +250,6 @@ const UpdateProblem = () => {
             />
           </label>
 
-          {/* WORKING ON REFACTORING INPUT CHOICES TO ACCEPT VALUES  */}
           {formState.inputs.isMultipleChoice.value && (
             <InputChoices
               choicesArray={formState.inputs.choices.value}
