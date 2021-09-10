@@ -32,17 +32,14 @@ const formReducer = (state, action) => {
           action.inputId &&
           action.inputId.includes("choice")
         ) {
-
           formIsValid = formIsValid && action.isValid;
 
           let updateIndex;
-          state.inputs.choices.value.forEach(
-            (choice, index) => {
-              if (choice.id === action.inputId) {
-                updateIndex = index;
-              }
+          state.inputs.choices.value.forEach((choice, index) => {
+            if (choice.id === action.inputId) {
+              updateIndex = index;
             }
-          );
+          });
 
           console.log(updateIndex);
 
@@ -130,33 +127,17 @@ const formReducer = (state, action) => {
 
     case "SELECT_MULTIPLE_CHOICE":
       let updatedChoice = !state.inputs.isMultipleChoice.value;
-      if (updatedChoice) {
-        return {
-          ...state,
-          inputs: {
-            ...state.inputs,
-            isMultipleChoice: {
-              value: updatedChoice,
-              isValid: true,
-            },
+
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          isMultipleChoice: {
+            value: updatedChoice,
+            isValid: true,
           },
-        };
-      } else {
-        return {
-          ...state,
-          inputs: {
-            ...state.inputs,
-            isMultipleChoice: {
-              value: updatedChoice,
-              isValid: true,
-            },
-            choices: {
-              value: [],
-              isValid: true,
-            },
-          },
-        };
-      }
+        },
+      };
 
     default:
       return state;

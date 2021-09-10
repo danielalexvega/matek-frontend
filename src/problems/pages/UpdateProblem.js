@@ -197,20 +197,36 @@ const UpdateProblem = () => {
           <input
             type="checkbox"
             id="multipleChoiceSelection"
-            value={formState.inputs.isMultipleChoice}
+            value={formState.inputs.isMultipleChoice.value}
             onClick={multipleChoiceHandler}
+            checked={formState.inputs.isMultipleChoice.value}
           />
         </label>
 
         {/* WORKING ON REFACTORING INPUT CHOICES TO ACCEPT VALUES  */}
-        {/* {formState.inputs.isMultipleChoice.value && (
+        {formState.inputs.isMultipleChoice.value && (
           <InputChoices
             choicesArray={formState.inputs.choices.value}
             inputHandler={inputHandler}
             addChoiceHandler={addChoiceHandler}
             removeChoiceHandler={removeChoiceHandler}
           />
-        )} */}
+        )}
+
+        {/* Description  */}
+        <Input
+          element="textarea"
+          id="description"
+          label="Description"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid problem"
+          onInput={inputHandler}
+          value={formState.inputs.description.value}
+          valid={true}
+        />
+        <Button type="submit" disabled={!formState.isValid}>
+          Update Problem
+        </Button>
       </form>
     </div>
   );
