@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Tex } from "react-tex";
 
@@ -83,43 +83,79 @@ const optionsTitles = options.map((option) => option.title);
 
 const UpdateProblem = () => {
   const problemId = useParams().problemId;
+  const [isLoading, setIsLoading] = useState(true);
 
-  const identifiedProblem = DUMMY_PROBLEMS.find((p) => p.id === problemId);
   const [
     formState,
     inputHandler,
     addChoiceHandler,
     removeChoiceHandler,
     multipleChoiceHandler,
+    setFormData,
   ] = useForm(
     {
       subjectContent: {
-        value: identifiedProblem.content,
-        isValid: true,
+        value: "",
+        isValid: false,
       },
       katex: {
-        value: identifiedProblem.katex.value,
-        isValid: true,
+        value: "",
+        isValid: false,
       },
       solution: {
-        value: identifiedProblem.solution.value,
-        isValid: true,
+        value: "",
+        isValid: false,
       },
       isMultipleChoice: {
-        value: identifiedProblem.isMultipleChoice.value,
-        isValid: true,
+        value: "",
+        isValid: false,
       },
       choices: {
-        value: identifiedProblem.choices.value,
-        isValid: true,
+        value: "",
+        isValid: false,
       },
       description: {
-        value: identifiedProblem.description.value,
-        isValid: true,
+        value: "",
+        isValid: false,
       },
     },
-    true
+    false
   );
+
+  const identifiedProblem = DUMMY_PROBLEMS.find((p) => p.id === problemId);
+
+  useEffect(() => {
+    setFormData(
+      {
+        subjectContent: {
+          value: identifiedProblem.content,
+          isValid: true,
+        },
+        katex: {
+          value: identifiedProblem.katex.value,
+          isValid: true,
+        },
+        solution: {
+          value: identifiedProblem.solution.value,
+          isValid: true,
+        },
+        isMultipleChoice: {
+          value: identifiedProblem.isMultipleChoice.value,
+          isValid: true,
+        },
+        choices: {
+          value: identifiedProblem.choices.value,
+          isValid: true,
+        },
+        description: {
+          value: identifiedProblem.description.value,
+          isValid: true,
+        },
+      },
+      true
+    );
+    setIsLoading(false);
+  }, [setFormData, identifiedProblem]);
 
   const problemUpdateSubmitHandler = (event) => {
     event.preventDefault();
@@ -148,91 +184,93 @@ const UpdateProblem = () => {
           documentation.
         </a>
       </p>
-      <form className="problem-form" onSubmit={problemUpdateSubmitHandler}>
-        <InputList
-          id="subjectContent"
-          selectName="subjectContent"
-          label="Please select a subject content."
-          options={options}
-          validators={[VALIDATOR_MATCH(optionsTitles)]}
-          errorText="Please enter a valid content section"
-          onInput={inputHandler}
-          type="text"
-          placeholder="Exponent Rules"
-          listTitle="contentList"
-          initialValue={formState.inputs.subjectContent.value}
-          initialValid={true}
-        />
-        {/* Problem  */}
-        <Input
-          element="textarea"
-          id="katex"
-          label="Problem - Written in Katex"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid problem"
-          onInput={inputHandler}
-          initialValue={formState.inputs.katex.value}
-          initialValid={true}
-        />
-        <KatexPreview
-          title="KaTex Preview"
-          texContent={formState.inputs.katex.value}
-        />
-        {/* Solution  */}
-        <Input
-          element="input"
-          type="text"
-          id="solution"
-          label="Solution - Written in Katex"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid problem"
-          onInput={inputHandler}
-          initialValue={formState.inputs.solution.value}
-          initialValid={true}
-        />
-        <KatexPreview
-          title="Katex Preview for Solution"
-          texContent={formState.inputs.solution.value}
-        />
-        <label
-          htmlFor="multipleChoiceSelection"
-          className="multipleChoiceSelection"
-        >
-          Is this a multiple choice question?
-          <input
-            type="checkbox"
-            id="multipleChoiceSelection"
-            value={formState.inputs.isMultipleChoice.value}
-            onClick={multipleChoiceHandler}
-            checked={formState.inputs.isMultipleChoice.value}
+      {!isLoading && (
+        <form className="problem-form" onSubmit={problemUpdateSubmitHandler}>
+          <InputList
+            id="subjectContent"
+            selectName="subjectContent"
+            label="Please select a subject content."
+            options={options}
+            validators={[VALIDATOR_MATCH(optionsTitles)]}
+            errorText="Please enter a valid content section"
+            onInput={inputHandler}
+            type="text"
+            placeholder="Exponent Rules"
+            listTitle="contentList"
+            initialValue={formState.inputs.subjectContent.value}
+            initialValid={true}
           />
-        </label>
-
-        {/* WORKING ON REFACTORING INPUT CHOICES TO ACCEPT VALUES  */}
-        {formState.inputs.isMultipleChoice.value && (
-          <InputChoices
-            choicesArray={formState.inputs.choices.value}
-            inputHandler={inputHandler}
-            addChoiceHandler={addChoiceHandler}
-            removeChoiceHandler={removeChoiceHandler}
+          {/* Problem  */}
+          <Input
+            element="textarea"
+            id="katex"
+            label="Problem - Written in Katex"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter a valid problem"
+            onInput={inputHandler}
+            initialValue={formState.inputs.katex.value}
+            initialValid={true}
           />
-        )}
+          <KatexPreview
+            title="KaTex Preview"
+            texContent={formState.inputs.katex.value}
+          />
+          {/* Solution  */}
+          <Input
+            element="input"
+            type="text"
+            id="solution"
+            label="Solution - Written in Katex"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter a valid problem"
+            onInput={inputHandler}
+            initialValue={formState.inputs.solution.value}
+            initialValid={true}
+          />
+          <KatexPreview
+            title="Katex Preview for Solution"
+            texContent={formState.inputs.solution.value}
+          />
+          <label
+            htmlFor="multipleChoiceSelection"
+            className="multipleChoiceSelection"
+          >
+            Is this a multiple choice question?
+            <input
+              type="checkbox"
+              id="multipleChoiceSelection"
+              value={formState.inputs.isMultipleChoice.value}
+              onClick={multipleChoiceHandler}
+              checked={formState.inputs.isMultipleChoice.value}
+            />
+          </label>
 
-        {/* Description  */}
-        <Input
-          element="textarea"
-          id="description"
-          label="Description"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid problem"
-          onInput={inputHandler}
-          initialValue={formState.inputs.description.value}
-          initialValid={true}
-        />
-        <Button type="submit" disabled={!formState.isValid}>
-          Update Problem
-        </Button>
-      </form>
+          {/* WORKING ON REFACTORING INPUT CHOICES TO ACCEPT VALUES  */}
+          {formState.inputs.isMultipleChoice.value && (
+            <InputChoices
+              choicesArray={formState.inputs.choices.value}
+              inputHandler={inputHandler}
+              addChoiceHandler={addChoiceHandler}
+              removeChoiceHandler={removeChoiceHandler}
+            />
+          )}
+
+          {/* Description  */}
+          <Input
+            element="textarea"
+            id="description"
+            label="Description"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter a valid problem"
+            onInput={inputHandler}
+            initialValue={formState.inputs.description.value}
+            initialValid={true}
+          />
+          <Button type="submit" disabled={!formState.isValid}>
+            Update Problem
+          </Button>
+        </form>
+      )}
     </div>
   );
 };
