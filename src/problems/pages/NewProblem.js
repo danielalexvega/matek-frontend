@@ -82,6 +82,7 @@ const NewProblem = () => {
   const [
     formState,
     inputHandler,
+    setFormData,
     addChoiceHandler,
     removeChoiceHandler,
     multipleChoiceHandler,

@@ -89,10 +89,10 @@ const UpdateProblem = () => {
   const [
     formState,
     inputHandler,
+    setFormData,
     addChoiceHandler,
     removeChoiceHandler,
     multipleChoiceHandler,
-    setFormData,
   ] = useForm(
     {
       subjectContent: {

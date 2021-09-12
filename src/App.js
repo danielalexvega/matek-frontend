@@ -8,6 +8,7 @@ import {
 
 import Homepage from "./homepage/page/Homepage";
 import Users from "./user/pages/Users";
+import Auth from "./user/pages/Auth";
 import AllProblems from "./problems/pages/AllProblems";
 import NewProblem from "./problems/pages/NewProblem";
 import UserProblems from "./problems/pages/UserProblems";
@@ -40,6 +41,9 @@ const App = () => {
         </Route>
         <Route path="/learn-more">
           <LearnMore />
+        </Route>
+        <Route path="/auth">
+          <Auth />
         </Route>
 
 

@@ -24,6 +24,9 @@ const formReducer = (state, action) => {
     case "INPUT_CHANGE":
       let formIsValid = true;
       for (const inputId in state.inputs) {
+        if(!state.inputs[inputId]) {
+          continue;
+        }
         if (inputId !== "choices" && inputId === action.inputId) {
           formIsValid = formIsValid && action.isValid;
         } else if (
@@ -165,31 +168,27 @@ export const useForm = (initialInputs, initialFormValidity) => {
     });
   }, []);
 
-  const addChoiceHandler = useCallback(
-    (event) => {
-      event.preventDefault();
-      let choiceIndex = formState.inputs.choices.value.length;
-      dispatch({
-        type: "ADD_CHOICE",
-        id: `choice${choiceLetterArray[choiceIndex]}`,
-        label: choiceLetterArray[choiceIndex],
-      });
-    },
-    [formState.inputs.choices.value.length]
-  );
-
-  const removeChoiceHandler = useCallback((event) => {
+  const addChoiceHandler = (event) => {
+    event.preventDefault();
+    let choiceIndex = formState.inputs.choices.value.length;
+    dispatch({
+      type: "ADD_CHOICE",
+      id: `choice${choiceLetterArray[choiceIndex]}`,
+      label: choiceLetterArray[choiceIndex],
+    });
+  };
+  const removeChoiceHandler =(event) => {
     event.preventDefault();
     dispatch({
       type: "REMOVE_CHOICE",
     });
-  }, []);
+  };
 
-  const multipleChoiceHandler = useCallback(() => {
+  const multipleChoiceHandler = () => {
     dispatch({
       type: "SELECT_MULTIPLE_CHOICE",
     });
-  }, []);
+  };
 
   const setFormData = useCallback((inputData, formValidity) => {
     dispatch({
@@ -202,9 +201,9 @@ export const useForm = (initialInputs, initialFormValidity) => {
   return [
     formState,
     inputHandler,
+    setFormData,
     addChoiceHandler,
     removeChoiceHandler,
     multipleChoiceHandler,
-    setFormData,
   ];
 };
