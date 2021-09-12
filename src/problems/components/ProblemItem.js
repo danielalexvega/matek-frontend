@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Tex } from "react-tex";
 
 import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/FormElements/Button";
 import Modal from "../../shared/components/UIElements/Modal";
+import { AuthContext } from "../../shared/context/auth-context";
 import "./ProblemItem.css";
 import "katex/dist/katex.min.css";
 
@@ -19,30 +20,39 @@ const ProblemItem = ({
   courses,
 }) => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const { isLoggedIn } = useContext(AuthContext);
 
   const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
-  }
+  };
 
   const cancelDeleteHandler = () => {
     setShowConfirmModal(false);
-  }
+  };
 
   const confirmDeleteHandler = () => {
     setShowConfirmModal(false);
     console.log("Deleting...");
-  }
-
-
+  };
 
   return (
     <React.Fragment>
-      <Modal  show={showConfirmModal} onCancel={cancelDeleteHandler} header="Are you sure?" footerClass="problem-item__modal-actions" footer={
-        <React.Fragment>
-          <Button inverse onClick={cancelDeleteHandler}>CANCEL</Button>
-          <Button danger onClick={confirmDeleteHandler}>DELETE</Button>
-        </React.Fragment>
-      }>
+      <Modal
+        show={showConfirmModal}
+        onCancel={cancelDeleteHandler}
+        header="Are you sure?"
+        footerClass="problem-item__modal-actions"
+        footer={
+          <React.Fragment>
+            <Button inverse onClick={cancelDeleteHandler}>
+              CANCEL
+            </Button>
+            <Button danger onClick={confirmDeleteHandler}>
+              DELETE
+            </Button>
+          </React.Fragment>
+        }
+      >
         <p>Do you want to delete this problem?</p>
       </Modal>
       <li className="problem-item">
@@ -73,9 +83,13 @@ const ProblemItem = ({
             </div>
           </div>
           <div className="problem-item__actions">
-            <Button inverse>Add to desk</Button>
-            <Button to={`/problems/${id}`}>Edit</Button>
-            <Button danger onClick={showDeleteWarningHandler}>Delete</Button>
+            {isLoggedIn && <Button inverse>Add to desk</Button>}
+            {isLoggedIn && <Button to={`/problems/${id}`}>Edit</Button>}
+            {isLoggedIn && (
+              <Button danger onClick={showDeleteWarningHandler}>
+                Delete
+              </Button>
+            )}
           </div>
         </Card>
       </li>

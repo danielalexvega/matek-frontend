@@ -22,7 +22,19 @@
   position: relative;
 }
 
-.nav-links a:after {
+.nav-links button {
+  cursor: pointer;
+  border: none;
+  color: #292929;
+  background: transparent;
+  padding: 0.5rem;
+  position: relative;
+  font: inherit;
+}
+
+
+.nav-links a:after,
+.nav-links button:after {
   content: "";
   position: absolute;
   width: 0;
@@ -37,19 +49,12 @@
 
 .nav-links a:hover:after,
 .nav-links a:active:after,
-.nav-links a.active:after {
+.nav-links a.active:after,
+.nav-links button:hover:after {
     width: 100%;
     left: 0;
 }
 
-.nav-links button {
-  cursor: pointer;
-  border: 1px solid #292929;
-  color: #292929;
-  background: transparent;
-  padding: 0.5rem;
-  font: inherit;
-}
 
 .nav-links button:focus {
   outline: none;
@@ -76,14 +81,13 @@
   }
 
   .nav-links button {
-    border: 1px solid white;
     color: white;
     background: transparent;
   }
 
   .nav-links button:hover,
   .nav-links button:active {
-    background: #f8df00;
-    color: #292929;
+    background: transparent;
+    color: var(--light);
   }
 }

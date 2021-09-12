@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
@@ -9,10 +9,20 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from "../../shared/util/validators";
+import { AuthContext } from "../../shared/context/auth-context";
+import { useHistory } from "react-router-dom";
+
 import "./Auth.css";
 
 const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const { isLoggedIn, login, logout } = useContext(AuthContext);
+
+  const history = useHistory();
+
+  const routeChange = () => {
+      history.push(`/`);
+  }
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -41,11 +51,11 @@ const Auth = () => {
     } else {
       setFormData(
         {
-            ...formState.inputs,
-            name: {
-              value: "",
-              isValid: false,
-            },
+          ...formState.inputs,
+          name: {
+            value: "",
+            isValid: false,
+          },
         },
         false
       );
@@ -55,6 +65,10 @@ const Auth = () => {
 
   const authSubmitHandler = (event) => {
     event.preventDefault();
+    console.log(formState.inputs);
+    login();
+    routeChange();
+    
   };
 
   return (
