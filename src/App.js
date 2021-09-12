@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -16,40 +16,53 @@ import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import LearnMore from "./learn-more/pages/LearnMore";
 import UpdateProblem from "./problems/pages/UpdateProblem";
 
+import { AuthContext } from "./shared/context/auth-context";
+
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const login = useCallback(()=> {
+    setIsLoggedIn(true);
+  }, [])
+
+  const logout = useCallback(()=> {
+    setIsLoggedIn(false);
+  }, [])
+
   return (
-    <Router>
-      <MainNavigation />
-      <Switch>
-        <Route path="/" exact>
-          <Homepage />
-        </Route>
-        <Route path="/problems" exact>
-          <AllProblems />
-        </Route>
-        <Route path="/:userId/problems" exact>
-          <UserProblems />
-        </Route>
-        <Route path="/problems/new" exact>
-          <NewProblem />
-        </Route>
-        <Route path="/problems/:problemId">
-          <UpdateProblem />
-        </Route>
-        <Route path="/users">
-          <Users />
-        </Route>
-        <Route path="/learn-more">
-          <LearnMore />
-        </Route>
-        <Route path="/auth">
-          <Auth />
-        </Route>
+    <AuthContext.Provider value={{isLoggedIn: isLoggedIn, login: login, logout: logout}}>
+      <Router>
+        <MainNavigation />
+        <Switch>
+          <Route path="/" exact>
+            <Homepage />
+          </Route>
+          <Route path="/problems" exact>
+            <AllProblems />
+          </Route>
+          <Route path="/:userId/problems" exact>
+            <UserProblems />
+          </Route>
+          <Route path="/problems/new" exact>
+            <NewProblem />
+          </Route>
+          <Route path="/problems/:problemId">
+            <UpdateProblem />
+          </Route>
+          <Route path="/users">
+            <Users />
+          </Route>
+          <Route path="/learn-more">
+            <LearnMore />
+          </Route>
+          <Route path="/auth">
+            <Auth />
+          </Route>
 
-
-        <Redirect to="/" />
-      </Switch>
-    </Router>
+          <Redirect to="/" />
+        </Switch>
+      </Router>
+    </AuthContext.Provider>
   );
 };
 
