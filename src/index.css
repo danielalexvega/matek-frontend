@@ -40,6 +40,7 @@
 
 html {
   font-family: 'Quicksand', sans-serif;
+  overflow-y: scroll;
 }
 
 h1 {

@@ -17,6 +17,11 @@ const NavLinks = (props) => {
       </li>
       {isLoggedIn && (
         <li>
+          <NavLink to="/users">View All Users</NavLink>
+        </li>
+      )}
+      {isLoggedIn && (
+        <li>
           <NavLink to="/a1/problems">Your Desk</NavLink>
         </li>
       )}
