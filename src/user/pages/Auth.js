@@ -6,6 +6,7 @@ import Card from "../../shared/components/UIElements/Card";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useForm } from "../../shared/hooks/form-hook";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
@@ -19,8 +20,7 @@ import "./Auth.css";
 const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const { isLoggedIn, login, logout } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const history = useHistory();
 
@@ -43,7 +43,6 @@ const Auth = () => {
   );
 
   const switchModeHandler = () => {
-    // if you're not in login mode, then you're GOING to login mode
     if (!isLoginMode) {
       setFormData(
         {
@@ -69,72 +68,52 @@ const Auth = () => {
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
-    
-    setIsLoading(true);
+
     if (isLoginMode) {
       try {
-        const response = await fetch("http://localhost:5000/api/users/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        await sendRequest(
+          "http://localhost:5000/api/users/login",
+          "POST",
+          JSON.stringify({
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
           }),
-        });
-
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
-
-        setIsLoading(false);
+          {
+            "Content-Type": "application/json",
+          }
+        );
 
         login();
         routeChange();
-      } catch (err) {
-        setIsLoading(false);
-        setError(err.message || "Something went wrong. Please try again.");
+      } catch (error) {
+        // error state is set in custom hook
       }
-
     } else {
       try {
-        const response = await fetch("http://localhost:5000/api/users/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        await sendRequest(
+          "http://localhost:5000/api/users/signup",
+          "POST",
+          JSON.stringify({
             name: formState.inputs.name.value,
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
           }),
-        });
-
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
-
-        setIsLoading(false);
+          {
+            "Content-Type": "application/json",
+          }
+        );
 
         login();
         routeChange();
       } catch (err) {
-        setIsLoading(false);
-        setError(err.message || "Something went wrong. Please try again.");
+        
       }
     }
   };
 
-  const errorHandler = () => {
-    setError(null);
-  }
-
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={errorHandler}/>
+      <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
         <h2>Login Required</h2>
