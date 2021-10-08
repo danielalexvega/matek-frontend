@@ -105,9 +105,7 @@ const Auth = () => {
 
         login();
         routeChange();
-      } catch (err) {
-        
-      }
+      } catch (err) {}
     }
   };
 
