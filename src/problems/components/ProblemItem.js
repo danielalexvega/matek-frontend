@@ -79,11 +79,11 @@ const ProblemItem = ({
             {/* <p className="info__rating"> Rating: {rating}</p> */}
             <div className="info__courses-container">
               Courses:
-              {/* <ul className="info__courses">
-                {courses.map((course, index) => (
-                  <li key={`course ${index}`}>{course}</li>
+              <ul className="info__courses">
+                {courses.map((course) => (
+                  <li key={course.id}>{course.value}</li>
                 ))}
-              </ul> */}
+              </ul>
             </div>
           </div>
           <div className="problem-item__actions">
