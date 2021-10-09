@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useHistory } from "react-router";
 import { Tex } from "react-tex";
 
 import Input from "../../shared/components/FormElements/Input";
@@ -61,6 +62,8 @@ const NewProblem = () => {
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
+  const history = useHistory();
+
   const problemSubmitHandler = async (event) => {
     event.preventDefault();
 
@@ -81,6 +84,7 @@ const NewProblem = () => {
         }),
         { "Content-Type": "application/json" }
       );
+      history.push(`/${userId}/problems`);
     } catch (error) {
       //redirect user to a different page
     }
