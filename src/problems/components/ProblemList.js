@@ -23,15 +23,15 @@ const ProblemList = ({ problems }) => {
     <ul className="problem-list">
       {problems.map((problem) => (
         <ProblemItem
-          key={problem.id}
+          key={problem._id}
           id={problem.id}
-          image={problem.imgUrl}
-          katex={problem.katex.value}
+          image={problem.image}
+          katex={problem.katex}
           author={problem.author}
           authorId={problem.authorId}
-          solution={problem.solution.value}
-          choices={problem.choices.value} //array of choice objects
-          content={problem.content}
+          solution={problem.solution}
+          choices={problem.choices} //array of choice objects
+          content={problem.subjectContent}
           courses={problem.courses}
         />
       ))}

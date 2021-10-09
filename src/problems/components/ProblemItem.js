@@ -22,6 +22,10 @@ const ProblemItem = ({
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { isLoggedIn } = useContext(AuthContext);
 
+  if(!choices) {
+    choices = [];
+  }
+
   const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
   };
@@ -55,7 +59,7 @@ const ProblemItem = ({
       >
         <p>Do you want to delete this problem?</p>
       </Modal>
-      <li className="problem-item">
+      <li className="problem-item" key={id}>
         <Card className="problem-item__content">
           <div className="problem-item__image">
             {image && <img src={image} alt="problem" />}
@@ -75,11 +79,11 @@ const ProblemItem = ({
             {/* <p className="info__rating"> Rating: {rating}</p> */}
             <div className="info__courses-container">
               Courses:
-              <ul className="info__courses">
+              {/* <ul className="info__courses">
                 {courses.map((course, index) => (
                   <li key={`course ${index}`}>{course}</li>
                 ))}
-              </ul>
+              </ul> */}
             </div>
           </div>
           <div className="problem-item__actions">

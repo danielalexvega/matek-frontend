@@ -1,14 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 
 import ProblemList from "../components/ProblemList";
-
-import DUMMY_PROBLEMS from "../../shared/DUMMY_PROBLEMS";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const UserProblems = () => {
+  const [loadedProblems, setLoadedProblems] = useState();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const userId = useParams().userId;
-  const loadedPlaces = DUMMY_PROBLEMS.filter(problem => problem.authorId === userId);
-  return <ProblemList problems={loadedPlaces} />;
+
+  useEffect(() => {
+    const fetchProblems = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/problems/user/${userId}`
+        );
+        setLoadedProblems(responseData.problems);
+      } catch (error) {}
+    };
+
+    fetchProblems();
+  }, [sendRequest, userId]);
+
+  return (
+    <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner />
+        </div>
+      )}
+      {!isLoading && loadedProblems && (
+        <ProblemList problems={loadedProblems} />
+      )}
+    </React.Fragment>
+  );
 };
 
 export default UserProblems;
