@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Tex } from "react-tex";
 
 import Input from "../../shared/components/FormElements/Input";
@@ -7,8 +7,11 @@ import Button from "../../shared/components/FormElements/Button";
 import InputList from "../../shared/components/FormElements/InputList";
 import InputChoices from "../components/InputChoices";
 import KatexPreview from "../components/KatexPreview";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import { AuthContext } from "../../shared/context/auth-context";
 // Add validators here
 import {
   VALIDATOR_REQUIRE,
@@ -21,6 +24,7 @@ import content_subjects from "../../shared/content_subjects";
 const optionsTitles = content_subjects.map((option) => option.title);
 
 const NewProblem = () => {
+  const { userId, userName } = useContext(AuthContext);
   const [
     formState,
     inputHandler,
@@ -42,7 +46,7 @@ const NewProblem = () => {
         value: "",
         isValid: false,
       },
-      isMultipleChoice: { value: null, isValid: true },
+      isMultipleChoice: { value: false, isValid: true },
       choices: {
         value: [],
         isValid: true,
@@ -57,9 +61,29 @@ const NewProblem = () => {
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const problemSubmitHandler = (event) => {
+  const problemSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(formState.inputs); //send to backend
+
+    try {
+      await sendRequest(
+        "http://localhost:5000/api/problems",
+        "POST",
+        JSON.stringify({
+          subjectContent: formState.inputs.subjectContent.value,
+          katex: formState.inputs.katex.value,
+          solution: formState.inputs.solution.value,
+          isMultipleChoice: formState.inputs.isMultipleChoice.value,
+          choices: formState.inputs.choices.value,
+          description: formState.inputs.description.value,
+          author: userName,
+          authorId: userId,
+          courses: [{value: "Algebra 2"}],
+        }),
+        { "Content-Type": "application/json" }
+      );
+    } catch (error) {
+      //redirect user to a different page
+    }
   };
 
   return (
@@ -79,7 +103,9 @@ const NewProblem = () => {
           documentation.
         </a>
       </p>
+      <ErrorModal error={error} onClear={clearError} />
       <form className="problem-form" onSubmit={problemSubmitHandler}>
+        {isLoading && <LoadingSpinner asOverlay />}
         {/* Subject Content  */}
         <InputList
           id="subjectContent"
