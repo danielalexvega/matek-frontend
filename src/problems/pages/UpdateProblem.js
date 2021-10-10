@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, useHistory } from "react-router";
 import { Tex } from "react-tex";
 
 import Input from "../../shared/components/FormElements/Input";
@@ -13,6 +13,7 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import { AuthContext } from "../../shared/context/auth-context";
 
 import {
   VALIDATOR_REQUIRE,
@@ -26,9 +27,12 @@ import content_subjects from "../../shared/content_subjects";
 const optionsTitles = content_subjects.map((option) => option.title);
 
 const UpdateProblem = () => {
+  const auth = useContext(AuthContext);
   const problemId = useParams().problemId;
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedProblem, setLoadedProblem] = useState();
+
+  const history = useHistory();
 
   const [
     formState,
@@ -103,18 +107,40 @@ const UpdateProblem = () => {
           },
           true
         );
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     };
     fetchProblem();
   }, [sendRequest, problemId, setFormData]);
 
- 
-  const problemUpdateSubmitHandler = (event) => {
+  const problemUpdateSubmitHandler = async (event) => {
     event.preventDefault();
     console.log(formState.inputs);
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/problems/${problemId}`,
+        "PATCH",
+        JSON.stringify({
+          subjectContent: formState.inputs.subjectContent.value,
+          katex: formState.inputs.katex.value,
+          solution: formState.inputs.solution.value,
+          isMultipleChoice: formState.inputs.isMultipleChoice.value,
+          choices: formState.inputs.choices.value,
+          description: formState.inputs.description.value,
+          courses: [{ value: "Algebra 2" }],
+        }),
+        { "Content-Type": "application/json" }
+      );
+      history.push(`/${loadedProblem.authorId}/problems`);
+    } catch (error) {}
   };
+
+  if (isLoading) {
+    return (
+      <div className="center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   if (!isLoading && !loadedProblem) {
     return (
@@ -142,7 +168,6 @@ const UpdateProblem = () => {
         </a>
       </p>
       <ErrorModal error={error} onClear={clearError} />
-      {isLoading && <LoadingSpinner asOverlay />}
       {!isLoading && loadedProblem && (
         <form className="problem-form" onSubmit={problemUpdateSubmitHandler}>
           <InputList
@@ -201,6 +226,7 @@ const UpdateProblem = () => {
               value={loadedProblem.isMultipleChoice}
               onClick={multipleChoiceHandler}
               checked={loadedProblem.isMultipleChoice}
+              onChange={multipleChoiceHandler}
             />
           </label>
 
