@@ -24,9 +24,11 @@ const UserProblems = () => {
     fetchProblems();
   }, [sendRequest, userId]);
 
-  const problemDeleteHandler = deletedPlaceId => {
-    setLoadedProblems(prevProblems => prevProblems.filter(problem => problem.id !== deletedPlaceId));
-  }
+  const problemDeleteHandler = (deletedPlaceId) => {
+    setLoadedProblems((prevProblems) =>
+      prevProblems.filter((problem) => problem.id !== deletedPlaceId)
+    );
+  };
 
   return (
     <React.Fragment>
@@ -37,7 +39,11 @@ const UserProblems = () => {
         </div>
       )}
       {!isLoading && loadedProblems && (
-        <ProblemList problems={loadedProblems} onDeleteProblem={problemDeleteHandler}/>
+        <ProblemList
+          problems={loadedProblems}
+          onDeleteProblem={problemDeleteHandler}
+          problemsUserId={userId}
+        />
       )}
     </React.Fragment>
   );

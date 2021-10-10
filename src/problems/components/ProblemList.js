@@ -1,19 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import Card from "../../shared/components/UIElements/Card";
 import ProblemItem from "./ProblemItem";
 import Button from "../../shared/components/FormElements/Button";
+import { AuthContext } from "../../shared/context/auth-context";
 import "./ProblemList.css";
 
-const ProblemList = ({ problems, onDeleteProblem }) => {
-  // problems should be a prop, an array of problems
+const ProblemList = ({ problems, onDeleteProblem, problemsUserId }) => {
+  const { userId } = useContext(AuthContext);
+
   // if problems array is empty
-  if (problems.length === 0) {
+  if (problems.length === 0 && problemsUserId === userId) {
     return (
       <div className="problem-list center">
         <Card>
           <h2>No problems found. Maybe create one?</h2>
           <Button to="/problems/new">Create Problem</Button>
+        </Card>
+      </div>
+    );
+  }
+
+  if (problems.length === 0 && problemsUserId !== userId) {
+    return (
+      <div className="problem-list center">
+        <Card>
+          <h2>This user has not created any problems yet.</h2>
+          <Button to="/problems">View Other Problems</Button>
         </Card>
       </div>
     );
