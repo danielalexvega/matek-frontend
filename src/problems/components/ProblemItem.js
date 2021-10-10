@@ -4,7 +4,10 @@ import { Tex } from "react-tex";
 import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/FormElements/Button";
 import Modal from "../../shared/components/UIElements/Modal";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../../shared/context/auth-context";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 import "./ProblemItem.css";
 import "katex/dist/katex.min.css";
 
@@ -13,16 +16,19 @@ const ProblemItem = ({
   image,
   katex,
   author,
+  authorId,
   rating,
   solution,
   choices,
   content,
   courses,
+  onDelete,
 }) => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, userId } = useContext(AuthContext);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  if(!choices) {
+  if (!choices) {
     choices = [];
   }
 
@@ -34,13 +40,17 @@ const ProblemItem = ({
     setShowConfirmModal(false);
   };
 
-  const confirmDeleteHandler = () => {
+  const confirmDeleteHandler = async () => {
     setShowConfirmModal(false);
-    console.log("Deleting...");
+    try {
+      await sendRequest(`http://localhost:5000/api/problems/${id}`, "DELETE");
+      onDelete(id);
+    } catch (error) {}
   };
 
   return (
     <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showConfirmModal}
         onCancel={cancelDeleteHandler}
@@ -61,6 +71,7 @@ const ProblemItem = ({
       </Modal>
       <li className="problem-item" key={id}>
         <Card className="problem-item__content">
+          {isLoading && <LoadingSpinner asOverlay />}
           <div className="problem-item__image">
             {image && <img src={image} alt="problem" />}
           </div>
@@ -87,9 +98,13 @@ const ProblemItem = ({
             </div>
           </div>
           <div className="problem-item__actions">
-            {isLoggedIn && <Button inverse>Add to desk</Button>}
-            {isLoggedIn && <Button to={`/problems/${id}`}>Edit</Button>}
-            {isLoggedIn && (
+            {isLoggedIn && authorId !== userId && (
+              <Button inverse>Add to desk</Button>
+            )}
+            {isLoggedIn && authorId === userId && (
+              <Button to={`/problems/${id}`}>Edit</Button>
+            )}
+            {isLoggedIn && authorId === userId && (
               <Button danger onClick={showDeleteWarningHandler}>
                 Delete
               </Button>

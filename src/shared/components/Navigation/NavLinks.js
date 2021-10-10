@@ -22,7 +22,7 @@ const NavLinks = (props) => {
       )}
       {isLoggedIn && (
         <li>
-          <NavLink to="/a1/problems">Your Desk</NavLink>
+          <NavLink to={`/${userId}/problems`}>Your Desk</NavLink>
         </li>
       )}
       {isLoggedIn && (

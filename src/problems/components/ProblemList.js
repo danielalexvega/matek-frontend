@@ -5,7 +5,7 @@ import ProblemItem from "./ProblemItem";
 import Button from "../../shared/components/FormElements/Button";
 import "./ProblemList.css";
 
-const ProblemList = ({ problems }) => {
+const ProblemList = ({ problems, onDeleteProblem }) => {
   // problems should be a prop, an array of problems
   // if problems array is empty
   if (problems.length === 0) {
@@ -33,6 +33,7 @@ const ProblemList = ({ problems }) => {
           choices={problem.choices} //array of choice objects
           content={problem.subjectContent}
           courses={problem.courses}
+          onDelete={onDeleteProblem}
         />
       ))}
     </ul>
