@@ -8,7 +8,11 @@ import InputList from "../../shared/components/FormElements/InputList";
 import Card from "../../shared/components/UIElements/Card";
 import InputChoices from "../components/InputChoices";
 import KatexPreview from "../components/KatexPreview";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+
 import { useForm } from "../../shared/hooks/form-hook";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 
 import {
   VALIDATOR_REQUIRE,
@@ -17,74 +21,14 @@ import {
 
 import "./ProblemForm.css";
 
-import DUMMY_PROBLEMS from "../../shared/DUMMY_PROBLEMS";
+import content_subjects from "../../shared/content_subjects";
 
-const options = [
-  { id: 1, value: "exponent-rules", title: "Exponent Rules" },
-  { id: 2, value: "fractional-exponents", title: "Fractional Exponents" },
-  { id: 3, value: "simplify-radicals", title: "Simplify Radicals" },
-  {
-    id: 4,
-    value: "radicals-and-fractional-exponents",
-    title: "Radicals and Fractional Exponents",
-  },
-  {
-    id: 5,
-    value: "imaginary-complex-numbers",
-    title: "Imaginary/Complex Numbers",
-  },
-  { id: 6, value: "factoring", title: "Radicals and Fractional Exponents" },
-  {
-    id: 7,
-    value: "advanced-factoring",
-    title: "Radicals and Fractional Exponents",
-  },
-  {
-    id: 8,
-    value: "quadratic-formula",
-    title: "Radicals and Fractional Exponents",
-  },
-  {
-    id: 9,
-    value: "complete-the-square",
-    title: "Radicals and Fractional Exponents",
-  },
-  {
-    id: 10,
-    value: "nature-of-the-roots",
-    title: "Radicals and Fractional Exponents",
-  },
-  {
-    id: 11,
-    value: "sum-product-of-the-roots",
-    title: "Sum/Product of the Roots",
-  },
-  { id: 12, value: "systems-of-equations", title: "System of Equations" },
-  {
-    id: 13,
-    value: "parabolas-equations-from-directrix-and-focus",
-    title: "Parabolos Equations from Directrix and Focus",
-  },
-  { id: 14, value: "polynomial-operations", title: "Polynomial Operations" },
-  { id: 15, value: "polynomial-division", title: "Polynomial Division" },
-  { id: 16, value: "polynomial-graphs", title: "Polynomial Graphs" },
-  {
-    id: 17,
-    value: "polynomial-key-features",
-    title: "Polynomial Key Features",
-  },
-  {
-    id: 18,
-    value: "solving-the-square",
-    title: "Solving the Square",
-  },
-];
-
-const optionsTitles = options.map((option) => option.title);
+const optionsTitles = content_subjects.map((option) => option.title);
 
 const UpdateProblem = () => {
   const problemId = useParams().problemId;
-  const [isLoading, setIsLoading] = useState(true);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [loadedProblem, setLoadedProblem] = useState();
 
   const [
     formState,
@@ -123,49 +67,56 @@ const UpdateProblem = () => {
     false
   );
 
-  const identifiedProblem = DUMMY_PROBLEMS.find((p) => p.id === problemId);
-
   useEffect(() => {
-    if (identifiedProblem) {
-      setFormData(
-        {
-          subjectContent: {
-            value: identifiedProblem.content,
-            isValid: true,
+    const fetchProblem = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/problems/${problemId}`
+        );
+        setLoadedProblem(responseData.problem);
+        setFormData(
+          {
+            subjectContent: {
+              value: responseData.problem.subjectContent,
+              isValid: true,
+            },
+            katex: {
+              value: responseData.problem.katex,
+              isValid: true,
+            },
+            solution: {
+              value: responseData.problem.solution,
+              isValid: true,
+            },
+            isMultipleChoice: {
+              value: responseData.problem.isMultipleChoice,
+              isValid: true,
+            },
+            choices: {
+              value: responseData.problem.choices,
+              isValid: true,
+            },
+            description: {
+              value: responseData.problem.description,
+              isValid: true,
+            },
           },
-          katex: {
-            value: identifiedProblem.katex.value,
-            isValid: true,
-          },
-          solution: {
-            value: identifiedProblem.solution.value,
-            isValid: true,
-          },
-          isMultipleChoice: {
-            value: identifiedProblem.isMultipleChoice.value,
-            isValid: true,
-          },
-          choices: {
-            value: identifiedProblem.choices.value,
-            isValid: true,
-          },
-          description: {
-            value: identifiedProblem.description.value,
-            isValid: true,
-          },
-        },
-        true
-      );
-    }
-    setIsLoading(false);
-  }, [setFormData, identifiedProblem]);
+          true
+        );
+      } catch (error) {
+        
+      }
+    };
+    fetchProblem();
+  }, [sendRequest, problemId, setFormData]);
 
+ 
   const problemUpdateSubmitHandler = (event) => {
     event.preventDefault();
     console.log(formState.inputs);
   };
 
-  if (!identifiedProblem) {
+  if (!isLoading && !loadedProblem) {
     return (
       <div className="center">
         <Card>
@@ -174,6 +125,7 @@ const UpdateProblem = () => {
       </div>
     );
   }
+
   return (
     <div className="problem-container">
       <h1 className="problem-container__title">Update a problem.</h1>
@@ -189,20 +141,22 @@ const UpdateProblem = () => {
           documentation.
         </a>
       </p>
-      {!isLoading && (
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && <LoadingSpinner asOverlay />}
+      {!isLoading && loadedProblem && (
         <form className="problem-form" onSubmit={problemUpdateSubmitHandler}>
           <InputList
             id="subjectContent"
             selectName="subjectContent"
             label="Please select a subject content."
-            options={options}
+            options={content_subjects}
             validators={[VALIDATOR_MATCH(optionsTitles)]}
             errorText="Please enter a valid content section"
             onInput={inputHandler}
             type="text"
             placeholder="Exponent Rules"
             listTitle="contentList"
-            initialValue={formState.inputs.subjectContent.value}
+            initialValue={loadedProblem.subjectContent}
             initialValid={true}
           />
           {/* Problem  */}
@@ -213,7 +167,7 @@ const UpdateProblem = () => {
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter a valid problem"
             onInput={inputHandler}
-            initialValue={formState.inputs.katex.value}
+            initialValue={loadedProblem.katex}
             initialValid={true}
           />
           <KatexPreview
@@ -229,7 +183,7 @@ const UpdateProblem = () => {
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter a valid problem"
             onInput={inputHandler}
-            initialValue={formState.inputs.solution.value}
+            initialValue={loadedProblem.solution}
             initialValid={true}
           />
           <KatexPreview
@@ -244,15 +198,15 @@ const UpdateProblem = () => {
             <input
               type="checkbox"
               id="multipleChoiceSelection"
-              value={formState.inputs.isMultipleChoice.value}
+              value={loadedProblem.isMultipleChoice}
               onClick={multipleChoiceHandler}
-              checked={formState.inputs.isMultipleChoice.value}
+              checked={loadedProblem.isMultipleChoice}
             />
           </label>
 
           {formState.inputs.isMultipleChoice.value && (
             <InputChoices
-              choicesArray={formState.inputs.choices.value}
+              choicesArray={loadedProblem.choices}
               inputHandler={inputHandler}
               addChoiceHandler={addChoiceHandler}
               removeChoiceHandler={removeChoiceHandler}
@@ -267,7 +221,7 @@ const UpdateProblem = () => {
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter a valid problem"
             onInput={inputHandler}
-            initialValue={formState.inputs.description.value}
+            initialValue={loadedProblem.description}
             initialValid={true}
           />
           <Button type="submit" disabled={!formState.isValid}>
