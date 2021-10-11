@@ -5,6 +5,7 @@ import Button from "../../shared/components/FormElements/Button";
 import Card from "../../shared/components/UIElements/Card";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import {
@@ -19,7 +20,7 @@ import "./Auth.css";
 
 const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const { isLoggedIn, userId, userName, login, logout } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const history = useHistory();
@@ -48,6 +49,7 @@ const Auth = () => {
         {
           ...formState.inputs,
           name: undefined,
+          image: undefined
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -59,6 +61,10 @@ const Auth = () => {
             value: "",
             isValid: false,
           },
+          image: {
+            value: null,
+            isValid: false
+          }
         },
         false
       );
@@ -127,6 +133,9 @@ const Auth = () => {
               errorText={"Please provide a name."}
               onInput={inputHandler}
             />
+          )}
+          {!isLoginMode && (
+            <ImageUpload id="image" center onInput={inputHandler}/>
           )}
           <Input
             id="email"
