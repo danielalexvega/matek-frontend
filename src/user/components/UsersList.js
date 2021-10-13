@@ -20,7 +20,7 @@ const UsersList = props => {
                 <UserItem 
                     key={user.id} 
                     id={user.id} 
-                    image={user.image} 
+                    image={`http://localhost:5000/${user.image}`} 
                     name={user.name} 
                     problemsCount={user.problems.length}
                 />
