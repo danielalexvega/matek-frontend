@@ -24,7 +24,7 @@ const formReducer = (state, action) => {
     case "INPUT_CHANGE":
       let formIsValid = true;
       for (const inputId in state.inputs) {
-        if(!state.inputs[inputId]) {
+        if (!state.inputs[inputId]) {
           continue;
         }
         if (inputId !== "choices" && inputId === action.inputId) {
@@ -142,6 +142,20 @@ const formReducer = (state, action) => {
         },
       };
 
+    case "SELECT_IMAGE_CHOICE":
+      let updateImageSelection = !state.inputs.hasImage.value;
+
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          hasImage: {
+            value: updateImageSelection,
+            isValid: true,
+          },
+        },
+      };
+      
     case "SET_DATA":
       return {
         inputs: action.inputs,
@@ -177,7 +191,7 @@ export const useForm = (initialInputs, initialFormValidity) => {
       label: choiceLetterArray[choiceIndex],
     });
   };
-  const removeChoiceHandler =(event) => {
+  const removeChoiceHandler = (event) => {
     event.preventDefault();
     dispatch({
       type: "REMOVE_CHOICE",
@@ -187,6 +201,12 @@ export const useForm = (initialInputs, initialFormValidity) => {
   const multipleChoiceHandler = () => {
     dispatch({
       type: "SELECT_MULTIPLE_CHOICE",
+    });
+  };
+
+  const imageSelectionHandler = () => {
+    dispatch({
+      type: "SELECT_IMAGE_CHOICE",
     });
   };
 
@@ -205,5 +225,6 @@ export const useForm = (initialInputs, initialFormValidity) => {
     addChoiceHandler,
     removeChoiceHandler,
     multipleChoiceHandler,
+    imageSelectionHandler,
   ];
 };

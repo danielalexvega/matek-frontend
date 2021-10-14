@@ -6,6 +6,7 @@ import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 // import Select from "../../shared/components/FormElements/Select";
 import InputList from "../../shared/components/FormElements/InputList";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 import InputChoices from "../components/InputChoices";
 import KatexPreview from "../components/KatexPreview";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
@@ -33,6 +34,7 @@ const NewProblem = () => {
     addChoiceHandler,
     removeChoiceHandler,
     multipleChoiceHandler,
+    imageSelectionHandler,
   ] = useForm(
     {
       subjectContent: {
@@ -56,6 +58,11 @@ const NewProblem = () => {
         value: "",
         isValid: true,
       },
+      hasImage: { value: false, isValid: true },
+      image: {
+        value: null,
+        isValid: false,
+      },
     },
     false
   );
@@ -66,27 +73,53 @@ const NewProblem = () => {
 
   const problemSubmitHandler = async (event) => {
     event.preventDefault();
+    if (!formState.inputs.hasImage.value) {
+      try {
+        await sendRequest(
+          "http://localhost:5000/api/problems",
+          "POST",
+          JSON.stringify({
+            subjectContent: formState.inputs.subjectContent.value,
+            katex: formState.inputs.katex.value,
+            solution: formState.inputs.solution.value,
+            isMultipleChoice: formState.inputs.isMultipleChoice.value,
+            choices: formState.inputs.choices.value,
+            description: formState.inputs.description.value,
+            author: userName,
+            authorId: userId,
+            courses: [{ value: "Algebra 2" }],
+            hasImage: formState.inputs.hasImage.value,
+          }),
+          { "Content-Type": "application/json" }
+        );
+        history.push(`/${userId}/problems`);
+      } catch (error) {
+        //redirect user to a different page
+      }
+    } else {
+      try {
+        const formData = new FormData();
+        formData.append("subjectContent", formState.inputs.subjectContent.value);
+        formData.append("katex", formState.inputs.katex.value);
+        formData.append("solution", formState.inputs.solution.value);
+        formData.append("isMultipleChoice", formState.inputs.isMultipleChoice.value);
+        formData.append("choices", formState.inputs.choices.value);
+        formData.append("description", formState.inputs.description.value);
+        formData.append("author", userName);
+        formData.append("authorId", userId);
+        formData.append("courses", [{ value: "Algebra 2" }]);
+        formData.append("hasImage", formState.inputs.hasImage.value);
+        formData.append("image", formState.inputs.image.value);
 
-    try {
-      await sendRequest(
-        "http://localhost:5000/api/problems",
-        "POST",
-        JSON.stringify({
-          subjectContent: formState.inputs.subjectContent.value,
-          katex: formState.inputs.katex.value,
-          solution: formState.inputs.solution.value,
-          isMultipleChoice: formState.inputs.isMultipleChoice.value,
-          choices: formState.inputs.choices.value,
-          description: formState.inputs.description.value,
-          author: userName,
-          authorId: userId,
-          courses: [{value: "Algebra 2"}],
-        }),
-        { "Content-Type": "application/json" }
-      );
-      history.push(`/${userId}/problems`);
-    } catch (error) {
-      //redirect user to a different page
+        await sendRequest(
+          "http://localhost:5000/api/problems",
+          "POST",
+          formData
+        );
+        history.push(`/${userId}/problems`);
+      } catch (error) {
+        
+      }
     }
   };
 
@@ -164,7 +197,6 @@ const NewProblem = () => {
         </label>
 
         {/* Input Choices  */}
-        {/* map over the choices array, for each value, add an input */}
         {formState.inputs.isMultipleChoice.value && (
           <InputChoices
             choicesArray={formState.inputs.choices.value}
@@ -183,6 +215,17 @@ const NewProblem = () => {
           errorText="Please enter a valid problem"
           onInput={inputHandler}
         />
+        <label htmlFor="imageSelection" className="imageSelection">
+          Does this problem have an image associated with it?
+          <input
+            type="checkbox"
+            id="imageSelection"
+            onClick={imageSelectionHandler}
+          />
+        </label>
+        {formState.inputs.hasImage.value && (
+          <ImageUpload id="image" center onInput={inputHandler} />
+        )}
         <Button type="submit" disabled={!formState.isValid}>
           Add Problem
         </Button>
