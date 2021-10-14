@@ -38,14 +38,15 @@ const ProblemList = ({ problems, onDeleteProblem, problemsUserId }) => {
         <ProblemItem
           key={problem._id}
           id={problem.id}
-          image={problem.image}
+          image={`http://localhost:5000/${problem.image}`}
           katex={problem.katex}
           author={problem.author}
           authorId={problem.authorId}
           solution={problem.solution}
-          choices={problem.choices} //array of choice objects
+          choices={problem.choices} 
           content={problem.subjectContent}
           courses={problem.courses}
+          hasImage={problem.hasImage}
           onDelete={onDeleteProblem}
         />
       ))}

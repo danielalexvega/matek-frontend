@@ -61,7 +61,7 @@ const NewProblem = () => {
       hasImage: { value: false, isValid: true },
       image: {
         value: null,
-        isValid: false,
+        isValid: true,
       },
     },
     false

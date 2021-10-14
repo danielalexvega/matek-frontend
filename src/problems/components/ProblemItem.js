@@ -23,6 +23,7 @@ const ProblemItem = ({
   content,
   courses,
   onDelete,
+  hasImage
 }) => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { isLoggedIn, userId } = useContext(AuthContext);
@@ -72,16 +73,18 @@ const ProblemItem = ({
       <li className="problem-item" key={id}>
         <Card className="problem-item__content">
           {isLoading && <LoadingSpinner asOverlay />}
-          <div className="problem-item__image">
+          {hasImage && <div className="problem-item__image">
             {image && <img src={image} alt="problem" />}
-          </div>
+          </div>}
           <div className="problem-item__problem">
             <p className="problem__content">{content}</p>
             <Tex className="problem__katex" texContent={katex} />
           </div>
           <ul className="problem-item__choices">
             {choices.map((choice, index) => (
-              <li key={index}>{choice.value}</li>
+              <li key={index}>
+                <Tex texContent={choice.value} />
+                </li>
             ))}
           </ul>
           <div className="problem-item__solution"></div>
