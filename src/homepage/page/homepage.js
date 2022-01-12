@@ -4,7 +4,7 @@ import HomepageHero from "../components/HomepageHero";
 import FullWidthContainer from "../components/FullWidthContainer";
 import KatexExample from "../components/KatexExample";
 
-import "./Homepage.css";
+import "./homepage.css";
 
 const homepage = () => {
   return (

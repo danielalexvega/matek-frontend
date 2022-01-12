@@ -54,6 +54,10 @@ const NewProblem = () => {
         value: [],
         isValid: true,
       },
+      courses: {
+        value: ["Algebra 2"],
+        isValid: true,
+      },
       description: {
         value: "",
         isValid: true,
@@ -107,7 +111,7 @@ const NewProblem = () => {
         formData.append("description", formState.inputs.description.value);
         formData.append("author", userName);
         formData.append("authorId", userId);
-        formData.append("courses", [{ value: "Algebra 2" }]);
+        formData.append("courses", formState.inputs.courses.value);
         formData.append("hasImage", formState.inputs.hasImage.value);
         formData.append("image", formState.inputs.image.value);
 
