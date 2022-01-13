@@ -3,7 +3,8 @@
     margin: 5rem auto;
     padding: 0;
     max-width: var(--max-width);
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 
   }
   

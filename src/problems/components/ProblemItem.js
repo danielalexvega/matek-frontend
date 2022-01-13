@@ -74,7 +74,7 @@ const ProblemItem = ({
         <Card className="problem-item__content">
           {isLoading && <LoadingSpinner asOverlay />}
           {hasImage && <div className="problem-item__image">
-            {image && <img src={`http://localhost:5000/${image}`} alt="problem" />}
+            {image && <img src={image} alt="problem" />}
           </div>}
           <div className="problem-item__problem">
             <p className="problem__content">{content}</p>
