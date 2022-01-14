@@ -19,25 +19,25 @@ import UpdateProblem from "./problems/pages/UpdateProblem";
 import { AuthContext } from "./shared/context/auth-context";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(null);
   const [userId, setUserId] = useState();
   const [userName, setUserName] = useState();
 
-  const login = useCallback((uid, name) => {
-    setIsLoggedIn(true);
+  const login = useCallback((uid, name, token) => {
+    setToken(token);
     setUserId(uid);
     setUserName(name);
   }, []);
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
+    setToken(null);
     setUserId(null);
     setUserName(null);
   }, []);
 
   let routes;
 
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Switch>
         <Route path="/" exact>
@@ -93,7 +93,8 @@ const App = () => {
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: isLoggedIn,
+        isLoggedIn: !!token,
+        token: token,
         userId: userId,
         userName: userName,
         login: login,

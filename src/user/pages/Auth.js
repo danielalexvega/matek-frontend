@@ -108,7 +108,7 @@ const Auth = () => {
           formData
         );
 
-        login(responseData.user.id, responseData.user.name);
+        login(responseData.userId, responseData.userName, responseData.token);
         routeChange();
       } catch (err) {}
     }
