@@ -89,10 +89,14 @@ const Auth = () => {
           }
         );
 
-        login(responseData.user.id, responseData.user.name, responseData.token);
+        console.log(responseData);
+
+        login(responseData.userId, responseData.name, responseData.token);
+
         routeChange();
       } catch (error) {
         // error state is set in custom hook
+        console.log("dumb face");
       }
     } else {
       try {
