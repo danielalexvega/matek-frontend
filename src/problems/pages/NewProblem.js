@@ -80,7 +80,7 @@ const NewProblem = () => {
         if (!formState.inputs.hasImage.value) {
             try {
                 await sendRequest(
-                    "http://localhost:5000/api/problems",
+                    process.env.REACT_APP_BACKEND_URL + "/problems",
                     "POST",
                     JSON.stringify({
                         subjectContent: formState.inputs.subjectContent.value,
@@ -91,7 +91,6 @@ const NewProblem = () => {
                         choices: formState.inputs.choices.value,
                         description: formState.inputs.description.value,
                         author: userName,
-                        authorId: userId,
                         courses: [{ value: "Algebra 2" }],
                         hasImage: formState.inputs.hasImage.value,
                     }),
@@ -123,13 +122,12 @@ const NewProblem = () => {
                     formState.inputs.description.value
                 );
                 formData.append("author", userName);
-                formData.append("authorId", userId);
                 formData.append("courses", formState.inputs.courses.value);
                 formData.append("hasImage", formState.inputs.hasImage.value);
                 formData.append("image", formState.inputs.image.value);
 
                 await sendRequest(
-                    "http://localhost:5000/api/problems",
+                    process.env.REACT_APP_BACKEND_URL + "/problems",
                     "POST",
                     formData,
                     { Authorization: "Bearer " + token }

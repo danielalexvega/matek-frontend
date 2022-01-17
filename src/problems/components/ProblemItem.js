@@ -45,7 +45,7 @@ const ProblemItem = ({
         setShowConfirmModal(false);
         try {
             await sendRequest(
-                `http://localhost:5000/api/problems/${id}`,
+                `${process.env.REACT_APP_BACKEND_URL}/problems/${id}`,
                 "DELETE",
                 null,
                 { Authorization: "Bearer " + token }

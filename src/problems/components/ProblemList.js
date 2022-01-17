@@ -38,7 +38,7 @@ const ProblemList = ({ problems, onDeleteProblem, problemsUserId }) => {
         <ProblemItem
           key={problem._id}
           id={problem.id}
-          image={`http://localhost:5000/${problem.image}`}
+          image={`${process.env.REACT_APP_ASSET_URL}/${problem.image}`}
           katex={problem.katex}
           author={problem.author}
           authorId={problem.authorId}

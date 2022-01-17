@@ -75,7 +75,7 @@ const UpdateProblem = () => {
         const fetchProblem = async () => {
             try {
                 const responseData = await sendRequest(
-                    `http://localhost:5000/api/problems/${problemId}`
+                    `${process.env.REACT_APP_BACKEND_URL}/problems/${problemId}`
                 );
                 setLoadedProblem(responseData.problem);
                 setFormData(
@@ -117,7 +117,7 @@ const UpdateProblem = () => {
         console.log(formState.inputs);
         try {
             await sendRequest(
-                `http://localhost:5000/api/problems/${problemId}`,
+                `${process.env.REACT_APP_BACKEND_URL}/problems/${problemId}`,
                 "PATCH",
                 JSON.stringify({
                     subjectContent: formState.inputs.subjectContent.value,
