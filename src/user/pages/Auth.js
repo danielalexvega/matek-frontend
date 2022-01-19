@@ -96,7 +96,6 @@ const Auth = () => {
         routeChange();
       } catch (error) {
         // error state is set in custom hook
-        console.log("dumb face");
       }
     } else {
       try {

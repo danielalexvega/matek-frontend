@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { Tex } from "react-tex";
 
@@ -26,6 +26,7 @@ import content_subjects from "../../shared/content_subjects";
 const optionsTitles = content_subjects.map((option) => option.title);
 
 const NewProblem = () => {
+    const [courses, setCourses] = useState([]);
     const { userId, userName, token } = useContext(AuthContext);
     const [
         formState,
@@ -37,6 +38,10 @@ const NewProblem = () => {
         imageSelectionHandler,
     ] = useForm(
         {
+            course: {
+                value: "",
+                isValid: false,
+            },
             subjectContent: {
                 value: "",
                 isValid: false,
@@ -72,6 +77,26 @@ const NewProblem = () => {
     );
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+    useEffect(() => {
+        const fetchCourses = async () => {
+            try {
+                const responseData = await sendRequest(
+                    process.env.REACT_APP_BACKEND_URL + "/courses/"
+                );
+                const courseList = responseData.courses.map(
+                    (course) => {
+                        return {title: course.courseTitle, id: course.id}
+                    }
+                );
+                setCourses(courseList);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchCourses();
+    }, [sendRequest]);
 
     const history = useHistory();
 
@@ -157,92 +182,114 @@ const NewProblem = () => {
             <ErrorModal error={error} onClear={clearError} />
             <form className="problem-form" onSubmit={problemSubmitHandler}>
                 {isLoading && <LoadingSpinner asOverlay />}
-                {/* Subject Content  */}
-                <InputList
-                    id="subjectContent"
-                    selectName="subjectContent"
-                    label="Please select a subject content."
-                    options={content_subjects}
-                    validators={[VALIDATOR_MATCH(optionsTitles)]}
-                    errorText="Please enter a valid content section"
-                    onInput={inputHandler}
-                    type="text"
-                    placeholder="Exponent Rules"
-                    listTitle="contentList"
-                />
-                {/* Problem  */}
-                <Input
-                    element="textarea"
-                    id="katex"
-                    label="Problem - Written in Katex"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please enter a valid problem"
-                    onInput={inputHandler}
-                />
-                <KatexPreview
-                    title="KaTex Preview"
-                    texContent={formState.inputs.katex.value}
-                />
+                {!isLoading && courses !== [] && (
+                    <>
+                        <InputList
+                            id="course"
+                            selectName="course"
+                            label="Please select a course"
+                            options={courses}
+                            validators={[VALIDATOR_REQUIRE]}
+                            errorText="Please select a course"
+                            onInput={inputHandler}
+                            type="text"
+                            placeholder="Courses"
+                            listTitle="courseList"
+                        />
+                        <InputList
+                            id="subjectContent"
+                            selectName="subjectContent"
+                            label="Please select a subject content."
+                            options={content_subjects}
+                            validators={[VALIDATOR_MATCH(optionsTitles)]}
+                            errorText="Please enter a valid content section"
+                            onInput={inputHandler}
+                            type="text"
+                            placeholder="Exponent Rules"
+                            listTitle="contentList"
+                        />
+                        {/* Problem  */}
+                        <Input
+                            element="textarea"
+                            id="katex"
+                            label="Problem - Written in Katex"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please enter a valid problem"
+                            onInput={inputHandler}
+                        />
+                        <KatexPreview
+                            title="KaTex Preview"
+                            texContent={formState.inputs.katex.value}
+                        />
 
-                {/* Solution  */}
-                <Input
-                    element="input"
-                    type="text"
-                    id="solution"
-                    label="Solution - Written in Katex"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please enter a valid problem"
-                    onInput={inputHandler}
-                />
-                <KatexPreview
-                    title="Katex Preview for Solution"
-                    texContent={formState.inputs.solution.value}
-                />
-                <label
-                    htmlFor="multipleChoiceSelection"
-                    className="multipleChoiceSelection"
-                >
-                    Is this a multiple choice question?
-                    <input
-                        type="checkbox"
-                        id="multipleChoiceSelection"
-                        onClick={multipleChoiceHandler}
-                    />
-                </label>
+                        {/* Solution  */}
+                        <Input
+                            element="input"
+                            type="text"
+                            id="solution"
+                            label="Solution - Written in Katex"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please enter a valid problem"
+                            onInput={inputHandler}
+                        />
+                        <KatexPreview
+                            title="Katex Preview for Solution"
+                            texContent={formState.inputs.solution.value}
+                        />
+                        <label
+                            htmlFor="multipleChoiceSelection"
+                            className="multipleChoiceSelection"
+                        >
+                            Is this a multiple choice question?
+                            <input
+                                type="checkbox"
+                                id="multipleChoiceSelection"
+                                onClick={multipleChoiceHandler}
+                            />
+                        </label>
 
-                {/* Input Choices  */}
-                {formState.inputs.isMultipleChoice.value && (
-                    <InputChoices
-                        choicesArray={formState.inputs.choices.value}
-                        inputHandler={inputHandler}
-                        addChoiceHandler={addChoiceHandler}
-                        removeChoiceHandler={removeChoiceHandler}
-                    />
+                        {/* Input Choices  */}
+                        {formState.inputs.isMultipleChoice.value && (
+                            <InputChoices
+                                choicesArray={formState.inputs.choices.value}
+                                inputHandler={inputHandler}
+                                addChoiceHandler={addChoiceHandler}
+                                removeChoiceHandler={removeChoiceHandler}
+                            />
+                        )}
+
+                        {/* Description  */}
+                        <Input
+                            element="textarea"
+                            id="description"
+                            label="Description"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please enter a valid problem"
+                            onInput={inputHandler}
+                        />
+                        <label
+                            htmlFor="imageSelection"
+                            className="imageSelection"
+                        >
+                            Does this problem have an image associated with it?
+                            <input
+                                type="checkbox"
+                                id="imageSelection"
+                                onClick={imageSelectionHandler}
+                            />
+                        </label>
+                        {formState.inputs.hasImage.value && (
+                            <ImageUpload
+                                id="image"
+                                center
+                                onInput={inputHandler}
+                            />
+                        )}
+                        <Button type="submit" disabled={!formState.isValid}>
+                            Add Problem
+                        </Button>
+                    </>
                 )}
-
-                {/* Description  */}
-                <Input
-                    element="textarea"
-                    id="description"
-                    label="Description"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please enter a valid problem"
-                    onInput={inputHandler}
-                />
-                <label htmlFor="imageSelection" className="imageSelection">
-                    Does this problem have an image associated with it?
-                    <input
-                        type="checkbox"
-                        id="imageSelection"
-                        onClick={imageSelectionHandler}
-                    />
-                </label>
-                {formState.inputs.hasImage.value && (
-                    <ImageUpload id="image" center onInput={inputHandler} />
-                )}
-                <Button type="submit" disabled={!formState.isValid}>
-                    Add Problem
-                </Button>
             </form>
         </div>
     );
