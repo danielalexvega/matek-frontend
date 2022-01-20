@@ -89,8 +89,6 @@ const Auth = () => {
           }
         );
 
-        console.log(responseData);
-
         login(responseData.userId, responseData.name, responseData.token);
 
         routeChange();

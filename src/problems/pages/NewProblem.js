@@ -27,6 +27,9 @@ const optionsTitles = content_subjects.map((option) => option.title);
 
 const NewProblem = () => {
     const [courses, setCourses] = useState([]);
+    const [courseTitles, setCourseTitles] = useState([]);
+    const [contentDomains, setContentDomains] = useState([]);
+    const [domainTitles, setDomainTitles] = useState([]);
     const { userId, userName, token } = useContext(AuthContext);
     const [
         formState,
@@ -84,18 +87,42 @@ const NewProblem = () => {
                 const responseData = await sendRequest(
                     process.env.REACT_APP_BACKEND_URL + "/courses/"
                 );
-                const courseList = responseData.courses.map(
-                    (course) => {
-                        return {title: course.courseTitle, id: course.id}
-                    }
-                );
+                const courseList = responseData.courses.map((course) => {
+                    return { title: course.courseTitle, id: course.id };
+                });
+
+                const courseTitleList = courseList.map(course => course.title);
                 setCourses(courseList);
+                setCourseTitles(courseTitleList);
             } catch (err) {
                 console.log(err);
             }
         };
 
         fetchCourses();
+    }, [sendRequest]);
+
+    useEffect(() => {
+        const fetchContentDomains = async () => {
+            try {
+                const responseData = await sendRequest(
+                    process.env.REACT_APP_BACKEND_URL + "/contentDomains/"
+                );
+                const contentDomainList = responseData.contentDomains.map(
+                    (domain) => {
+                        return { title: domain.domainTitle, id: domain.id, courses: domain.courses };
+                    }
+                );
+
+                const domainTitleList = contentDomainList.map(domain => domain.title);
+                setContentDomains(contentDomainList);
+                setDomainTitles(domainTitleList);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchContentDomains();
     }, [sendRequest]);
 
     const history = useHistory();
@@ -189,7 +216,7 @@ const NewProblem = () => {
                             selectName="course"
                             label="Please select a course"
                             options={courses}
-                            validators={[VALIDATOR_REQUIRE]}
+                            validators={[VALIDATOR_MATCH(courseTitles)]}
                             errorText="Please select a course"
                             onInput={inputHandler}
                             type="text"
@@ -200,12 +227,12 @@ const NewProblem = () => {
                             id="subjectContent"
                             selectName="subjectContent"
                             label="Please select a subject content."
-                            options={content_subjects}
-                            validators={[VALIDATOR_MATCH(optionsTitles)]}
+                            options={contentDomains}
+                            validators={[VALIDATOR_MATCH(domainTitles)]}
                             errorText="Please enter a valid content section"
                             onInput={inputHandler}
                             type="text"
-                            placeholder="Exponent Rules"
+                            placeholder="Content Domains"
                             listTitle="contentList"
                         />
                         {/* Problem  */}
