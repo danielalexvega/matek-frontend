@@ -34,7 +34,6 @@ const NewProblem = () => {
     const [
         formState,
         inputHandler,
-        setFormData,
         addChoiceHandler,
         removeChoiceHandler,
         multipleChoiceHandler,
@@ -75,6 +74,9 @@ const NewProblem = () => {
                 value: null,
                 isValid: true,
             },
+            courseList: {
+                value: courses
+            }
         },
         false
     );
@@ -126,6 +128,7 @@ const NewProblem = () => {
     }, [sendRequest]);
 
     const history = useHistory();
+    
 
     const problemSubmitHandler = async (event) => {
         event.preventDefault();
