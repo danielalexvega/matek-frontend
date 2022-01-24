@@ -28,8 +28,10 @@ const optionsTitles = content_subjects.map((option) => option.title);
 const NewProblem = () => {
     const [courses, setCourses] = useState([]);
     const [courseTitles, setCourseTitles] = useState([]);
+    const [filteredContentDomains, setFilteredContentDomains] = useState([]);
     const [contentDomains, setContentDomains] = useState([]);
     const [domainTitles, setDomainTitles] = useState([]);
+
     const { userId, userName, token } = useContext(AuthContext);
     const [
         formState,
@@ -118,6 +120,7 @@ const NewProblem = () => {
 
                 const domainTitleList = contentDomainList.map(domain => domain.title);
                 setContentDomains(contentDomainList);
+                setFilteredContentDomains(contentDomainList);
                 setDomainTitles(domainTitleList);
             } catch (err) {
                 console.log(err);
@@ -129,6 +132,19 @@ const NewProblem = () => {
 
     const history = useHistory();
     
+    const updateContentSections = (course) => {
+        if(course === "") {
+            console.log("The course is empty, so the no content should be filtered");
+        }
+        if(courseTitles.includes(course)){
+            console.log("we got one");
+        }
+
+
+
+
+
+    }
 
     const problemSubmitHandler = async (event) => {
         event.preventDefault();
@@ -225,12 +241,13 @@ const NewProblem = () => {
                             type="text"
                             placeholder="Courses"
                             listTitle="courseList"
+                            updateContentSections={updateContentSections}
                         />
                         <InputList
                             id="subjectContent"
                             selectName="subjectContent"
                             label="Please select a subject content."
-                            options={contentDomains}
+                            options={filteredContentDomains}
                             validators={[VALIDATOR_MATCH(domainTitles)]}
                             errorText="Please enter a valid content section"
                             onInput={inputHandler}

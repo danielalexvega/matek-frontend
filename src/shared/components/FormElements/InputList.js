@@ -28,7 +28,7 @@ const InputList = (props) => {
     isValid: props.valid || props.initialValid || false,
   });
 
-  const { id, onInput } = props;
+  const { id, onInput, options } = props;
   const { value, isValid } = inputState;
 
   useEffect(() => {
@@ -36,9 +36,27 @@ const InputList = (props) => {
   }, [id, value, isValid, onInput]);
 
   const changeHandler = (event) => {
+    //check something, and then do a function that could be passed as a prop
+    // console.log(id);
+
+    let course = event.target.value;
+
+    if(id === "course") {
+        let isCourse = false;
+        for(let i = 0; i < options.length; i++) {
+            if(course === options[i].title) {
+                isCourse = true;
+            }
+        }
+
+        if(isCourse || course === "") {
+            props.updateContentSections(course);
+        }
+    }
+
     dispatch({
       type: "CHANGE",
-      val: event.target.value,
+      val: course,
       validators: props.validators,
     });
   };
@@ -64,7 +82,7 @@ const InputList = (props) => {
         list={props.listTitle}
       />
       <datalist id={props.listTitle}>
-        {props.options.map(option => (
+        {options.map(option => (
             <option value={option.title} key={option.id}/>
         ))}
       </datalist>

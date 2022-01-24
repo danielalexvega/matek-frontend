@@ -1,4 +1,4 @@
-import { useCallback, useReducer, useState } from "react";
+import { useCallback, useReducer } from "react";
 
 const choiceLetterArray = [
     "A",
@@ -21,21 +21,22 @@ const choiceLetterArray = [
 
 // const courseChoices;
 
-const fectchCourseChoices = async () => {
-try {
-    const response = await fetch( process.env.REACT_APP_BACKEND_URL + "/courses/");
-    const responseData = await response.json();
-    return responseData;
-} catch (error) {
-    console.log(error);
-}
-};
+// const fectchCourseChoices = async () => {
+// try {
+//     const response = await fetch( process.env.REACT_APP_BACKEND_URL + "/courses/");
+//     if(response.ok) {
+//         const responseData = await response.json();
+//         return responseData;
+//     }
+// } catch (error) {
+//     console.log(error);
+// }
+// };
 
-const courseChoices = fectchCourseChoices();
-console.log(courseChoices);
+// const courseChoices = fectchCourseChoices();
+// console.log(courseChoices);
 
 const formReducer = (state, action) => {
-
     switch (action.type) {
         case "INPUT_CHANGE":
             let formIsValid = true;
@@ -180,16 +181,16 @@ const formReducer = (state, action) => {
                 isValid: action.formIsValid,
             };
 
-        case "SET_COURSE_LIST":
-            return {
-                ...state,
-                inputs: {
-                    ...state.inputs,
-                    courseList: {
-                        value: action.courseList,
-                    },
-                },
-            };
+        // case "SET_COURSE_LIST":
+        //     return {
+        //         ...state,
+        //         inputs: {
+        //             ...state.inputs,
+        //             courseList: {
+        //                 value: action.courseList,
+        //             },
+        //         },
+        //     };
         default:
             return state;
     }
@@ -201,10 +202,11 @@ export const useForm = (initialInputs, initialFormValidity) => {
         isValid: initialFormValidity,
     });
 
+    //useForm needs to know the course
+    // I don't think I need to use state inside the useForm function
+    // const [test, setTest] = useState(null);
+
     const inputHandler = useCallback((id, value, isValid) => {
-        if (id === "course") {
-            console.log("this");
-        }
         dispatch({
             type: "INPUT_CHANGE",
             value: value,
@@ -241,13 +243,13 @@ export const useForm = (initialInputs, initialFormValidity) => {
         });
     };
 
-    const setChoiceList = (courseList) => {
-        console.log("this is it");
-        dispatch({
-            type: "SET_COURSE_LIST",
-            courseList: courseList,
-        });
-    };
+    // const setChoiceList = (courseList) => {
+    //     console.log("this is it");
+    //     dispatch({
+    //         type: "SET_COURSE_LIST",
+    //         courseList: courseList,
+    //     });
+    // };
 
     const setFormData = useCallback((inputData, formValidity) => {
         dispatch({
