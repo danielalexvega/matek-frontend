@@ -21,10 +21,6 @@ import {
 } from "../../shared/util/validators";
 import "./ProblemForm.css";
 
-import content_subjects from "../../shared/content_subjects";
-
-const optionsTitles = content_subjects.map((option) => option.title);
-
 const NewProblem = () => {
     const [courses, setCourses] = useState([]);
     const [courseTitles, setCourseTitles] = useState([]);
@@ -76,9 +72,6 @@ const NewProblem = () => {
                 value: null,
                 isValid: true,
             },
-            courseList: {
-                value: courses
-            }
         },
         false
     );
@@ -134,16 +127,12 @@ const NewProblem = () => {
     
     const updateContentSections = (course) => {
         if(course === "") {
-            console.log("The course is empty, so the no content should be filtered");
+            setFilteredContentDomains(contentDomains);
         }
         if(courseTitles.includes(course)){
-            console.log("we got one");
+            let filteredDomainList = contentDomains.filter(domain => domain.courses[0].value === course);
+            setFilteredContentDomains(filteredDomainList);
         }
-
-
-
-
-
     }
 
     const problemSubmitHandler = async (event) => {
@@ -162,7 +151,7 @@ const NewProblem = () => {
                         choices: formState.inputs.choices.value,
                         description: formState.inputs.description.value,
                         author: userName,
-                        courses: [{ value: "Algebra 2" }],
+                        courses: [{ value: formState.inputs.course.value }],
                         hasImage: formState.inputs.hasImage.value,
                     }),
                     {

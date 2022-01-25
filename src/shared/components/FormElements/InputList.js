@@ -80,6 +80,7 @@ const InputList = (props) => {
         onBlur={touchHandler}
         value={inputState.value}
         list={props.listTitle}
+        autoComplete="off"
       />
       <datalist id={props.listTitle}>
         {options.map(option => (
