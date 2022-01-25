@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import {
     BrowserRouter as Router,
     Route,
@@ -7,17 +7,21 @@ import {
 } from "react-router-dom";
 
 import Homepage from "./homepage/page/homepage";
-import Users from "./user/pages/Users";
 import Auth from "./user/pages/Auth";
 import AllProblems from "./problems/pages/AllProblems";
-import NewProblem from "./problems/pages/NewProblem";
-import UserProblems from "./problems/pages/UserProblems";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import LearnMore from "./learn-more/pages/LearnMore";
-import UpdateProblem from "./problems/pages/UpdateProblem";
+import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
+
+const Users = React.lazy(() => import("./user/pages/Users"));
+const NewProblem = React.lazy(() => import("./problems/pages/NewProblem"));
+const UpdateProblem = React.lazy(() =>
+    import("./problems/pages/UpdateProblem")
+);
+const UserProblems = React.lazy(() => import("./problems/pages/UserProblems"));
 
 const App = () => {
     const { token, userId, userName, login, logout } = useAuth();
@@ -63,9 +67,6 @@ const App = () => {
                 <Route path="/problems" exact>
                     <AllProblems />
                 </Route>
-                <Route path="/users">
-                    <Users />
-                </Route>
                 <Route path="/auth">
                     <Auth />
                 </Route>
@@ -90,7 +91,15 @@ const App = () => {
         >
             <Router>
                 <MainNavigation />
-                {routes}
+                <Suspense
+                    fallback={
+                        <div className="center">
+                            <LoadingSpinner />
+                        </div>
+                    }
+                >
+                    {routes}
+                </Suspense>
             </Router>
         </AuthContext.Provider>
     );
