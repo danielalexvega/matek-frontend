@@ -2,3 +2,7 @@
     max-width: var(--max-width);
     margin: 5rem auto 0 auto;
 }
+
+.all-problems__container h1 {
+    margin: 0 1rem;
+}

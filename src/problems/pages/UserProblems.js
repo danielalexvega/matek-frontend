@@ -6,6 +6,8 @@ import ProblemList from "../components/ProblemList";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
+import "./UserProblems.css"; 
+
 const UserProblems = () => {
   const [loadedProblems, setLoadedProblems] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -43,6 +45,7 @@ const UserProblems = () => {
           problems={loadedProblems}
           onDeleteProblem={problemDeleteHandler}
           problemsUserId={userId}
+          className="userProblems"
         />
       )}
     </React.Fragment>

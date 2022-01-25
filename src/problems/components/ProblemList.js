@@ -6,7 +6,7 @@ import Button from "../../shared/components/FormElements/Button";
 import { AuthContext } from "../../shared/context/auth-context";
 import "./ProblemList.css";
 
-const ProblemList = ({ problems, onDeleteProblem, problemsUserId }) => {
+const ProblemList = ({ problems, onDeleteProblem, problemsUserId, className }) => {
   const { userId } = useContext(AuthContext);
 
   // if problems array is empty
@@ -33,7 +33,7 @@ const ProblemList = ({ problems, onDeleteProblem, problemsUserId }) => {
   }
 
   return (
-    <ul className="problem-list">
+    <ul className={`problem-list ${className}`}>
       {problems.map((problem) => (
         <ProblemItem
           key={problem._id}
