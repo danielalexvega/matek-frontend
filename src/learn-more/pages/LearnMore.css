@@ -1,3 +1,21 @@
-.learn-more__header{
-    margin: 5rem 1rem;
+.body__header{
+    margin: 5rem 0rem 1rem;
+}
+
+.learn-more__page.page-container {
+    display: grid;
+    grid-template-columns: 4rem 1fr 4rem;
+}
+
+.page-container__body {
+    display: grid;
+     grid-column: 2/-2;
+}
+
+.content__subheader {
+    margin: 1rem 0rem 0rem;
+}
+
+.three-quarters {
+    max-width: 75%;
 }
