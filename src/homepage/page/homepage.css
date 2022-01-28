@@ -1,6 +1,7 @@
 .page-container {
     display: grid;
     grid-template-columns: 1fr var(--max-width) 1fr;
+    grid-row: 2/-2;
 }
 
 .katex-logo {

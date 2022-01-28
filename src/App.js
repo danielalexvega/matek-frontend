@@ -10,6 +10,7 @@ import Homepage from "./homepage/page/homepage";
 import Auth from "./user/pages/Auth";
 import AllProblems from "./problems/pages/AllProblems";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
+import Footer from "./shared/components/Navigation/Footer";
 import LearnMore from "./learn-more/pages/LearnMore";
 import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 
@@ -100,6 +101,7 @@ const App = () => {
                 >
                     {routes}
                 </Suspense>
+                <Footer />
             </Router>
         </AuthContext.Provider>
     );
