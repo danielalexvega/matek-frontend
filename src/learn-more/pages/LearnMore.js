@@ -13,17 +13,24 @@ const LearnMore = () => {
                 color="#061523"
                 title="Why Matek?"
                 width="75%"
+                className="mb-0"
             >
-                We have one goal for Matek; to make teaching highschool math easier. We know that each school is full of the most knowledgable teachers and we want to tap into that. It will start with a problem database, and from there we'll start conversations with teachers and ask what would make the day to day routine easier for them and also for their students.
+                We have one goal for Matek; to make teaching highschool math easier. We know that each school is full of the most knowledgable teachers and we want to tap into that. It will start with a problem database, and from there we'll start conversations with teachers and ask what would make the day to day routine easier for them and also for their students. <br/> <br/> 
+                As teachers sign up, the problem database will grow. We want to have hundres of problems for each content domain and every course. We'll start by focusing on Algebra 1, Algebra 2, and PreCalculus, and eventually move into Geometry and Calculus.
+
             </FullWidthContainer>
-            <FullWidthContainer
+            {/* <FullWidthContainer
                 backgroundColor="#EDF6FC"
                 color="#061523"
+                title="Why Matek?"
                 width="75%"
-                className="my-0"
+                className="mb-0"
             >
-               As teachers sign up, the problem database will grow. We want to have hundres of problems for each content domain and every course. We'll start by focusing on Algebra 1, Algebra 2, and PreCalculus, and eventually move into Geometry and Calculus.
-            </FullWidthContainer>
+                We have one goal for Matek; to make teaching highschool math easier. We know that each school is full of the most knowledgable teachers and we want to tap into that. It will start with a problem database, and from there we'll start conversations with teachers and ask what would make the day to day routine easier for them and also for their students. <br/> <br/> 
+                As teachers sign up, the problem database will grow. We want to have hundres of problems for each content domain and every course. We'll start by focusing on Algebra 1, Algebra 2, and PreCalculus, and eventually move into Geometry and Calculus.
+
+            </FullWidthContainer> */}
+
         </div>
 
         // <div className="learn-more__page page-container">

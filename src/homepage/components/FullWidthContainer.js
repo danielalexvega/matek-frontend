@@ -13,7 +13,7 @@ const FullWidthContainer = (props) => {
       style={{ backgroundColor: `${backgroundColor}`, color: `${color}` }}
     >
       <div className={`full-width-container__content ${className}`} style={{width: `${props.width}`}}>
-        <h3 className="full-width-container__title">{props.title}</h3>
+        {props.title && <h3 className="full-width-container__title">{props.title}</h3>}
         <p className="full-width-container__body">{props.children}</p>
       </div>
     </div>

@@ -76,12 +76,12 @@
   }
 
   .nav-links a {
-    color: white;
+    color: var(--light);
     text-decoration: none;
   }
 
   .nav-links button {
-    color: white;
+    color: var(--light);
     background: transparent;
   }
 

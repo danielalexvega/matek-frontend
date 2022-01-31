@@ -4,7 +4,7 @@ import "./Footer.css";
 
 const Footer = () => {
   return <div className='footer'>
-      <p>I am a footer</p>
+      <p>© 2022 Matek. All rights reserved.</p>
   </div>;
 };
 
