@@ -20,7 +20,7 @@ const UsersList = props => {
                 <UserItem 
                     key={user.id} 
                     id={user.id} 
-                    image={`${process.env.REACT_APP_ASSET_URL}/${user.image}`} 
+                    image={`${process.env.REACT_APP_ASSET_URL}/images/${user.image}`} 
                     name={user.name} 
                     problemsCount={user.problems.length}
                 />
