@@ -1,0 +1,11 @@
+.problem-count {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 10rem 1fr 1fr 10rem;
+}
+
+.problem-count__container {
+    grid-column: 2/-2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}

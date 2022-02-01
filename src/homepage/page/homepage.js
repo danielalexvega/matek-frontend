@@ -3,6 +3,7 @@ import { Tex } from "react-tex";
 import HomepageHero from "../components/HomepageHero";
 import FullWidthContainer from "../components/FullWidthContainer";
 import KatexExample from "../components/KatexExample";
+import ProblemCount from "../components/ProblemCount";
 
 import "./homepage.css";
 
@@ -31,6 +32,7 @@ const homepage = () => {
       >
         Here is an example of a problem that can be rendered with <Tex texContent="\KaTeX"/>
       </KatexExample>
+      <ProblemCount />
     </div>
   );
 };
