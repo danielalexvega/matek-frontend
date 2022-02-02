@@ -9,3 +9,35 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
+.container__left-side {
+}
+
+.container__right-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right-side__problemCount-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 41px;
+    border: 3px solid var(--dark);
+    border-radius: 50%;
+    background: var(--primary-dark1);
+    margin: 1rem;
+}
+
+.problemCount-container__count {
+    font-size: 78px;
+    font-weight: 600;
+    line-height: 78px;
+}
+
+.problemCount-container__text {
+    font-size: 28px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}

@@ -1,105 +1,124 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap");
 
 :root {
-  --light: #EDF6FC; /* Alice Blue */
-  --light-2: #CBE5F6; /* Columbia Blue*/
-  --dark: #061523; /* Rich Black FOGRA 29*/
-  --dark-2: #030B12; /* Rich Black FOGRA 29 */
+    --light: #edf6fc; /* Alice Blue */
+    --light-2: #cbe5f6; /* Columbia Blue*/
+    --dark: #061523; /* Rich Black FOGRA 29*/
+    --dark-2: #030b12; /* Rich Black FOGRA 29 */
 
-  /* PRIMARY COLOR IS YALE BLUE */
-  --primary: #124E78;  /* Yale Blue */
-  --primary-dark1: #0D3959;  /* Indigo Dye*/
-  --primary-dark2: #082235;  /* Prussian Blue */
+    /* PRIMARY COLOR IS YALE BLUE */
+    --primary: #124e78; /* Yale Blue */
+    --primary-dark1: #0d3959; /* Indigo Dye*/
+    --primary-dark2: #082235; /* Prussian Blue */
 
-  --primary-light1: #1867A0; /* Sapphire Blue */
-  --primary-light2: #1B73B1; /* Spanish Blue */
+    --primary-light1: #1867a0; /* Sapphire Blue */
+    --primary-light2: #1b73b1; /* Spanish Blue */
 
-  /* SECONDARY COLOR IS BOTTLE GREEN*/
+    /* SECONDARY COLOR IS BOTTLE GREEN*/
 
-  --secondary: #106A54;  /* Bottle Green */
-  --secondary-dark1: #0A4738;  /* Brunswick Green */
-  --secondary-dark2: #08362A;  /* Phthalo Green */
+    --secondary: #106a54; /* Bottle Green */
+    --secondary-dark1: #0a4738; /* Brunswick Green */
+    --secondary-dark2: #08362a; /* Phthalo Green */
 
-  --secondary-light1: #168D6F; /* Illuminating Emerald */
-  --secondary-light2: #1CB08B; /* Jungle Green */
+    --secondary-light1: #168d6f; /* Illuminating Emerald */
+    --secondary-light2: #1cb08b; /* Jungle Green */
 
-  --danger: #B1271B;   /* Carnelian*/
-  --danger-dark: #8E1F15;   /* Kobe*/
+    --danger: #b1271b; /* Carnelian*/
+    --danger-dark: #8e1f15; /* Kobe*/
 
-  --max-width: 1440px;
+    --max-width: 1440px;
 
-  /* MAIN NAVIGATION VARIABLES  */
-  --navigation-height: 4rem;
-
+    /* MAIN NAVIGATION VARIABLES  */
+    --navigation-height: 4rem;
 }
 
-
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  font-family: 'Quicksand', sans-serif;
-  overflow-y: scroll;
+    font-family: "Quicksand", sans-serif;
+    overflow-y: scroll;
 }
 
 h1 {
-  font-size: 48px;
-  line-height: 57.6px;
-  
+    font-size: 48px;
+    line-height: 57.6px;
 }
 
 h2 {
-  font-size: 42px;
-  line-height: 50.4px;
-
+    font-size: 42px;
+    line-height: 50.4px;
 }
 h3 {
-  font-size: 36px;
-  line-height: 43.2px;
-
+    font-size: 36px;
+    line-height: 43.2px;
 }
 
 p {
-  font-size: 22px;
-  line-height: 26.4px;
+    font-size: 22px;
+    line-height: 26.4px;
 }
 
-#root{
+#root {
     display: grid;
     min-height: 100vh;
-    grid-template-rows: auto 1fr auto;    
+    grid-template-rows: auto 1fr auto;
 }
 
 body {
-  margin: 0;
-  background: var(--light);
+    margin: 0;
+    background: var(--light);
 }
 
 .slide-in-left-enter {
-  transform: translateX(-100%);
+    transform: translateX(-100%);
 }
 
 .slide-in-left-enter-active {
-  transform: translateX(0);
-  opacity: 1;
-  transition: all 200ms;
+    transform: translateX(0);
+    opacity: 1;
+    transition: all 200ms;
 }
 
 .slide-in-left-exit {
-  transform: translateX(0%);
-  opacity: 1;
+    transform: translateX(0%);
+    opacity: 1;
 }
 
 .slide-in-left-exit-active {
-  transform: translateX(-100%);
-  opacity: 0;
-  transition: all 200ms;
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: all 200ms;
 }
 
 .center {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.secondary {
+    color: var(--secondary);
+}
+
+.light-2 {
+    color: var(--light-2);
+}
+
+.light {
+    color: var(--light);
+}
+
+.dark {
+    color: var(--dark);
+}
+
+.dark-2 {
+    color: var(--dark-2);
+}
+
+.primary-light2 {
+    color: var(--primary-light2);
 }
