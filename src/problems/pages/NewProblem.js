@@ -27,6 +27,8 @@ const NewProblem = () => {
     const [filteredContentDomains, setFilteredContentDomains] = useState([]);
     const [contentDomains, setContentDomains] = useState([]);
     const [domainTitles, setDomainTitles] = useState([]);
+    const [subdomains, setSubdomains] = useState([]);
+    const [filteredSubdomains, setFilteredSubdomains] = useState([]);
 
     const { userId, userName, token } = useContext(AuthContext);
     const [
@@ -45,6 +47,10 @@ const NewProblem = () => {
             subjectContent: {
                 value: "",
                 isValid: false,
+            },
+            subdomain: {
+                value: "",
+                isValid: true,
             },
             katex: {
                 value: "",
@@ -88,7 +94,9 @@ const NewProblem = () => {
                     return { title: course.courseTitle, id: course.id };
                 });
 
-                const courseTitleList = courseList.map(course => course.title);
+                const courseTitleList = courseList.map(
+                    (course) => course.title
+                );
                 setCourses(courseList);
                 setCourseTitles(courseTitleList);
             } catch (err) {
@@ -105,16 +113,39 @@ const NewProblem = () => {
                 const responseData = await sendRequest(
                     process.env.REACT_APP_BACKEND_URL + "/contentDomains/"
                 );
+                // Get Content Domain List
                 const contentDomainList = responseData.contentDomains.map(
                     (domain) => {
-                        return { title: domain.domainTitle, id: domain.id, courses: domain.courses };
+                        return {
+                            title: domain.domainTitle,
+                            id: domain.id,
+                            courses: domain.courses,
+                            subdomains: domain.subdomains,
+                        };
                     }
                 );
+                // Create Domain Title List for Validation
+                const domainTitleList = contentDomainList.map(
+                    (domain) => domain.title
+                );
 
-                const domainTitleList = contentDomainList.map(domain => domain.title);
+                // Get Subdomain List from Content Domain List
+                const subDomainList= [];
+                for(let i = 0; i < contentDomainList.length; i++) {
+                    if(contentDomainList[i].subdomains !== undefined) {
+                        console.log("subdomain");
+                        for (let j = 0; j < contentDomainList[i].subdomains.length; j++) {
+                            subDomainList.push(contentDomainList[i].subdomains[j]);
+                        }
+                    }
+                }
+
                 setContentDomains(contentDomainList);
                 setFilteredContentDomains(contentDomainList);
                 setDomainTitles(domainTitleList);
+                setSubdomains(subDomainList);
+                setFilteredSubdomains(subDomainList);
+
             } catch (err) {
                 console.log(err);
             }
@@ -124,16 +155,18 @@ const NewProblem = () => {
     }, [sendRequest]);
 
     const history = useHistory();
-    
+
     const updateContentSections = (course) => {
-        if(course === "") {
+        if (course === "") {
             setFilteredContentDomains(contentDomains);
         }
-        if(courseTitles.includes(course)){
-            let filteredDomainList = contentDomains.filter(domain => domain.courses[0].value === course);
+        if (courseTitles.includes(course)) {
+            let filteredDomainList = contentDomains.filter(
+                (domain) => domain.courses[0].value === course
+            );
             setFilteredContentDomains(filteredDomainList);
         }
-    }
+    };
 
     const problemSubmitHandler = async (event) => {
         event.preventDefault();
@@ -236,6 +269,18 @@ const NewProblem = () => {
                             id="subjectContent"
                             selectName="subjectContent"
                             label="Please select a subject content."
+                            options={filteredContentDomains}
+                            validators={[VALIDATOR_MATCH(domainTitles)]}
+                            errorText="Please enter a valid content section"
+                            onInput={inputHandler}
+                            type="text"
+                            placeholder="Content Domains"
+                            listTitle="contentList"
+                        />
+                        <InputList
+                            id="contentSubdomain"
+                            selectName="contentSubdomain"
+                            label="Please select a content subdomain."
                             options={filteredContentDomains}
                             validators={[VALIDATOR_MATCH(domainTitles)]}
                             errorText="Please enter a valid content section"
