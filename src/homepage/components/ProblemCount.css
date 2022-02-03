@@ -23,8 +23,7 @@
     display: flex;
     flex-flow: column;
     align-items: center;
-    padding: 41px;
-    border: 3px solid var(--dark);
+    padding: 60px;
     border-radius: 50%;
     background: var(--primary-dark1);
     margin: 1rem;

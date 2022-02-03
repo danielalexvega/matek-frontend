@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import Gradient from "../../assets/gradient_green.png";
 
 import "./ProblemCount.css";
 
@@ -40,7 +41,7 @@ const ProblemCount = () => {
                         </div>
                     )}
                     {!isLoading && problemCount && (
-                        <div className="right-side__problemCount-container">
+                        <div className="right-side__problemCount-container" style={{backgroundImage: `url(${Gradient})`}}>
                             <div className="problemCount-container__count light">{problemCount}</div>
                             <div className="problemCount-container__text light">problems</div>
                         </div>
