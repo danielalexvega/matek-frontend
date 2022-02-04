@@ -29,6 +29,7 @@ const NewProblem = () => {
     const [domainTitles, setDomainTitles] = useState([]);
     const [subdomains, setSubdomains] = useState([]);
     const [filteredSubdomains, setFilteredSubdomains] = useState([]);
+    const [subdomainTitles, setSubdomainTitles] = useState([]);
 
     const { userId, userName, token } = useContext(AuthContext);
     const [
@@ -119,33 +120,45 @@ const NewProblem = () => {
                         return {
                             title: domain.domainTitle,
                             id: domain.id,
-                            courses: domain.courses,
+                            course: domain.courses[0].value,
                             subdomains: domain.subdomains,
                         };
                     }
                 );
+
                 // Create Domain Title List for Validation
                 const domainTitleList = contentDomainList.map(
                     (domain) => domain.title
                 );
-
                 // Get Subdomain List from Content Domain List
                 const subDomainList= [];
                 for(let i = 0; i < contentDomainList.length; i++) {
                     if(contentDomainList[i].subdomains !== undefined) {
-                        console.log("subdomain");
                         for (let j = 0; j < contentDomainList[i].subdomains.length; j++) {
-                            subDomainList.push(contentDomainList[i].subdomains[j]);
+                            let tempSubDomain = {
+                                course: contentDomainList[i].course, 
+                                contentDomain: contentDomainList[i].title, 
+                                title: contentDomainList[i].subdomains[j], 
+                                id: contentDomainList[i].id + j};
+                            subDomainList.push(tempSubDomain);
                         }
                     }
                 }
 
+                const subdomainTitleList = subDomainList.map((subdomain) => subdomain.title);
+
+                 console.log(contentDomainList);
+                 console.log(subDomainList);
+
+                // List of all Content Domains
                 setContentDomains(contentDomainList);
                 setFilteredContentDomains(contentDomainList);
                 setDomainTitles(domainTitleList);
+                // List of all Content Domains and Subdomains
                 setSubdomains(subDomainList);
                 setFilteredSubdomains(subDomainList);
-
+                setSubdomainTitles(subdomainTitleList);
+         
             } catch (err) {
                 console.log(err);
             }
@@ -156,15 +169,33 @@ const NewProblem = () => {
 
     const history = useHistory();
 
-    const updateContentSections = (course) => {
+    // filter the content domains and subdomains based on the course
+    const updateCourseDomains= (course) => {
         if (course === "") {
             setFilteredContentDomains(contentDomains);
+            setFilteredSubdomains(subdomains);
         }
+        // filter the content domains
         if (courseTitles.includes(course)) {
             let filteredDomainList = contentDomains.filter(
-                (domain) => domain.courses[0].value === course
+                (domain) => domain.course === course
             );
             setFilteredContentDomains(filteredDomainList);
+            // filter the subdomains
+            let filteredSubdomainList = subdomains.filter((subdomain)=> subdomain.course === course);
+            setFilteredSubdomains(filteredSubdomainList);
+        }
+    };
+
+    const updateCourseSubdomains = (domain) => {
+        if(domain = "") {
+            setFilteredSubdomains(subdomains);
+        }
+        if(domainTitles.includes(domain)) {
+            let filteredSubDomainList = subdomains.filter(
+                (subdomain) => subdomain.contentDomain === domain
+            )
+            setFilteredSubdomains(filteredSubDomainList);
         }
     };
 
@@ -255,39 +286,40 @@ const NewProblem = () => {
                         <InputList
                             id="course"
                             selectName="course"
-                            label="Please select a course"
+                            label="Please select a course."
                             options={courses}
                             validators={[VALIDATOR_MATCH(courseTitles)]}
-                            errorText="Please select a course"
+                            errorText="Please select a course."
                             onInput={inputHandler}
                             type="text"
                             placeholder="Courses"
                             listTitle="courseList"
-                            updateContentSections={updateContentSections}
-                        />
+                            updateSelection={updateCourseDomains}
+                            />
                         <InputList
                             id="subjectContent"
                             selectName="subjectContent"
                             label="Please select a subject content."
                             options={filteredContentDomains}
                             validators={[VALIDATOR_MATCH(domainTitles)]}
-                            errorText="Please enter a valid content section"
+                            errorText="Please enter a valid content section."
                             onInput={inputHandler}
                             type="text"
                             placeholder="Content Domains"
                             listTitle="contentList"
+                            updateSelection={updateCourseSubdomains}
                         />
                         <InputList
                             id="contentSubdomain"
                             selectName="contentSubdomain"
                             label="Please select a content subdomain."
-                            options={filteredContentDomains}
-                            validators={[VALIDATOR_MATCH(domainTitles)]}
-                            errorText="Please enter a valid content section"
+                            options={filteredSubdomains}
+                            validators={[VALIDATOR_MATCH(subdomainTitles)]}
+                            errorText="Please enter a valid subdomain for the selected content."
                             onInput={inputHandler}
                             type="text"
-                            placeholder="Content Domains"
-                            listTitle="contentList"
+                            placeholder="Content Subdomain"
+                            listTitle="subdomainList"
                         />
                         {/* Problem  */}
                         <Input

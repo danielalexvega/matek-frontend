@@ -39,6 +39,8 @@ const InputList = (props) => {
     //check something, and then do a function that could be passed as a prop
     // console.log(id);
 
+    // START AGAIN HERE
+
     let course = event.target.value;
 
     if(id === "course") {
@@ -50,7 +52,7 @@ const InputList = (props) => {
         }
 
         if(isCourse || course === "") {
-            props.updateContentSections(course);
+            props.updateSelection(course);
         }
     }
 
