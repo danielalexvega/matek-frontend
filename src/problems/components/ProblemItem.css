@@ -18,6 +18,19 @@
   margin-top: 0;
 }
 
+.problem-item__problem .katex .katex-html {
+    width:100%;
+    line-break: anywhere;
+}
+
+.problem-item__problem .katex .katex-html .base{
+    width: 100%;
+    /* line-break: anywhere; */
+    hyphens: auto;
+    white-space: break-spaces;
+    display: contents;
+}
+
 .problem-item__choices {
   list-style: lower-alpha;
   display: flex;
@@ -66,3 +79,12 @@
 @media (min-width: 768px) {
 
 }
+/* 
+word-break: break-word;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    white-space: normal;
+    /* display: flex; */
+    /* width: 100%; */
+    /* flex-flow: column; */
