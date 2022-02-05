@@ -36,29 +36,24 @@ const InputList = (props) => {
   }, [id, value, isValid, onInput]);
 
   const changeHandler = (event) => {
-    //check something, and then do a function that could be passed as a prop
-    // console.log(id);
+    let target = event.target.value;
 
-    // START AGAIN HERE
-
-    let course = event.target.value;
-
-    if(id === "course") {
-        let isCourse = false;
+    if(id === "course" || id === "subjectContent") {
+        let isTarget = false;
         for(let i = 0; i < options.length; i++) {
-            if(course === options[i].title) {
-                isCourse = true;
+            if(target === options[i].title) {
+                isTarget = true;
             }
         }
 
-        if(isCourse || course === "") {
-            props.updateSelection(course);
+        if(isTarget || target === "") {
+            props.updateSelection(target);
         }
     }
 
     dispatch({
       type: "CHANGE",
-      val: course,
+      val: target,
       validators: props.validators,
     });
   };

@@ -51,7 +51,7 @@ const NewProblem = () => {
             },
             subdomain: {
                 value: "",
-                isValid: true,
+                isValid: false,
             },
             katex: {
                 value: "",
@@ -188,9 +188,10 @@ const NewProblem = () => {
     };
 
     const updateCourseSubdomains = (domain) => {
-        if(domain = "") {
+        if(domain === "") {
             setFilteredSubdomains(subdomains);
         }
+        
         if(domainTitles.includes(domain)) {
             let filteredSubDomainList = subdomains.filter(
                 (subdomain) => subdomain.contentDomain === domain

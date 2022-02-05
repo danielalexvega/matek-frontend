@@ -90,8 +90,6 @@ const Auth = () => {
                     }
                 );
 
-                console.log("You got here");
-
                 login(
                     responseData.userId,
                     responseData.name,
