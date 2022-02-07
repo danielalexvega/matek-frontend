@@ -101,7 +101,7 @@ const ProblemItem = ({
                         <div className="info__courses-container">
                             Courses:
                             <ul className="info__courses">
-                                {courses.map((course) => (
+                                {courses && courses.map((course) => (
                                     <li key={course.id}>{course.value}</li>
                                 ))}
                             </ul>

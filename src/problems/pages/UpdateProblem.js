@@ -10,7 +10,6 @@ import InputChoices from "../components/InputChoices";
 import KatexPreview from "../components/KatexPreview";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
@@ -27,10 +26,18 @@ import content_subjects from "../../shared/content_subjects";
 const optionsTitles = content_subjects.map((option) => option.title);
 
 const UpdateProblem = () => {
-    const auth = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
     const problemId = useParams().problemId;
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [loadedProblem, setLoadedProblem] = useState();
+    const [courses, setCourses] = useState([]);
+    const [courseTitles, setCourseTitles] = useState([]);
+    const [contentDomains, setContentDomains] = useState([]);
+    const [filteredContentDomains, setFilteredContentDomains] = useState([]);
+    const [domainTitles, setDomainTitles] = useState([]);
+    const [subdomains, setSubdomains] = useState([]);
+    const [filteredSubdomains, setFilteredSubdomains] = useState([]);
+    const [subdomainTitles, setSubdomainTitles] = useState([]);
 
     const history = useHistory();
 
@@ -43,7 +50,15 @@ const UpdateProblem = () => {
         multipleChoiceHandler,
     ] = useForm(
         {
+            course: {
+                value: "",
+                isValid: false,
+            },
             subjectContent: {
+                value: "",
+                isValid: false,
+            },
+            subdomain: {
                 value: "",
                 isValid: false,
             },
@@ -56,16 +71,21 @@ const UpdateProblem = () => {
                 isValid: false,
             },
             isMultipleChoice: {
-                value: "",
-                isValid: false,
+                value: false,
+                isValid: true,
             },
             choices: {
-                value: "",
-                isValid: false,
+                value: [],
+                isValid: true,
             },
             description: {
                 value: "",
                 isValid: false,
+            },
+            hasImage: { value: false, isValid: true },
+            image: {
+                value: null,
+                isValid: true,
             },
         },
         false
@@ -74,34 +94,38 @@ const UpdateProblem = () => {
     useEffect(() => {
         const fetchProblem = async () => {
             try {
-                const responseData = await sendRequest(
+                const {problem} = await sendRequest(
                     `${process.env.REACT_APP_BACKEND_URL}/problems/${problemId}`
                 );
-                setLoadedProblem(responseData.problem);
+                setLoadedProblem(problem);
+                console.log(problem);
                 setFormData(
                     {
+                        course: {
+                            value: problem.course
+                        },
                         subjectContent: {
-                            value: responseData.problem.subjectContent,
+                            value: problem.subjectContent,
                             isValid: true,
                         },
                         katex: {
-                            value: responseData.problem.katex,
+                            value: problem.katex,
                             isValid: true,
                         },
                         solution: {
-                            value: responseData.problem.solution,
+                            value: problem.solution,
                             isValid: true,
                         },
                         isMultipleChoice: {
-                            value: responseData.problem.isMultipleChoice,
+                            value: problem.isMultipleChoice,
                             isValid: true,
                         },
                         choices: {
-                            value: responseData.problem.choices,
+                            value: problem.choices,
                             isValid: true,
                         },
                         description: {
-                            value: responseData.problem.description,
+                            value: problem.description,
                             isValid: true,
                         },
                     },
@@ -130,7 +154,7 @@ const UpdateProblem = () => {
                 }),
                 {
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + auth.token,
+                    Authorization: "Bearer " + token,
                 }
             );
             history.push(`/${loadedProblem.authorId}/problems`);

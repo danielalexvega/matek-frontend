@@ -4,16 +4,16 @@ import { Tex } from "react-tex";
 
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
-// import Select from "../../shared/components/FormElements/Select";
 import InputList from "../../shared/components/FormElements/InputList";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 import InputChoices from "../components/InputChoices";
 import KatexPreview from "../components/KatexPreview";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+
 // Add validators here
 import {
     VALIDATOR_REQUIRE,
@@ -24,8 +24,8 @@ import "./ProblemForm.css";
 const NewProblem = () => {
     const [courses, setCourses] = useState([]);
     const [courseTitles, setCourseTitles] = useState([]);
-    const [filteredContentDomains, setFilteredContentDomains] = useState([]);
     const [contentDomains, setContentDomains] = useState([]);
+    const [filteredContentDomains, setFilteredContentDomains] = useState([]);
     const [domainTitles, setDomainTitles] = useState([]);
     const [subdomains, setSubdomains] = useState([]);
     const [filteredSubdomains, setFilteredSubdomains] = useState([]);
@@ -64,10 +64,6 @@ const NewProblem = () => {
             isMultipleChoice: { value: false, isValid: true },
             choices: {
                 value: [],
-                isValid: true,
-            },
-            courses: {
-                value: ["Algebra 2"],
                 isValid: true,
             },
             description: {
@@ -147,9 +143,6 @@ const NewProblem = () => {
 
                 const subdomainTitleList = subDomainList.map((subdomain) => subdomain.title);
 
-                 console.log(contentDomainList);
-                 console.log(subDomainList);
-
                 // List of all Content Domains
                 setContentDomains(contentDomainList);
                 setFilteredContentDomains(contentDomainList);
@@ -208,7 +201,9 @@ const NewProblem = () => {
                     process.env.REACT_APP_BACKEND_URL + "/problems",
                     "POST",
                     JSON.stringify({
+                        course: formState.inputs.course.value,
                         subjectContent: formState.inputs.subjectContent.value,
+                        subdomain: formState.inputs.subdomain.value,
                         katex: formState.inputs.katex.value,
                         solution: formState.inputs.solution.value,
                         isMultipleChoice:
@@ -216,7 +211,6 @@ const NewProblem = () => {
                         choices: formState.inputs.choices.value,
                         description: formState.inputs.description.value,
                         author: userName,
-                        courses: [{ value: formState.inputs.course.value }],
                         hasImage: formState.inputs.hasImage.value,
                     }),
                     {
@@ -247,7 +241,7 @@ const NewProblem = () => {
                     formState.inputs.description.value
                 );
                 formData.append("author", userName);
-                formData.append("courses", formState.inputs.courses.value);
+                formData.append("courses", formState.inputs.course.value);
                 formData.append("hasImage", formState.inputs.hasImage.value);
                 formData.append("image", formState.inputs.image.value);
 
