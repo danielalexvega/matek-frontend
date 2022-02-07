@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Tex } from "react-tex";
+import { InlineTex } from "react-tex";
 
 import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/FormElements/Button";
@@ -85,12 +85,12 @@ const ProblemItem = ({
                     )}
                     <div className="problem-item__problem">
                         <p className="problem__content">{content}</p>
-                        <Tex className="problem__katex" texContent={katex} />
+                        <InlineTex className="problem__katex" texContent={katex} />
                     </div>
                     <ul className="problem-item__choices">
                         {choices.map((choice, index) => (
                             <li key={index}>
-                                <Tex texContent={choice.value} />
+                                <InlineTex texContent={choice.value} />
                             </li>
                         ))}
                     </ul>

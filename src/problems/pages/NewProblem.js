@@ -311,8 +311,8 @@ const NewProblem = () => {
                             updateSelection={updateCourseSubdomains}
                         />
                         <InputList
-                            id="contentSubdomain"
-                            selectName="contentSubdomain"
+                            id="subdomain"
+                            selectName="subdomain"
                             label="Please select a content subdomain."
                             options={filteredSubdomains}
                             validators={[VALIDATOR_MATCH(subdomainTitles)]}

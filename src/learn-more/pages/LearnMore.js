@@ -1,6 +1,6 @@
 import React from "react";
 import FullWidthContainer from "../../homepage/components/FullWidthContainer";
-import { Tex } from "react-tex";
+import { Tex, InlineTex } from "react-tex";
 
 import "./LearnMore.css";
 
@@ -30,7 +30,6 @@ const LearnMore = () => {
                 As teachers sign up, the problem database will grow. We want to have hundres of problems for each content domain and every course. We'll start by focusing on Algebra 1, Algebra 2, and PreCalculus, and eventually move into Geometry and Calculus.
 
             </FullWidthContainer> */}
-
         </div>
 
         // <div className="learn-more__page page-container">
