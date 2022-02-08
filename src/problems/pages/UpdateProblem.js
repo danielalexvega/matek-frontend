@@ -21,14 +21,7 @@ import {
 
 import "./ProblemForm.css";
 
-import content_subjects from "../../shared/content_subjects";
-
-const optionsTitles = content_subjects.map((option) => option.title);
-
 const UpdateProblem = () => {
-    const { token } = useContext(AuthContext);
-    const problemId = useParams().problemId;
-    const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [loadedProblem, setLoadedProblem] = useState();
     const [courses, setCourses] = useState([]);
     const [courseTitles, setCourseTitles] = useState([]);
@@ -39,6 +32,10 @@ const UpdateProblem = () => {
     const [filteredSubdomains, setFilteredSubdomains] = useState([]);
     const [subdomainTitles, setSubdomainTitles] = useState([]);
 
+    const problemId = useParams().problemId;
+
+    const { token } = useContext(AuthContext);
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const history = useHistory();
 
     const [
@@ -94,18 +91,21 @@ const UpdateProblem = () => {
     useEffect(() => {
         const fetchProblem = async () => {
             try {
-                const {problem} = await sendRequest(
+                const { problem } = await sendRequest(
                     `${process.env.REACT_APP_BACKEND_URL}/problems/${problemId}`
                 );
                 setLoadedProblem(problem);
-                console.log(problem);
                 setFormData(
                     {
                         course: {
-                            value: problem.course
+                            value: problem.course,
                         },
                         subjectContent: {
                             value: problem.subjectContent,
+                            isValid: true,
+                        },
+                        subdomain: {
+                            value: problem.subdomain,
                             isValid: true,
                         },
                         katex: {
@@ -128,13 +128,125 @@ const UpdateProblem = () => {
                             value: problem.description,
                             isValid: true,
                         },
+                        // work on updating image (not touching it for now)
                     },
                     true
                 );
             } catch (error) {}
         };
+        const fetchCourses = async () => {
+            try {
+                const responseData = await sendRequest(
+                    process.env.REACT_APP_BACKEND_URL + "/courses/"
+                );
+                const courseList = responseData.courses.map((course) => {
+                    return { title: course.courseTitle, id: course.id };
+                });
+
+                const courseTitleList = courseList.map(
+                    (course) => course.title
+                );
+                setCourses(courseList);
+                setCourseTitles(courseTitleList);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        const fetchContentDomains = async () => {
+            try {
+                const responseData = await sendRequest(
+                    process.env.REACT_APP_BACKEND_URL + "/contentDomains/"
+                );
+                // Get Content Domain List
+                const contentDomainList = responseData.contentDomains.map(
+                    (domain) => {
+                        return {
+                            title: domain.domainTitle,
+                            id: domain.id,
+                            course: domain.courses[0].value,
+                            subdomains: domain.subdomains,
+                        };
+                    }
+                );
+
+                // Create Domain Title List for Validation
+                const domainTitleList = contentDomainList.map(
+                    (domain) => domain.title
+                );
+                // Get Subdomain List from Content Domain List
+                const subDomainList = [];
+                for (let i = 0; i < contentDomainList.length; i++) {
+                    if (contentDomainList[i].subdomains !== undefined) {
+                        for (
+                            let j = 0;
+                            j < contentDomainList[i].subdomains.length;
+                            j++
+                        ) {
+                            let tempSubDomain = {
+                                course: contentDomainList[i].course,
+                                contentDomain: contentDomainList[i].title,
+                                title: contentDomainList[i].subdomains[j],
+                                id: contentDomainList[i].id + j,
+                            };
+                            subDomainList.push(tempSubDomain);
+                        }
+                    }
+                }
+
+                const subdomainTitleList = subDomainList.map(
+                    (subdomain) => subdomain.title
+                );
+
+                // List of all Content Domains
+                setContentDomains(contentDomainList);
+                setFilteredContentDomains(contentDomainList);
+                setDomainTitles(domainTitleList);
+                // List of all Content Domains and Subdomains
+                setSubdomains(subDomainList);
+                setFilteredSubdomains(subDomainList);
+                setSubdomainTitles(subdomainTitleList);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
         fetchProblem();
+        fetchCourses();
+        fetchContentDomains();
     }, [sendRequest, problemId, setFormData]);
+
+    // filter the content domains and subdomains based on the course
+    const updateCourseDomains = (course) => {
+        if (course === "") {
+            setFilteredContentDomains(contentDomains);
+            setFilteredSubdomains(subdomains);
+        }
+        // filter the content domains
+        if (courseTitles.includes(course)) {
+            let filteredDomainList = contentDomains.filter(
+                (domain) => domain.course === course
+            );
+            setFilteredContentDomains(filteredDomainList);
+            // filter the subdomains
+            let filteredSubdomainList = subdomains.filter(
+                (subdomain) => subdomain.course === course
+            );
+            setFilteredSubdomains(filteredSubdomainList);
+        }
+    };
+
+    const updateCourseSubdomains = (domain) => {
+        if (domain === "") {
+            setFilteredSubdomains(subdomains);
+        }
+
+        if (domainTitles.includes(domain)) {
+            let filteredSubDomainList = subdomains.filter(
+                (subdomain) => subdomain.contentDomain === domain
+            );
+            setFilteredSubdomains(filteredSubDomainList);
+        }
+    };
 
     const problemUpdateSubmitHandler = async (event) => {
         event.preventDefault();
@@ -201,17 +313,47 @@ const UpdateProblem = () => {
                     onSubmit={problemUpdateSubmitHandler}
                 >
                     <InputList
+                        id="course"
+                        selectName="course"
+                        label="Please select a course."
+                        options={courses}
+                        validators={[VALIDATOR_MATCH(courseTitles)]}
+                        errorText="Please select a course."
+                        onInput={inputHandler}
+                        type="text"
+                        placeholder="Courses"
+                        listTitle="courseList"
+                        updateSelection={updateCourseDomains}
+                        initialValue={loadedProblem.course}
+                        initialValid={true}
+                    />
+                    <InputList
                         id="subjectContent"
                         selectName="subjectContent"
                         label="Please select a subject content."
-                        options={content_subjects}
-                        validators={[VALIDATOR_MATCH(optionsTitles)]}
-                        errorText="Please enter a valid content section"
+                        options={filteredContentDomains}
+                        validators={[VALIDATOR_MATCH(domainTitles)]}
+                        errorText="Please enter a valid content section."
                         onInput={inputHandler}
                         type="text"
-                        placeholder="Exponent Rules"
+                        placeholder="Content Domains"
                         listTitle="contentList"
+                        updateSelection={updateCourseSubdomains}
                         initialValue={loadedProblem.subjectContent}
+                        initialValid={true}
+                    />
+                    <InputList
+                        id="subdomain"
+                        selectName="subdomain"
+                        label="Please select a content subdomain."
+                        options={filteredSubdomains}
+                        validators={[VALIDATOR_MATCH(subdomainTitles)]}
+                        errorText="Please enter a valid subdomain for the selected content."
+                        onInput={inputHandler}
+                        type="text"
+                        placeholder="Content Subdomain"
+                        listTitle="subdomainList"
+                        initialValue={loadedProblem.subdomain}
                         initialValid={true}
                     />
                     {/* Problem  */}

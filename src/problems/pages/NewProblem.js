@@ -32,6 +32,9 @@ const NewProblem = () => {
     const [subdomainTitles, setSubdomainTitles] = useState([]);
 
     const { userId, userName, token } = useContext(AuthContext);
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+    const history = useHistory();
+
     const [
         formState,
         inputHandler,
@@ -78,8 +81,6 @@ const NewProblem = () => {
         },
         false
     );
-
-    const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -159,8 +160,6 @@ const NewProblem = () => {
 
         fetchContentDomains();
     }, [sendRequest]);
-
-    const history = useHistory();
 
     // filter the content domains and subdomains based on the course
     const updateCourseDomains= (course) => {
