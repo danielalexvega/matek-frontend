@@ -24,6 +24,12 @@ const AllProblems = () => {
     fetchProblems();
   }, [sendRequest]);
 
+  const problemDeleteHandler = (deletedPlaceId) => {
+    setLoadedProblems((prevProblems) =>
+      prevProblems.filter((problem) => problem.id !== deletedPlaceId)
+    );
+  };
+
   return (
     <div className="all-problems__container">
       <ErrorModal error={error} onClear={clearError} />
@@ -34,7 +40,7 @@ const AllProblems = () => {
         </div>
       )}
       {!isLoading && loadedProblems && (
-        <ProblemList problems={loadedProblems} />
+        <ProblemList problems={loadedProblems} onDeleteProblem={problemDeleteHandler} />
       )}
     </div>
   );
