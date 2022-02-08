@@ -18,6 +18,14 @@
   margin-top: 0;
 }
 
+.problem__katex {
+    font-size: 18px;
+}
+
+.problem__katex .katex {
+    display: inline-block;
+}
+
 .problem-item__problem .katex .katex-html {
     width:100%;
     line-break: anywhere;
@@ -51,6 +59,7 @@
 
 .info__courses-container {
   font-size: 14px;
+  margin-bottom: 1rem;
 }
 
 .info__courses {

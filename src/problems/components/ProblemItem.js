@@ -21,7 +21,7 @@ const ProblemItem = ({
     solution,
     choices,
     content,
-    courses,
+    course,
     onDelete,
     hasImage,
 }) => {
@@ -85,7 +85,11 @@ const ProblemItem = ({
                     )}
                     <div className="problem-item__problem">
                         <p className="problem__content">{content}</p>
-                        <InlineTex className="problem__katex" texContent={katex} />
+                        <p className="problem__katex">
+                            <InlineTex
+                                texContent={katex}
+                            />
+                        </p>
                     </div>
                     <ul className="problem-item__choices">
                         {choices.map((choice, index) => (
@@ -99,12 +103,7 @@ const ProblemItem = ({
                         <p className="info__author">Written by {author}</p>
                         {/* <p className="info__rating"> Rating: {rating}</p> */}
                         <div className="info__courses-container">
-                            Courses:
-                            <ul className="info__courses">
-                                {courses && courses.map((course) => (
-                                    <li key={course.id}>{course.value}</li>
-                                ))}
-                            </ul>
+                            Course: {course}
                         </div>
                     </div>
                     <div className="problem-item__actions">
