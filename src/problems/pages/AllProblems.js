@@ -33,14 +33,14 @@ const AllProblems = () => {
   return (
     <div className="all-problems__container">
       <ErrorModal error={error} onClear={clearError} />
-      <h1>Here are all the problems</h1>
+      <h1>View all problems</h1>
       {isLoading && (
         <div className="center">
           <LoadingSpinner />
         </div>
       )}
       {!isLoading && loadedProblems && (
-        <ProblemList problems={loadedProblems} onDeleteProblem={problemDeleteHandler} />
+        <ProblemList problems={loadedProblems} onDeleteProblem={problemDeleteHandler} className="all-problems-list"/>
       )}
     </div>
   );

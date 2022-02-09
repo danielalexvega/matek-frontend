@@ -17,11 +17,10 @@ const ProblemItem = ({
     katex,
     author,
     authorId,
-    rating,
-    solution,
     choices,
     content,
     course,
+    subdomain,
     onDelete,
     hasImage,
 }) => {
@@ -84,11 +83,12 @@ const ProblemItem = ({
                         </div>
                     )}
                     <div className="problem-item__problem">
-                        <p className="problem__content">{content}</p>
+                        <div className="problem__course">
+                            <span className="course__title">{course}</span> | {content}
+                        </div>
+                        <div className="problem__subdomain">{subdomain}</div>
                         <p className="problem__katex">
-                            <InlineTex
-                                texContent={katex}
-                            />
+                            <InlineTex texContent={katex} />
                         </p>
                     </div>
                     <ul className="problem-item__choices">
@@ -102,9 +102,6 @@ const ProblemItem = ({
                     <div className="problem-item__info">
                         <p className="info__author">Written by {author}</p>
                         {/* <p className="info__rating"> Rating: {rating}</p> */}
-                        <div className="info__courses-container">
-                            Course: {course}
-                        </div>
                     </div>
                     <div className="problem-item__actions">
                         {isLoggedIn && authorId !== userId && (

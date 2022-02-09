@@ -18,6 +18,13 @@
   margin-top: 0;
 }
 
+.course__title {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.problem__subdomain {}
+
 .problem__katex {
     font-size: 18px;
 }

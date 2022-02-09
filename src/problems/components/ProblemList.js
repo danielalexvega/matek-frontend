@@ -46,6 +46,7 @@ const ProblemList = ({ problems, onDeleteProblem, problemsUserId, className }) =
           choices={problem.choices} 
           content={problem.subjectContent}
           course={problem.course}
+          subdomain={problem.subdomain}
           hasImage={problem.hasImage}
           onDelete={onDeleteProblem}
         />
