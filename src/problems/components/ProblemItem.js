@@ -104,9 +104,9 @@ const ProblemItem = ({
                         {/* <p className="info__rating"> Rating: {rating}</p> */}
                     </div>
                     <div className="problem-item__actions">
-                        {isLoggedIn && authorId !== userId && (
+                        {/* {isLoggedIn && authorId !== userId && (
                             <Button inverse>Add to desk</Button>
-                        )}
+                        )} */}
                         {isLoggedIn && authorId === userId && (
                             <Button to={`/problems/${id}`}>Edit</Button>
                         )}
@@ -114,6 +114,9 @@ const ProblemItem = ({
                             <Button danger onClick={showDeleteWarningHandler}>
                                 Delete
                             </Button>
+                        )}
+                        {isLoggedIn && authorId === userId && (
+                            <Button to={`/problems/${id}/clone`}>Clone</Button>
                         )}
                     </div>
                 </Card>

@@ -23,6 +23,7 @@ const UpdateProblem = React.lazy(() =>
     import("./problems/pages/UpdateProblem")
 );
 const UserProblems = React.lazy(() => import("./problems/pages/UserProblems"));
+const CloneProblem = React.lazy(() => import("./problems/pages/CloneProblem"));
 
 const App = () => {
     const { token, userId, userName, login, logout } = useAuth();
@@ -46,6 +47,9 @@ const App = () => {
                 </Route>
                 <Route path="/problems/new" exact>
                     <NewProblem />
+                </Route>
+                <Route path="/problems/:problemId/clone" exact>
+                    <CloneProblem />
                 </Route>
                 <Route path="/problems/:problemId">
                     <UpdateProblem />

@@ -19,9 +19,9 @@ import {
     VALIDATOR_MATCH,
 } from "../../shared/util/validators";
 
-import "./ProblemForm.css";
+import "./CloneProblem.css";
 
-const UpdateProblem = () => {
+const CloneProblem = () => {
     const [loadedProblem, setLoadedProblem] = useState();
     const [courses, setCourses] = useState([]);
     const [courseTitles, setCourseTitles] = useState([]);
@@ -34,7 +34,7 @@ const UpdateProblem = () => {
 
     const problemId = useParams().problemId;
 
-    const { token } = useContext(AuthContext);
+    const { userId, userName, token } = useContext(AuthContext);
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const history = useHistory();
 
@@ -127,6 +127,11 @@ const UpdateProblem = () => {
                         },
                         description: {
                             value: problem.description,
+                            isValid: true,
+                        },
+                        hasImage: { value: false, isValid: true },
+                        image: {
+                            value: null,
                             isValid: true,
                         },
                         // work on updating image (not touching it for now)
@@ -249,29 +254,34 @@ const UpdateProblem = () => {
         }
     };
 
-    const problemUpdateSubmitHandler = async (event) => {
+    const problemSubmitHandler = async (event) => {
         event.preventDefault();
-        console.log(formState.inputs);
         try {
             await sendRequest(
-                `${process.env.REACT_APP_BACKEND_URL}/problems/${problemId}`,
-                "PATCH",
+                process.env.REACT_APP_BACKEND_URL + "/problems",
+                "POST",
                 JSON.stringify({
+                    course: formState.inputs.course.value,
                     subjectContent: formState.inputs.subjectContent.value,
+                    subdomain: formState.inputs.subdomain.value,
                     katex: formState.inputs.katex.value,
                     solution: formState.inputs.solution.value,
                     isMultipleChoice: formState.inputs.isMultipleChoice.value,
                     choices: formState.inputs.choices.value,
                     description: formState.inputs.description.value,
-                    courses: [{ value: "Algebra 2" }],
+                    author: userName,
+                    hasImage: formState.inputs.hasImage.value,
                 }),
                 {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + token,
                 }
             );
-            history.push(`/${loadedProblem.authorId}/problems`);
-        } catch (error) {}
+            history.push(`/${userId}/problems`);
+        } catch (error) {
+            //redirect user to a different page
+            console.log(error);
+        }
     };
 
     if (isLoading) {
@@ -294,7 +304,9 @@ const UpdateProblem = () => {
 
     return (
         <div className="problem-container">
-            <h1 className="problem-container__title">Update a problem.</h1>
+            <h1 className="problem-container__title">
+                Clone a problem. Currently cannot clone images.
+            </h1>
             <p className="problem-container__description">
                 If you need help with <Tex texContent="\KaTeX" /> syntax, you
                 can check out the{" "}
@@ -308,128 +320,130 @@ const UpdateProblem = () => {
                 </a>
             </p>
             <ErrorModal error={error} onClear={clearError} />
-            {!isLoading && loadedProblem && (
-                <form
-                    className="problem-form"
-                    onSubmit={problemUpdateSubmitHandler}
-                >
-                    <InputList
-                        id="course"
-                        selectName="course"
-                        label="Please select a course."
-                        options={courses}
-                        validators={[VALIDATOR_MATCH(courseTitles)]}
-                        errorText="Please select a course."
-                        onInput={inputHandler}
-                        type="text"
-                        placeholder="Courses"
-                        listTitle="courseList"
-                        updateSelection={updateCourseDomains}
-                        initialValue={loadedProblem.course}
-                        initialValid={true}
-                    />
-                    <InputList
-                        id="subjectContent"
-                        selectName="subjectContent"
-                        label="Please select a subject content."
-                        options={filteredContentDomains}
-                        validators={[VALIDATOR_MATCH(domainTitles)]}
-                        errorText="Please enter a valid content section."
-                        onInput={inputHandler}
-                        type="text"
-                        placeholder="Content Domains"
-                        listTitle="contentList"
-                        updateSelection={updateCourseSubdomains}
-                        initialValue={loadedProblem.subjectContent}
-                        initialValid={true}
-                    />
-                    <InputList
-                        id="subdomain"
-                        selectName="subdomain"
-                        label="Please select a content subdomain."
-                        options={filteredSubdomains}
-                        validators={[VALIDATOR_MATCH(subdomainTitles)]}
-                        errorText="Please enter a valid subdomain for the selected content."
-                        onInput={inputHandler}
-                        type="text"
-                        placeholder="Content Subdomain"
-                        listTitle="subdomainList"
-                        initialValue={loadedProblem.subdomain}
-                        initialValid={true}
-                    />
-                    {/* Problem  */}
-                    <Input
-                        element="textarea"
-                        id="katex"
-                        label="Problem - Written in Katex"
-                        validators={[VALIDATOR_REQUIRE()]}
-                        errorText="Please enter a valid problem"
-                        onInput={inputHandler}
-                        initialValue={loadedProblem.katex}
-                        initialValid={true}
-                    />
-                    <KatexPreview
-                        title="KaTex Preview"
-                        texContent={formState.inputs.katex.value}
-                    />
-                    {/* Solution  */}
-                    <Input
-                        element="input"
-                        type="text"
-                        id="solution"
-                        label="Solution - Written in Katex"
-                        validators={[VALIDATOR_REQUIRE()]}
-                        errorText="Please enter a valid problem"
-                        onInput={inputHandler}
-                        initialValue={loadedProblem.solution}
-                        initialValid={true}
-                    />
-                    <KatexPreview
-                        title="Katex Preview for Solution"
-                        texContent={formState.inputs.solution.value}
-                    />
-                    <label
-                        htmlFor="multipleChoiceSelection"
-                        className="multipleChoiceSelection"
-                    >
-                        Is this a multiple choice question?
-                        <input
-                            type="checkbox"
-                            id="multipleChoiceSelection"
-                            value={loadedProblem.isMultipleChoice}
-                            onClick={multipleChoiceHandler}
-                            checked={loadedProblem.isMultipleChoice}
-                            onChange={multipleChoiceHandler}
+            <form className="problem-form" onSubmit={problemSubmitHandler}>
+                {isLoading && <LoadingSpinner asOverlay />}
+                {!isLoading && courses !== [] && (
+                    <>
+                        <InputList
+                            id="course"
+                            selectName="course"
+                            label="Please select a course."
+                            options={courses}
+                            validators={[VALIDATOR_MATCH(courseTitles)]}
+                            errorText="Please select a course."
+                            onInput={inputHandler}
+                            type="text"
+                            placeholder="Courses"
+                            listTitle="courseList"
+                            updateSelection={updateCourseDomains}
+                            initialValue={loadedProblem.course}
+                            initialValid={true}
                         />
-                    </label>
-
-                    {formState.inputs.isMultipleChoice.value && (
-                        <InputChoices
-                            choicesArray={loadedProblem.choices}
-                            inputHandler={inputHandler}
-                            addChoiceHandler={addChoiceHandler}
-                            removeChoiceHandler={removeChoiceHandler}
+                        <InputList
+                            id="subjectContent"
+                            selectName="subjectContent"
+                            label="Please select a subject content."
+                            options={filteredContentDomains}
+                            validators={[VALIDATOR_MATCH(domainTitles)]}
+                            errorText="Please enter a valid content section."
+                            onInput={inputHandler}
+                            type="text"
+                            placeholder="Content Domains"
+                            listTitle="contentList"
+                            updateSelection={updateCourseSubdomains}
+                            initialValue={loadedProblem.subjectContent}
+                            initialValid={true}
                         />
-                    )}
+                        <InputList
+                            id="subdomain"
+                            selectName="subdomain"
+                            label="Please select a content subdomain."
+                            options={filteredSubdomains}
+                            validators={[VALIDATOR_MATCH(subdomainTitles)]}
+                            errorText="Please enter a valid subdomain for the selected content."
+                            onInput={inputHandler}
+                            type="text"
+                            placeholder="Content Subdomain"
+                            listTitle="subdomainList"
+                            initialValue={loadedProblem.subdomain}
+                            initialValid={true}
+                        />
+                        {/* Problem  */}
+                        <Input
+                            element="textarea"
+                            id="katex"
+                            label="Problem - Written in Katex"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please enter a valid problem"
+                            onInput={inputHandler}
+                            initialValue={loadedProblem.katex}
+                            initialValid={true}
+                        />
+                        <KatexPreview
+                            title="KaTex Preview"
+                            texContent={formState.inputs.katex.value}
+                        />
 
-                    {/* Description  */}
-                    <Input
-                        element="textarea"
-                        id="description"
-                        label="Description"
-                        validators={[VALIDATOR_REQUIRE()]}
-                        errorText="Please enter a valid problem"
-                        onInput={inputHandler}
-                        initialValue={loadedProblem.description}
-                        initialValid={true}
-                    />
-                    <Button type="submit" disabled={!formState.isValid}>
-                        Update Problem
-                    </Button>
-                </form>
-            )}
+                        {/* Solution  */}
+                        <Input
+                            element="input"
+                            type="text"
+                            id="solution"
+                            label="Solution - Written in Katex"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please enter a valid problem"
+                            onInput={inputHandler}
+                            initialValue={loadedProblem.solution}
+                            initialValid={true}
+                        />
+                        <KatexPreview
+                            title="Katex Preview for Solution"
+                            texContent={formState.inputs.solution.value}
+                        />
+                        <label
+                            htmlFor="multipleChoiceSelection"
+                            className="multipleChoiceSelection"
+                        >
+                            Is this a multiple choice question?
+                            <input
+                                type="checkbox"
+                                id="multipleChoiceSelection"
+                                onClick={multipleChoiceHandler}
+                                checked={loadedProblem.isMultipleChoice}
+                                onChange={multipleChoiceHandler}
+                            />
+                        </label>
+
+                        {/* Input Choices  */}
+                        {formState.inputs.isMultipleChoice.value && (
+                            <InputChoices
+                                choicesArray={formState.inputs.choices.value}
+                                inputHandler={inputHandler}
+                                addChoiceHandler={addChoiceHandler}
+                                removeChoiceHandler={removeChoiceHandler}
+                            />
+                        )}
+
+                        {/* Description  */}
+                        <Input
+                            element="textarea"
+                            id="description"
+                            label="Description"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please enter a valid problem"
+                            onInput={inputHandler}
+                            initialValue={loadedProblem.description}
+                            initialValid={true}
+                        />
+                        {/* Can't clone images  */}
+                        <Button type="submit" disabled={!formState.isValid}>
+                            Add Problem
+                        </Button>
+                    </>
+                )}
+            </form>
         </div>
     );
 };
 
-export default UpdateProblem;
+export default CloneProblem;

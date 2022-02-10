@@ -1,0 +1,65 @@
+.problem-container {
+    margin: 5rem auto 0;
+    max-width: var(--max-width);
+}
+
+.problem-container__title {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.problem-container__description {
+     text-align: center;
+     font-size: 24px;
+     line-height: 30px;
+}
+
+.description__link {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--primary);
+    position: relative;
+}
+
+.description__link:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 3px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: var(--primary-light1);
+    transition: width 0.2s ease;
+    -webkit-transition: width 0.2s ease;
+}
+
+.description__link:hover {
+     color: var(--primary-light1);
+}
+
+.description__link:hover:after {
+    width: 100%;
+    left: 0;
+}
+
+.problem-form {
+    list-style: none;
+    margin: 3rem auto 0;
+    padding: 1rem;
+    width: 90%;
+    max-width: 40rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 6px;
+    background: white;
+  }
+
+  .multipleChoiceSelection {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .multipleChoiceSelection input {
+      margin-left: 1rem;
+  }
+  
