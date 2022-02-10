@@ -41,3 +41,7 @@
     line-height: 38px;
     margin-left: 1rem;
 }
+
+.display-katex__inlineTex {
+    margin-left: 2rem;
+}

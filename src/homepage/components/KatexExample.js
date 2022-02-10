@@ -1,24 +1,24 @@
 import React from "react";
-import { Tex } from "react-tex";
+import { InlineTex } from "react-tex";
 
 import "./KatexExample.css";
 
 // FIX THIS LATER 
 // props.children is the header of this component 
 
-const KatexExample = (props) => {
+const KatexExample = ({children, body, expressionHeader, expression, }) => {
   return (
     <div className="katex-example-container">
       <div className="katex-example">
-        <h3 className="katex-example__title">{props.children}</h3>
+        <h3 className="katex-example__title">{children}</h3>
       </div>
       <div className="katex-example__display-expression">
-        <p>{props.body}</p>
-        <p className="display-expression">{props.expression}</p>
+        <p>{body}</p>
+        <p className="display-expression">{expression}</p>
       </div>
       <div className="katex-example__display-katex">
-        <p>Katex will display the following:</p>
-        <Tex texContent={props.expression} />
+        <p>{expressionHeader}</p>
+        <div className="display-katex__inlineTex"><InlineTex style={{}}texContent={expression} /></div>
       </div>
     </div>
   );
