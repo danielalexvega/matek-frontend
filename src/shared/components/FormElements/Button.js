@@ -8,7 +8,7 @@ const Button = (props) => {
         return (
             <a
                 className={`button button--${props.size || "default"} ${
-                    props.inverse && "button--inverse"
+                    props.primary && "button--primary"
                 } ${props.danger && "button--danger"}`}
                 href={props.href}
             >
@@ -22,7 +22,7 @@ const Button = (props) => {
                 to={props.to}
                 exact={props.exact}
                 className={`button button--${props.size || "default"} ${
-                    (props.inverse && "button--inverse") || ""
+                    (props.primary && "button--primary") || ""
                 } ${(props.danger && "button--danger") || ""} ${
                     (props.warning && "button--warning") || ""
                 }`}
@@ -34,7 +34,7 @@ const Button = (props) => {
     return (
         <button
         className={`button button--${props.size || "default"} ${
-            (props.inverse && "button--inverse") || ""
+            (props.primary && "button--primary") || ""
         } ${(props.danger && "button--danger") || ""} ${
             (props.warning && "button--warning") || ""
         }`}

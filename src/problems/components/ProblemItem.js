@@ -63,7 +63,7 @@ const ProblemItem = ({
                 footerClass="problem-item__modal-actions"
                 footer={
                     <React.Fragment>
-                        <Button inverse onClick={cancelDeleteHandler}>
+                        <Button primary onClick={cancelDeleteHandler}>
                             CANCEL
                         </Button>
                         <Button danger onClick={confirmDeleteHandler}>
@@ -105,7 +105,7 @@ const ProblemItem = ({
                     </div>
                     <div className="problem-item__actions">
                         {/* {isLoggedIn && authorId !== userId && (
-                            <Button inverse>Add to desk</Button>
+                            <Button primary>Add to desk</Button>
                         )} */}
                         {isLoggedIn && authorId === userId && (
                             <Button to={`/problems/${id}`}>Edit</Button>

@@ -21,13 +21,13 @@
     border-color:var(--secondary-dark1);
   }
   
-  .button--inverse {
+  .button--primary {
     background: var(--primary);
     color: var(--light);
   }
   
-  .button--inverse:hover,
-  .button--inverse:active {
+  .button--primary:hover,
+  .button--primary:active {
     background: var(--primary-dark1);
   }
 
