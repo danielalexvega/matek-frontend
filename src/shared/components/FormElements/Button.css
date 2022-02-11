@@ -47,11 +47,22 @@
     background: var(--danger);
     border-color: var(--danger);
   }
+
+  .button--warning {
+    background: var(--warning);
+    border-color: var(--warning);
+  }
   
   .button--danger:hover,
   .button--danger:active {
     background: var(--danger-dark);
     border-color: var(--danger-dark);
+  }
+
+  .button--warning:hover,
+  .button--warning:active { 
+    background: var(--warning-dark);
+    border-color: var(--warning-dark);
   }
   
   .button:disabled,

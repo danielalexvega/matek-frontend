@@ -116,7 +116,7 @@ const ProblemItem = ({
                             </Button>
                         )}
                         {isLoggedIn && authorId === userId && (
-                            <Button to={`/problems/${id}/clone`}>Clone</Button>
+                            <Button warning className="clone-button" to={`/problems/${id}/clone`}>Clone</Button>
                         )}
                     </div>
                 </Card>
