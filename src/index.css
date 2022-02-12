@@ -29,7 +29,14 @@
     --warning: #FFB41F; /* Honey Yellow*/
     --warning-dark: #E09600; /* Gamboge*/
 
+    --text-color: #061523;
+    --bg: #124e78;
+    --bg-accent: #0d3959;
+    --nav-size: 60px;
+    --border: 1px solid #0d3959;
+    --border-radius: 8px;
     --max-width: 1440px;
+    --speed: 500ms;
 
     /* MAIN NAVIGATION VARIABLES  */
     --navigation-height: 4rem;

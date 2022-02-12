@@ -1,5 +1,9 @@
-.dd_wrapper {
+.dd-wrapper {
     position: relative;
+}
+
+.dd-header  {
+    margin-right: 0;
 }
 
 .dd-header-title {
@@ -11,5 +15,31 @@
     display: flex;
     flex-flow: column;
     z-index: 2;
+    left: 0;
+    right: 0;
+}
+.dd-list-item {
+    width: 100%;
+}
+
+.slide-from-top-enter {
+    transform: translateX(-100%);
+}
+
+.slide-from-top-enter-active {
+    transform: translateX(0);
+    opacity: 1;
+    transition: all 200ms;
+}
+
+.slide-from-top-exit {
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+.slide-from-top-exit-active {
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: all 200ms;
 }
 

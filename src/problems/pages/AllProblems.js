@@ -68,6 +68,7 @@ const AllProblems = () => {
                 <Dropdown
                     headerTitle="Select a course"
                     list={filteredCourses}
+                    selectItem={()=>{}}
                 />
             </div>
             {isLoading && (
