@@ -6,6 +6,7 @@ import ProblemList from "../components/ProblemList";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import Button from "../../shared/components/FormElements/Button";
+import Dropdown from "../../shared/components/UIElements/Dropdown";
 import "./AllProblems.css";
 
 const AllProblems = () => {
@@ -31,7 +32,11 @@ const AllProblems = () => {
                     process.env.REACT_APP_BACKEND_URL + "/courses/"
                 );
                 const courseList = responseData.courses.map((course) => {
-                    return { title: course.courseTitle, id: course.id, selected: false };
+                    return {
+                        title: course.courseTitle,
+                        id: course.id,
+                        selected: false,
+                    };
                 });
 
                 setFilteredCourses(courseList);
@@ -41,7 +46,7 @@ const AllProblems = () => {
             }
         };
 
-        //fetch contentDomains and subdomains 
+        //fetch contentDomains and subdomains
 
         fetchProblems();
         fetchCourses();
@@ -60,7 +65,10 @@ const AllProblems = () => {
             <ErrorModal error={error} onClear={clearError} />
             <h1>View all problems</h1>
             <div className="filter__container">
-                <Button inverse> Courses </Button>
+                <Dropdown
+                    headerTitle="Select a course"
+                    list={filteredCourses}
+                />
             </div>
             {isLoading && (
                 <div className="center">

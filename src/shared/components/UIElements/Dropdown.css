@@ -1,0 +1,15 @@
+.dd_wrapper {
+    position: relative;
+}
+
+.dd-header-title {
+    margin-right: 1rem;
+}
+
+.dd-list {
+    position: absolute;
+    display: flex;
+    flex-flow: column;
+    z-index: 2;
+}
+

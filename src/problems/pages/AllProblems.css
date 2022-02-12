@@ -6,3 +6,8 @@
 .all-problems__container h1 {
     margin: 0 1rem;
 }
+
+.filter__container {
+    display: flex;
+    justify-content: center;
+}

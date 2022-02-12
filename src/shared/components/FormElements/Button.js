@@ -37,10 +37,11 @@ const Button = (props) => {
             (props.primary && "button--primary") || ""
         } ${(props.danger && "button--danger") || ""} ${
             (props.warning && "button--warning") || ""
-        }`}
+        } ${props.className}`}
             type={props.type}
             onClick={props.onClick}
             disabled={props.disabled}
+            key={props.id}
         >
             {props.children}
         </button>
