@@ -14,6 +14,7 @@ const AllProblems = () => {
     const [loadedProblems, setLoadedProblems] = useState();
     const [filteredProblems, setFilteredProblems] = useState();
     const [filteredCourses, setFilteredCourses] = useState([]);
+    const [isSelected, setIsSelected] = useState([]);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -63,7 +64,39 @@ const AllProblems = () => {
         );
     };
 
-    const filterCourses = (courses) => {};
+    const selectItem = (index) => {
+        let newList = [...filteredCourses];
+        newList[index].selected = !newList[index].selected;
+        setFilteredCourses(newList);
+        filterProblemsByCourse(newList);
+    };
+
+    const selectAll = () => {
+        let newList = filteredCourses.map((course) => {
+            return { ...course, selected: true };
+        });
+        setFilteredCourses(newList);
+        filterProblemsByCourse(newList);
+    };
+
+    const selectNone = () => {
+        let newList = filteredCourses.map((course) => {
+            return { ...course, selected: false };
+        });
+        setFilteredCourses(newList);
+        filterProblemsByCourse(newList);
+    };
+
+    const filterProblemsByCourse = (courses) => {
+        let filterCourseTitles = courses.filter((course) => course.selected);
+        filterCourseTitles = filterCourseTitles.map((course) => course.title);
+
+        let newProblemList = loadedProblems.filter((problem) =>
+            filterCourseTitles.includes(problem.course)
+        );
+
+        setFilteredProblems(newProblemList);
+    };
 
     return (
         <div className="all-problems__container">
@@ -81,11 +114,14 @@ const AllProblems = () => {
                         <Dropdown
                             headerTitle="Select a course"
                             list={filteredCourses}
-                            selectItem={() => {}}
+                            selectItem={selectItem}
+                            selectAll={selectAll}
+                            deselectAll={selectNone}
+                            isSelected={isSelected}
                         />
                     </div>
                     <ProblemList
-                        problems={loadedProblems}
+                        problems={filteredProblems}
                         onDeleteProblem={problemDeleteHandler}
                         className="all-problems-list"
                     />
