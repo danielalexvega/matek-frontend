@@ -7,12 +7,14 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import Button from "../../shared/components/FormElements/Button";
 import Dropdown from "../../shared/components/UIElements/Dropdown";
+
 import "./AllProblems.css";
 
 const AllProblems = () => {
     const [loadedProblems, setLoadedProblems] = useState();
     const [filteredProblems, setFilteredProblems] = useState();
     const [filteredCourses, setFilteredCourses] = useState([]);
+
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
     useEffect(() => {
@@ -21,6 +23,9 @@ const AllProblems = () => {
                 const { problems } = await sendRequest(
                     process.env.REACT_APP_BACKEND_URL + "/problems/"
                 );
+
+                problems.reverse();
+
                 setLoadedProblems(problems);
                 setFilteredProblems(problems);
             } catch (error) {}
@@ -64,24 +69,27 @@ const AllProblems = () => {
         <div className="all-problems__container">
             <ErrorModal error={error} onClear={clearError} />
             <h1>View all problems</h1>
-            <div className="filter__container">
-                <Dropdown
-                    headerTitle="Select a course"
-                    list={filteredCourses}
-                    selectItem={()=>{}}
-                />
-            </div>
+
             {isLoading && (
                 <div className="center">
                     <LoadingSpinner />
                 </div>
             )}
             {!isLoading && loadedProblems && (
-                <ProblemList
-                    problems={loadedProblems}
-                    onDeleteProblem={problemDeleteHandler}
-                    className="all-problems-list"
-                />
+                <>
+                    <div className="filter__container">
+                        <Dropdown
+                            headerTitle="Select a course"
+                            list={filteredCourses}
+                            selectItem={() => {}}
+                        />
+                    </div>
+                    <ProblemList
+                        problems={loadedProblems}
+                        onDeleteProblem={problemDeleteHandler}
+                        className="all-problems-list"
+                    />
+                </>
             )}
         </div>
     );
