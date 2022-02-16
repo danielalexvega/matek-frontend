@@ -37,6 +37,7 @@ const homepage = () => {
         body={`And here is the syntax to write a expression involving squaring complex numbers with fractions.`}
         expressionHeader="And here's how the problem is formatted."
         expression="$$(\frac{\sqrt{3}}{2}-\frac{\sqrt{2}}{5}i)^2$$"
+        expressionClassName="frac"
         className="border-top"
       ></KatexExample>
 

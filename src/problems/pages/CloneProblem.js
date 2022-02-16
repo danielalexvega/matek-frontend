@@ -382,6 +382,7 @@ const CloneProblem = () => {
                         <KatexPreview
                             title="KaTex Preview"
                             texContent={formState.inputs.katex.value}
+                            katexClassName="katex-preview"
                         />
 
                         {/* Solution  */}
@@ -399,6 +400,7 @@ const CloneProblem = () => {
                         <KatexPreview
                             title="Katex Preview for Solution"
                             texContent={formState.inputs.solution.value}
+                            katexClassName="katex-solution"
                         />
                         <label
                             htmlFor="multipleChoiceSelection"

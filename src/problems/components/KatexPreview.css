@@ -1,0 +1,6 @@
+.problem-form__katex-display-container.katex-solution .katex{
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    margin-bottom: 2rem;
+}
