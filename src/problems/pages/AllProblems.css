@@ -3,10 +3,20 @@
     margin: 5rem auto 0 auto;
 }
 
-.all-problems__container h1 {
+.container__title {
     display: flex;
-    justify-content: center;
+    flex-flow: column;
+    align-items: center;
     margin: 1rem;
+}
+
+.container__title h1 {
+    margin-bottom: 0;
+}
+
+.container__title p {
+    width: 50%;
+    text-align: center;
 }
 
 .filter__container {

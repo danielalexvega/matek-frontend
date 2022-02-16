@@ -11,10 +11,9 @@ import Dropdown from "../../shared/components/UIElements/Dropdown";
 import "./AllProblems.css";
 
 const AllProblems = () => {
-    const [loadedProblems, setLoadedProblems] = useState();
-    const [filteredProblems, setFilteredProblems] = useState();
+    const [loadedProblems, setLoadedProblems] = useState([]);
+    const [filteredProblems, setFilteredProblems] = useState([]);
     const [filteredCourses, setFilteredCourses] = useState([]);
-    const [isSelected, setIsSelected] = useState([]);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -26,7 +25,6 @@ const AllProblems = () => {
                 );
 
                 problems.reverse();
-
                 setLoadedProblems(problems);
                 setFilteredProblems(problems);
             } catch (error) {}
@@ -46,7 +44,6 @@ const AllProblems = () => {
                 });
 
                 setFilteredCourses(courseList);
-                console.log(courseList);
             } catch (err) {
                 console.log(err);
             }
@@ -64,14 +61,14 @@ const AllProblems = () => {
         );
     };
 
-    const selectItem = (index) => {
+    const selectCourse = (index) => {
         let newList = [...filteredCourses];
         newList[index].selected = !newList[index].selected;
         setFilteredCourses(newList);
         filterProblemsByCourse(newList);
     };
 
-    const selectAll = () => {
+    const selectAllCourses = () => {
         let newList = filteredCourses.map((course) => {
             return { ...course, selected: true };
         });
@@ -79,7 +76,7 @@ const AllProblems = () => {
         filterProblemsByCourse(newList);
     };
 
-    const selectNone = () => {
+    const selectNoCourses = () => {
         let newList = filteredCourses.map((course) => {
             return { ...course, selected: false };
         });
@@ -101,8 +98,13 @@ const AllProblems = () => {
     return (
         <div className="all-problems__container">
             <ErrorModal error={error} onClear={clearError} />
-            <h1>View all problems</h1>
-
+            <div className="container__title">
+                <h1>View all problems</h1>
+                <p>
+                    Select all the courses, or any single course you want. <br/> (Just
+                    make sure you do select a course!)
+                </p>
+            </div>
             {isLoading && (
                 <div className="center">
                     <LoadingSpinner />
@@ -114,16 +116,16 @@ const AllProblems = () => {
                         <Dropdown
                             headerTitle="Select a course"
                             list={filteredCourses}
-                            selectItem={selectItem}
-                            selectAll={selectAll}
-                            deselectAll={selectNone}
-                            isSelected={isSelected}
+                            selectItem={selectCourse}
+                            selectAll={selectAllCourses}
+                            deselectAll={selectNoCourses}
                         />
                     </div>
                     <ProblemList
                         problems={filteredProblems}
                         onDeleteProblem={problemDeleteHandler}
                         className="all-problems-list"
+                        selectAll={selectAllCourses}
                     />
                 </>
             )}

@@ -7,4 +7,8 @@
     overflow: hidden;
     background: white;
   }
+
+  .centerCard {
+      grid-column: 1/4;
+  }
   

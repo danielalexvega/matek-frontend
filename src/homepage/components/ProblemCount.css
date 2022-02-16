@@ -8,6 +8,7 @@
     grid-column: 2/-2;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    margin: 3rem 0;
 }
 
 .container__left-side {

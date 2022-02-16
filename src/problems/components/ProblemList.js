@@ -6,16 +6,19 @@ import Button from "../../shared/components/FormElements/Button";
 import { AuthContext } from "../../shared/context/auth-context";
 import "./ProblemList.css";
 
-const ProblemList = ({ problems, onDeleteProblem, problemsUserId, className }) => {
+const ProblemList = ({ problems, onDeleteProblem, problemsUserId, className, selectAll }) => {
   const { userId } = useContext(AuthContext);
 
   // if problems array is empty
   if (problems.length === 0 && problemsUserId === userId) {
     return (
       <div className="problem-list center">
-        <Card>
-          <h2>No problems found. Maybe create one?</h2>
+        <Card className="centerCard">
+          <h2>Our dog ate your problems.</h2>
+          <p>Try selecting a different course. Our you can create some new problems.</p>
+          <div className="button-container"></div>
           <Button to="/problems/new">Create Problem</Button>
+          <Button type="button" onClick={selectAll}>View All Courses</Button>
         </Card>
       </div>
     );
@@ -24,9 +27,10 @@ const ProblemList = ({ problems, onDeleteProblem, problemsUserId, className }) =
   if (problems.length === 0 && problemsUserId !== userId) {
     return (
       <div className="problem-list center">
-        <Card>
-          <h2>This user has not created any problems yet.</h2>
-          <Button to="/problems">View Other Problems</Button>
+        <Card className="centerCard">
+          <h2>Our dog ate our problems for that course.</h2>
+          <p>Our more likely, a course isn't selected right now. Please select at least one course.</p>
+          <Button type="button" onClick={selectAll}>View All Courses</Button>
         </Card>
       </div>
     );

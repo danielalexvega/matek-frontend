@@ -14,7 +14,6 @@ const Dropdown = ({
     headerTitle,
     list,
     selectItem,
-    isSelected,
     selectAll,
     deselectAll,
 }) => {
@@ -61,7 +60,6 @@ const Dropdown = ({
                             type="button"
                             id={item.id}
                             onClick={() => selectItem(index)}
-                            isSelected={isSelected}
                         >
                             {item.title}{" "}
                             {item.selected && (

@@ -10,8 +10,8 @@ import Dropdown from "../../shared/components/UIElements/Dropdown";
 import "./UserProblems.css";
 
 const UserProblems = () => {
-    const [loadedProblems, setLoadedProblems] = useState();
-    const [filteredProblems, setFilteredProblems] = useState();
+    const [loadedProblems, setLoadedProblems] = useState([]);
+    const [filteredProblems, setFilteredProblems] = useState([]);
     const [filteredCourses, setFilteredCourses] = useState([]);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -25,6 +25,7 @@ const UserProblems = () => {
                 );
                 problems.reverse();
                 setLoadedProblems(problems);
+                setFilteredProblems(problems);
             } catch (error) {}
         };
 
@@ -42,7 +43,6 @@ const UserProblems = () => {
                 });
 
                 setFilteredCourses(courseList);
-                console.log(courseList);
             } catch (err) {
                 console.log(err);
             }
@@ -56,6 +56,40 @@ const UserProblems = () => {
         setLoadedProblems((prevProblems) =>
             prevProblems.filter((problem) => problem.id !== deletedPlaceId)
         );
+    };
+
+    const selectCourse = (index) => {
+        let newList = [...filteredCourses];
+        newList[index].selected = !newList[index].selected;
+        setFilteredCourses(newList);
+        filterProblemsByCourse(newList);
+    };
+
+    const selectAllCourses = () => {
+        let newList = filteredCourses.map((course) => {
+            return { ...course, selected: true };
+        });
+        setFilteredCourses(newList);
+        filterProblemsByCourse(newList);
+    };
+
+    const selectNoCourses = () => {
+        let newList = filteredCourses.map((course) => {
+            return { ...course, selected: false };
+        });
+        setFilteredCourses(newList);
+        filterProblemsByCourse(newList);
+    };
+
+    const filterProblemsByCourse = (courses) => {
+        let filterCourseTitles = courses.filter((course) => course.selected);
+        filterCourseTitles = filterCourseTitles.map((course) => course.title);
+
+        let newProblemList = loadedProblems.filter((problem) =>
+            filterCourseTitles.includes(problem.course)
+        );
+
+        setFilteredProblems(newProblemList);
     };
 
     return (
@@ -76,14 +110,17 @@ const UserProblems = () => {
                         <Dropdown
                             headerTitle="Select a course"
                             list={filteredCourses}
-                            selectItem={() => {}}
+                            selectItem={selectCourse}
+                            selectAll={selectAllCourses}
+                            deselectAll={selectNoCourses}
                         />
                     </div>
                     <ProblemList
-                        problems={loadedProblems}
+                        problems={filteredProblems}
                         onDeleteProblem={problemDeleteHandler}
                         problemsUserId={userId}
                         className="userProblems"
+                        selectAll={selectAllCourses}
                     />
                 </>
             )}
