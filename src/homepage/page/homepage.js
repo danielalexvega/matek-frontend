@@ -31,14 +31,14 @@ const homepage = () => {
         expressionHeader="And here's how the problem is formatted."
         expression="$$\begin{cases} -x - 5y - 5z = 2 \\ 4x - 5y + 4z = 19 \\ x + 5y - z = -20 \end{cases}$$"
       >
-        Here is an example of a problem that can be rendered with <Tex texContent="\KaTeX"/>
+        Here are some examples of problems that can be rendered with <Tex texContent="\KaTeX"/>
       </KatexExample>
       <KatexExample
         body={`And here is the syntax to write a expression involving squaring complex numbers with fractions.`}
         expressionHeader="And here's how the problem is formatted."
         expression="$$(\frac{\sqrt{3}}{2}-\frac{\sqrt{2}}{5}i)^2$$"
         expressionClassName="frac"
-        className="border-top"
+        className="border-top mb-3"
       ></KatexExample>
 
       <FullWidthContainer

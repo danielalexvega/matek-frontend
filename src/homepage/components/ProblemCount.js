@@ -8,6 +8,7 @@ import "./ProblemCount.css";
 
 const ProblemCount = () => {
     const [problemCount, setProblemCount] = useState(0);
+    const [courseCount, setCourseCount] = useState(0);
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
     useEffect(() => {
@@ -20,7 +21,20 @@ const ProblemCount = () => {
             } catch (err) {}
         };
 
+        const fetchCourses = async () => {
+            try {
+                const responseData = await sendRequest(
+                    process.env.REACT_APP_BACKEND_URL + "/courses/"
+                );
+
+                setCourseCount(responseData.courses.length);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
         fetchProblems();
+        fetchCourses();
     }, [sendRequest]);
 
     return (
@@ -31,7 +45,8 @@ const ProblemCount = () => {
                     <h3>Growing and growing...</h3>
                     <p>
                         Every day our problem set is growing as more teachers
-                        add to our numbers
+                        add to our numbers. We currently have{" "}
+                        <span>{problemCount}</span> problems, over {courseCount} courses. In those courses, we have...
                     </p>
                 </div>
                 <div className="container__right-side">
@@ -41,9 +56,16 @@ const ProblemCount = () => {
                         </div>
                     )}
                     {!isLoading && problemCount && (
-                        <div className="right-side__problemCount-container" style={{backgroundImage: `url(${Gradient})`}}>
-                            <div className="problemCount-container__count light">{problemCount}</div>
-                            <div className="problemCount-container__text light">problems</div>
+                        <div
+                            className="right-side__problemCount-container"
+                            style={{ backgroundImage: `url(${Gradient})` }}
+                        >
+                            <div className="problemCount-container__count light">
+                                {problemCount}
+                            </div>
+                            <div className="problemCount-container__text light">
+                                problems
+                            </div>
                         </div>
                     )}
                 </div>

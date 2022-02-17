@@ -2,19 +2,26 @@
     grid-column: 1/-1;
     display: grid;
     grid-template-columns: 10rem 1fr 1fr 10rem;
+    margin-top: 3rem;
 }
 
 .katex-example {
     grid-column: 2/-2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
-.katex-example__title {
-    margin-bottom: 0;
+.katex-example__title-container {
+    grid-column: 1/-1;
+}
+
+.title-container__title {
+    margin: 0;
 }
 
 .katex-example__display-expression {
-    grid-column: 2/3;
-    padding: 20px 40px 20px 0;
+    grid-column: 1/2;
+    padding: 10px 40px 0 0;
 }
 
 .katex-example__display-expression p,
@@ -24,16 +31,12 @@
 }
 
 .display-expression {
-    padding: 10px 20px
+    /* padding: 10px 20px */
 }
 
 .katex-example__display-katex {
-    grid-column: 3/4;
-    padding: 20px;
-}
-
-.katex-example__display-katex {
-    margin-bottom: 3rem;
+    grid-column: 2/3;
+    padding: 10px 0 0 40px;
 }
 
 .katex-example__display-katex .katex {
@@ -44,4 +47,17 @@
 
 .display-katex__inlineTex {
     margin-left: 2rem;
+}
+
+.katex-example__display-katex.frac .display-katex__inlineTex .katex {
+    font-size: 38px;
+    margin-left: 2rem;
+}
+
+.border-top .katex-example {
+    border-top: 2px solid var(--secondary-light1);
+}
+
+.katex-example-container.mb-3 {
+    margin-bottom: 3rem;
 }

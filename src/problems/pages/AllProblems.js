@@ -14,6 +14,8 @@ const AllProblems = () => {
     const [loadedProblems, setLoadedProblems] = useState([]);
     const [filteredProblems, setFilteredProblems] = useState([]);
     const [filteredCourses, setFilteredCourses] = useState([]);
+    const [filteredContentDomains, setFilteredContentDomains] = useState([]);
+    const [filteredSubdomains, setFilteredSubdomains] = useState([]);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -50,9 +52,53 @@ const AllProblems = () => {
         };
 
         //fetch contentDomains and subdomains
+        const fetchContentDomains = async () => {
+            try {
+                const responseData = await sendRequest(
+                    process.env.REACT_APP_BACKEND_URL + "/contentDomains/"
+                );
+                const contentDomainList = responseData.contentDomains.map(
+                    (domain) => {
+                        return {
+                            title: domain.domainTitle,
+                            id: domain.id,
+                            course: domain.courses[0].value,
+                            subdomains: domain.subdomains,
+                            selected: false,
+                        };
+                    }
+                );
+
+                const subDomainList = [];
+                for (let i = 0; i < contentDomainList.length; i++) {
+                    if (contentDomainList[i].subdomains !== undefined) {
+                        for (
+                            let j = 0;
+                            j < contentDomainList[i].subdomains.length;
+                            j++
+                        ) {
+                            let tempSubDomain = {
+                                course: contentDomainList[i].course,
+                                contentDomain: contentDomainList[i].title,
+                                title: contentDomainList[i].subdomains[j],
+                                id: contentDomainList[i].id + j,
+                                selected: false,
+                            };
+                            subDomainList.push(tempSubDomain);
+                        }
+                    }
+                }
+
+                setFilteredContentDomains(contentDomainList);
+                setFilteredSubdomains(subDomainList);
+            } catch (err) {
+                console.log(err);
+            }
+        };
 
         fetchProblems();
         fetchCourses();
+        fetchContentDomains();
     }, [sendRequest]);
 
     const problemDeleteHandler = (deletedPlaceId) => {
@@ -101,8 +147,8 @@ const AllProblems = () => {
             <div className="container__title">
                 <h1>View all problems</h1>
                 <p>
-                    Select all the courses, or any single course you want. <br/> (Just
-                    make sure you do select a course!)
+                    Select all the courses, or any single course you want.{" "}
+                    <br /> (Just make sure you do select a course!)
                 </p>
             </div>
             {isLoading && (

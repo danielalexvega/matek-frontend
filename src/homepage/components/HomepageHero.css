@@ -7,10 +7,9 @@
     flex-flow: column;
     background-position: right;
     background-repeat: no-repeat;
-    min-height: 500px;
+    min-height: 440px;
     justify-content: center;
     align-items: center;
-    
 }
 
 .hero-title {
