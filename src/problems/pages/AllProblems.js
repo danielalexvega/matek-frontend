@@ -14,7 +14,9 @@ const AllProblems = () => {
     const [loadedProblems, setLoadedProblems] = useState([]);
     const [filteredProblems, setFilteredProblems] = useState([]);
     const [filteredCourses, setFilteredCourses] = useState([]);
+    const [loadedContentDomains, setLoadedContentDomains] = useState([]);
     const [filteredContentDomains, setFilteredContentDomains] = useState([]);
+    const [loadedSubdomains, setLoadedSubdomains] = useState([]);
     const [filteredSubdomains, setFilteredSubdomains] = useState([]);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -89,7 +91,9 @@ const AllProblems = () => {
                     }
                 }
 
+                setLoadedContentDomains(contentDomainList);
                 setFilteredContentDomains(contentDomainList);
+                setLoadedSubdomains(subDomainList);
                 setFilteredSubdomains(subDomainList);
             } catch (err) {
                 console.log(err);
@@ -112,6 +116,29 @@ const AllProblems = () => {
         newList[index].selected = !newList[index].selected;
         setFilteredCourses(newList);
         filterProblemsByCourse(newList);
+        filterContentDomainsByCourse(newList);
+    };
+
+    const selectContentDomain = (index) => {
+        let newList = [...filteredContentDomains];
+        newList[index].selected = !newList[index].selected;
+        let noneSelected = true;
+        newList.forEach((contentDomain) => {
+            if (contentDomain.selected) {
+                noneSelected = false;
+            }
+        });
+
+        if (noneSelected) {
+            let resetList = newList.map((contentDomain) => {
+                return { ...contentDomain, selected: true };
+            });
+            filterProblemsByContentDomain(resetList);
+        } else {
+            filterProblemsByContentDomain(newList);
+        }
+
+        setFilteredContentDomains(newList);
     };
 
     const selectAllCourses = () => {
@@ -120,6 +147,7 @@ const AllProblems = () => {
         });
         setFilteredCourses(newList);
         filterProblemsByCourse(newList);
+        filterContentDomainsByCourse(newList);
     };
 
     const selectNoCourses = () => {
@@ -128,6 +156,7 @@ const AllProblems = () => {
         });
         setFilteredCourses(newList);
         filterProblemsByCourse(newList);
+        filterContentDomainsByCourse(newList);
     };
 
     const filterProblemsByCourse = (courses) => {
@@ -139,6 +168,35 @@ const AllProblems = () => {
         );
 
         setFilteredProblems(newProblemList);
+    };
+
+    const filterProblemsByContentDomain = (contentDomains) => {
+        let filterContentDomainTitles = contentDomains.filter(
+            (contentDomain) => contentDomain.selected
+        );
+        filterContentDomainTitles = filterContentDomainTitles.map(
+            (contentDomain) => contentDomain.title
+        );
+
+        let newProblemList = loadedProblems.filter((problem) =>
+            filterContentDomainTitles.includes(problem.subjectContent)
+        );
+
+        setFilteredProblems(newProblemList);
+    };
+
+    const filterContentDomainsByCourse = (courses) => {
+        let filterCourseTitles = courses.filter((course) => course.selected);
+        filterCourseTitles = filterCourseTitles.map((course) => course.title);
+
+        let newContentDomainList = loadedContentDomains.filter(
+            (contentDomain) => filterCourseTitles.includes(contentDomain.course)
+        );
+
+        setFilteredContentDomains(newContentDomainList);
+
+        // console.log(loadedContentDomains);
+        // console.log(filterCourseTitles);
     };
 
     return (
@@ -165,6 +223,11 @@ const AllProblems = () => {
                             selectItem={selectCourse}
                             selectAll={selectAllCourses}
                             deselectAll={selectNoCourses}
+                        />
+                        <Dropdown
+                            headerTitle="Select a content domain"
+                            list={filteredContentDomains}
+                            selectItem={selectContentDomain}
                         />
                     </div>
                     <ProblemList
