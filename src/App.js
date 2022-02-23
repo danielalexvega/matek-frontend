@@ -39,9 +39,9 @@ const App = () => {
                 <Route path="/problems" exact>
                     <AllProblems />
                 </Route>
-                <Route path="/users">
+                {/* <Route path="/users">
                     <Users />
-                </Route>
+                </Route> */}
                 <Route path="/:userId/problems" exact>
                     <UserProblems />
                 </Route>
