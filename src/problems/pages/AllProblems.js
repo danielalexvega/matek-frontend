@@ -141,6 +141,27 @@ const AllProblems = () => {
         setFilteredContentDomains(newList);
     };
 
+    const selectSubdomain = (index) => {
+        let newSubdomainList = [...filteredSubdomains];
+        newSubdomainList[index].selected = !newSubdomainList[index].selected;
+
+        let noneSelected = true;
+        newSubdomainList.forEach((subdomain) => {
+            if (subdomain.selected) {
+                noneSelected = false;
+            }
+        });
+
+        if (noneSelected) {
+            let resetList = newSubdomainList.map((subdomain) => {
+                return { ...subdomain, selected: true };
+            });
+            filterProblemsBySubdomain(resetList);
+        } else {
+            filterProblemsBySubdomain(newSubdomainList);
+        }
+    }
+
     const selectAllCourses = () => {
         let newList = filteredCourses.map((course) => {
             return { ...course, selected: true };
@@ -185,6 +206,10 @@ const AllProblems = () => {
         setFilteredProblems(newProblemList);
     };
 
+    const filterProblemsBySubdomain = (subdomain) => {
+        
+    }
+
     const filterContentDomainsByCourse = (courses) => {
         let filterCourseTitles = courses.filter((course) => course.selected);
         filterCourseTitles = filterCourseTitles.map((course) => course.title);
@@ -194,9 +219,6 @@ const AllProblems = () => {
         );
 
         setFilteredContentDomains(newContentDomainList);
-
-        // console.log(loadedContentDomains);
-        // console.log(filterCourseTitles);
     };
 
     return (
@@ -214,7 +236,7 @@ const AllProblems = () => {
                     <LoadingSpinner />
                 </div>
             )}
-            {!isLoading && loadedProblems && (
+            {!isLoading && loadedProblems.length > 0 && (
                 <>
                     <div className="filter__container">
                         <Dropdown
@@ -223,10 +245,17 @@ const AllProblems = () => {
                             selectItem={selectCourse}
                             selectAll={selectAllCourses}
                             deselectAll={selectNoCourses}
+                            selectAllOptions
                         />
                         <Dropdown
                             headerTitle="Select a content domain"
                             list={filteredContentDomains}
+                            selectItem={selectContentDomain}
+                        />
+
+                        <Dropdown
+                            headerTitle="Select a subdomain."
+                            list={filteredSubdomains}
                             selectItem={selectContentDomain}
                         />
                     </div>

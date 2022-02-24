@@ -26,20 +26,20 @@
     --danger: #b1271b; /* Carnelian*/
     --danger-dark: #8e1f15; /* Kobe*/
 
-    --warning: #FFB41F; /* Honey Yellow*/
-    --warning-dark: #E09600; /* Gamboge*/
+    --warning: #ffb41f; /* Honey Yellow*/
+    --warning-dark: #e09600; /* Gamboge*/
 
     --text-color: #061523;
     --bg: #124e78;
     --bg-accent: #0d3959;
-    --nav-size: 60px;
+    --nav-size: 72px;
     --border: 1px solid #0d3959;
     --border-radius: 8px;
     --max-width: 1440px;
     --speed: 500ms;
 
     /* MAIN NAVIGATION VARIABLES  */
-    --navigation-height: 4rem;
+    --navigation-height: 4.5rem;
 }
 
 * {
@@ -68,6 +68,17 @@ h3 {
 p {
     font-size: 22px;
     line-height: 26.4px;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: var(--light);
+    text-decoration: none;
 }
 
 #root {
@@ -110,7 +121,7 @@ body {
 }
 
 .frac {
-    font-size:24px;
+    font-size: 24px;
 }
 
 .secondary {

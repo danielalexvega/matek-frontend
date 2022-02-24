@@ -16,6 +16,7 @@ const Dropdown = ({
     selectItem,
     selectAll,
     deselectAll,
+    selectAllOptions
 }) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -43,18 +44,21 @@ const Dropdown = ({
                 unmountOnExit
             >
                 <div role="list" className={`dd-list`}>
-                    <DropdownItem
+                    {selectAllOptions && <DropdownItem
                         type="button"
                         id="select-all"
                         className="select-all"
-                        onClick={() => selectAll()}
+                        onClick={() => {
+                            selectAll();
+                            toggleList();
+                        }}
                     >
                         <span className="dd-select-all">Select All </span>
                         <FontAwesomeIcon
                             className={`dd_double-check`}
                             icon={faCheckDouble}
                         />
-                    </DropdownItem>
+                    </DropdownItem>}
                     {list.map((item, index) => (
                         <DropdownItem
                             type="button"
@@ -70,7 +74,7 @@ const Dropdown = ({
                             )}
                         </DropdownItem>
                     ))}
-                    <DropdownItem
+                    {selectAllOptions && <DropdownItem
                         type="button"
                         id="select-none"
                         className="select-none"
@@ -81,7 +85,7 @@ const Dropdown = ({
                             className={`dd_circle_x`}
                             icon={faCircleXmark}
                         />
-                    </DropdownItem>
+                    </DropdownItem>}
                 </div>
             </CSSTransition>
         </div>

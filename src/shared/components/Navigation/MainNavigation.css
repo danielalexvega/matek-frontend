@@ -49,7 +49,7 @@
     }
   
     .main-navigation__header-nav {
-      display: block;
+      display: flex;
     }
 
     .header-container {
