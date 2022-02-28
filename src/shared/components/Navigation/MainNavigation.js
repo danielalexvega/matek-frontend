@@ -73,6 +73,9 @@ const MainNavigation = (props) => {
                                         icon={faPencil}
                                     />
                                 }
+                                tooltip
+                                tooltipId="addItems"
+                                tooltipText="Add Items"
                             ></NavItem>
                             <NavItem
                                 icon={

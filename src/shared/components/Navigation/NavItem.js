@@ -1,16 +1,33 @@
 import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
+import ReactTooltip from "react-tooltip";
 
 import "./NavItem.css";
 
-const NavItem = ({ icon, children }) => {
+const NavItem = ({ icon, tooltip, tooltipId, tooltipText, children }) => {
     const [open, setOpen] = useState(false);
 
     return (
         <li className="nav-item">
-            <a href="#" className="icon-button" onClick={() => setOpen(!open)}>
+            {tooltip && <a
+                href="#"
+                className="icon-button"
+                onClick={() => setOpen(!open)}
+                data-tip
+                data-for={tooltipId}
+            >
                 {icon}
-            </a>
+            </a>}
+            {!tooltip && <a
+                href="#"
+                className="icon-button"
+                onClick={() => setOpen(!open)}
+            >
+                {icon}
+            </a>}
+            {(tooltip === true) && <ReactTooltip id={tooltipId} type="info" effect="solid" delayShow={250}>
+                <span>{tooltipText}</span>
+            </ReactTooltip>}
             <CSSTransition
                 in={open}
                 unmountOnExit
