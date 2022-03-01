@@ -24,11 +24,11 @@ const NavLinks = (props) => {
           View All Problems
         </NavLink>
       </li>
-      {/* {isLoggedIn && (
+      {isLoggedIn && (
         <li>
           <NavLink to="/users">View All Users</NavLink>
         </li>
-      )} */}
+      )}
       {isLoggedIn && (
         <li>
           <NavLink to={`/${userId}/problems`}>Your Desk</NavLink>

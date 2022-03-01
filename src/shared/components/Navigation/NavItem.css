@@ -32,7 +32,8 @@
 
 .nav-item-children-enter {
     position: absolute;
-    top: 58px;
+    top: 65px;
+    right: 0;
     transform: translateY(-150%);
 }
 .nav-item-children-enter-active {
@@ -41,7 +42,8 @@
 }
 .nav-item-children-exit {
     position: absolute;
-    top: 58px;
+    top: 65px;
+    right: 0;
 }
 .nav-item-children-exit-active {
     transform: translateY(-150%);
@@ -50,6 +52,17 @@
 
 .nav-item-children-enter-done {
     position: absolute;
-    top: 58px;
+    top: 65px;
+    right: 0;
+}
+
+.nav-item .icon-button .svg-inline--fa:first-child {
+    transform: rotate(0deg);
+    transition: transform 500ms ease-in-out;
+}
+
+.nav-item__open .icon-button .svg-inline--fa:first-child {
+    transform: rotate(180deg);
+    transition: transform 500ms ease-in-out;
 }
 

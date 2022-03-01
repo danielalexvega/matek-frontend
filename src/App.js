@@ -26,7 +26,7 @@ const UserProblems = React.lazy(() => import("./problems/pages/UserProblems"));
 const CloneProblem = React.lazy(() => import("./problems/pages/CloneProblem"));
 
 const App = () => {
-    const { token, userId, userName, login, logout } = useAuth();
+    const { token, userId, userName, login, logout, userImage } = useAuth();
 
     let routes;
 
@@ -39,9 +39,9 @@ const App = () => {
                 <Route path="/problems" exact>
                     <AllProblems />
                 </Route>
-                {/* <Route path="/users">
+                <Route path="/users">
                     <Users />
-                </Route> */}
+                </Route>
                 <Route path="/:userId/problems" exact>
                     <UserProblems />
                 </Route>
@@ -92,6 +92,7 @@ const App = () => {
                 userName: userName,
                 login: login,
                 logout: logout,
+                userImage: userImage,
             }}
         >
             <Router>

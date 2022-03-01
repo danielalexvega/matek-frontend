@@ -4,20 +4,12 @@ import { Link } from "react-router-dom";
 import MainHeader from "./MainHeader";
 import NavLinks from "./NavLinks";
 import Navbar from "./Navbar";
-import DropdownMenu from "./DropdownMenu";
-import DropdownMenuItem from "./DropdownMenuItem";
-import NavItem from "./NavItem";
+
 import SideDrawer from "./SideDrawer";
 import Backdrop from "../UIElements/Backdrop";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
-import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { faChalkboard } from "@fortawesome/free-solid-svg-icons";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
 
 import "./MainNavigation.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 const MainNavigation = (props) => {
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
@@ -65,66 +57,7 @@ const MainNavigation = (props) => {
 
                     <nav className="main-navigation__header-nav">
                         {/* <NavLinks /> */}
-                        <Navbar>
-                            <NavItem
-                                icon={
-                                    <FontAwesomeIcon
-                                        className="header-nav__icon"
-                                        icon={faPencil}
-                                    />
-                                }
-                                tooltip
-                                tooltipId="addItems"
-                                tooltipText="Add Items"
-                            ></NavItem>
-                            <NavItem
-                                icon={
-                                    <FontAwesomeIcon
-                                        className="header-nav__icon"
-                                        icon={faUserAstronaut}
-                                    />
-                                }
-                            ></NavItem>
-                            <NavItem
-                                icon={
-                                    <FontAwesomeIcon
-                                        className="header-nav__icon"
-                                        icon={faChevronUp}
-                                    />
-                                }
-                            >
-                                <DropdownMenu
-                                    main={[
-                                    <DropdownMenuItem
-                                        leftIcon={
-                                            <FontAwesomeIcon
-                                                className="header-nav__icon"
-                                                icon={faChalkboard}
-                                            />
-                                        }
-                                    >
-                                        View All Problems
-                                    </DropdownMenuItem>,
-                                    <DropdownMenuItem leftIcon={
-                                            <FontAwesomeIcon
-                                                className="header-nav__icon"
-                                                icon={faChalkboardUser}
-                                            />
-                                        }>
-                                        View Your Problems
-                                    </DropdownMenuItem>,
-                                    <DropdownMenuItem leftIcon={
-                                            <FontAwesomeIcon
-                                                className="header-nav__icon"
-                                                icon={faPlus}
-                                            />
-                                        }>
-                                        Add a Problem
-                                    </DropdownMenuItem>
-                                    ]}
-                                />
-                            </NavItem>
-                        </Navbar>
+                        <Navbar></Navbar>
                     </nav>
                 </div>
             </MainHeader>

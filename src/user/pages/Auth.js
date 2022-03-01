@@ -90,10 +90,14 @@ const Auth = () => {
                     }
                 );
 
+                console.log(responseData);
+
                 login(
                     responseData.userId,
                     responseData.name,
-                    responseData.token
+                    responseData.token,
+                    null,
+                    responseData.image
                 );
 
                 routeChange();
@@ -114,10 +118,14 @@ const Auth = () => {
                     formData
                 );
 
+                console.log(responseData.image);
+
                 login(
                     responseData.userId,
                     responseData.userName,
-                    responseData.token
+                    responseData.token,
+                    null, 
+                    responseData.image
                 );
                 routeChange();
             } catch (err) {}
