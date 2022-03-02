@@ -52,17 +52,17 @@ html {
 }
 
 h1 {
-    font-size: 48px;
-    line-height: 57.6px;
+    font-size: 44px;
+    line-height: 52.8px;
 }
 
 h2 {
-    font-size: 42px;
-    line-height: 50.4px;
-}
-h3 {
     font-size: 36px;
     line-height: 43.2px;
+}
+h3 {
+    font-size: 28px;
+    line-height: 33.6px;
 }
 
 p {

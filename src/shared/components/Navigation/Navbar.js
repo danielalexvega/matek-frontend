@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 
 import DropdownMenu from "./DropdownMenu";
@@ -20,8 +20,16 @@ import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
 
 const Navbar = () => {
-    const { isLoggedIn, logout, userId } = useContext(AuthContext);
+    const { isLoggedIn, logout, userName, userImage } = useContext(AuthContext);
+    const [loadedUserImage, setLoadedUserImage] = useState("");
     const history = useHistory();
+
+    useEffect(()=>{
+        if(isLoggedIn && userImage) {
+            console.log(userImage);
+            setLoadedUserImage(userImage);
+        }
+    },[userImage, isLoggedIn]);
 
     const handleLogout = () => {
         logout();
@@ -98,7 +106,7 @@ const Navbar = () => {
                     />
                 </NavItem>
 
-                {isLoggedIn && <NavItemUser></NavItemUser>}
+                {isLoggedIn && <NavItemUser loadedUserImage={loadedUserImage} name={userName}></NavItemUser>}
                 {!isLoggedIn && (
                     <NavItem
                         icon={
