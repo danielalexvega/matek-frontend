@@ -11,6 +11,10 @@
     background: var(--primary-light1);
 }
 
+.icon-left {
+    margin-right: 10px;
+}
+
 .icon-right {
     margin-left: auto;
 }

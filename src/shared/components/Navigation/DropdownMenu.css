@@ -10,6 +10,16 @@
     border: 1px solid var(--bg-accent);
 }
 
+.container__menu-title {
+    color: var(--light);
+    margin: 0;
+    padding: 0px 0.5rem 5px;
+}
+
+.container__menu {
+    /* padding: 5px; */
+}
+
 .menu-primary-enter {
     position: absolute;
     transform: translateX(-110%);

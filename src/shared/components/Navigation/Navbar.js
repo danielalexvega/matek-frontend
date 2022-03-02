@@ -56,15 +56,19 @@ const Navbar = () => {
                     tooltip
                     tooltipId="viewProblems"
                     tooltipText="View Problems"
+                    navlink="/problems"
                 ></NavItem>
                 {/* Menu  */}
-                <NavItem
+                {isLoggedIn && <NavItem
                     icon={
                         <FontAwesomeIcon
                             className="header-nav__icon"
                             icon={faChevronUp}
                         />
                     }
+                    tooltip
+                    tooltipId="menu"
+                    tooltipText={"Menu"}
                     rotate
                 >
                     <DropdownMenu
@@ -103,8 +107,10 @@ const Navbar = () => {
                                 Add a Problem
                             </DropdownMenuItem>,
                         ]}
+
+                        menuTitle="Menu"
                     />
-                </NavItem>
+                </NavItem>}
 
                 {isLoggedIn && <NavItemUser loadedUserImage={loadedUserImage} name={userName}></NavItemUser>}
                 {!isLoggedIn && (
