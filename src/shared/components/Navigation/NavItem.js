@@ -15,8 +15,10 @@ const NavItem = ({
     exact,
     children,
     onClick,
+    open,
+    setOpen
 }) => {
-    const [open, setOpen] = useState(false);
+   
 
     if (navlink) {
         return (

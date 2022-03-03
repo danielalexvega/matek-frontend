@@ -37,8 +37,8 @@ button.icon-button .svg-inline--fa {
 
 .nav-item-children-enter {
     position: absolute;
-    top: 65px;
-    right: 0;
+    top: 55px;
+    left: -55px;
     transform: translateY(-150%);
 }
 .nav-item-children-enter-active {
@@ -47,8 +47,8 @@ button.icon-button .svg-inline--fa {
 }
 .nav-item-children-exit {
     position: absolute;
-    top: 65px;
-    right: 0;
+    top: 55px;
+    left: -55px;
 }
 .nav-item-children-exit-active {
     transform: translateY(-150%);
@@ -57,14 +57,14 @@ button.icon-button .svg-inline--fa {
 
 .nav-item-children-enter-done {
     position: absolute;
-    top: 65px;
-    right: 0;
+    top: 55px;
+    left: -55px;
 }
 
 .nav-item-children-exit-done {
     position: absolute;
-    top: 65px;
-    right: 0;
+    top: 55px;
+    left: -55px;
     display: none;
 }
 

@@ -1,14 +1,33 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 import "./DropdownMenuItem.css";
 
-const DropdownMenuItem = (props) => {
+const DropdownMenuItem = ({
+    link,
+    leftIcon,
+    rightIcon,
+    children,
+    open,
+    setOpen,
+}) => {
     return (
-        <a href="#" className="menu-item">
-            <span className="icon-left">{props.leftIcon}</span>
-            {props.children}
-            <span className="icon-right">{props.rightIcon}</span>
-        </a>
+        <>
+            {link && (
+                <NavLink to={link} className="menu-item">
+                    <span className="icon-left">{leftIcon}</span>
+                    <button
+                        className="menu-item__button"
+                        onClick={() => {
+                            setOpen(!open);
+                        }}
+                    >
+                        {children}
+                    </button>
+                    <span className="icon-right">{rightIcon}</span>
+                </NavLink>
+            )}
+        </>
     );
 };
 

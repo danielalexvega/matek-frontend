@@ -20,16 +20,17 @@ import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
 
 const Navbar = () => {
-    const { isLoggedIn, logout, userName, userImage } = useContext(AuthContext);
+    const { isLoggedIn, logout, userName, userId, userImage } =
+        useContext(AuthContext);
     const [loadedUserImage, setLoadedUserImage] = useState("");
+    const [open, setOpen] = useState(false);
     const history = useHistory();
 
-    useEffect(()=>{
-        if(isLoggedIn && userImage) {
-            console.log(userImage);
+    useEffect(() => {
+        if (isLoggedIn && userImage) {
             setLoadedUserImage(userImage);
         }
-    },[userImage, isLoggedIn]);
+    }, [userImage, isLoggedIn]);
 
     const handleLogout = () => {
         logout();
@@ -59,60 +60,79 @@ const Navbar = () => {
                     navlink="/problems"
                 ></NavItem>
                 {/* Menu  */}
-                {isLoggedIn && <NavItem
-                    icon={
-                        <FontAwesomeIcon
-                            className="header-nav__icon"
-                            icon={faChevronUp}
+                {isLoggedIn && (
+                    <NavItem
+                        icon={
+                            <FontAwesomeIcon
+                                className="header-nav__icon"
+                                icon={faChevronUp}
+                            />
+                        }
+                        tooltip
+                        tooltipId="menu"
+                        tooltipText={"Menu"}
+                        rotate
+                        open={open}
+                        setOpen={setOpen}
+                    >
+                        <DropdownMenu
+                            main={[
+                                <DropdownMenuItem
+                                    key={1}
+                                    leftIcon={
+                                        <FontAwesomeIcon
+                                            className="header-nav__icon"
+                                            icon={faChalkboardUser}
+                                        />
+                                    }
+                                    link={`/${userId}/problems`}
+                                    open={open}
+                                    setOpen={setOpen}
+                                >
+                                    View Your Problems
+                                </DropdownMenuItem>,
+                                <DropdownMenuItem
+                                    key={2}
+                                    leftIcon={
+                                        <FontAwesomeIcon
+                                            className="header-nav__icon"
+                                            icon={faPlus}
+                                        />
+                                    }
+                                    link="/problems/new"
+                                    open={open}
+                                    setOpen={setOpen}
+                                >
+                                    Add a Problem
+                                </DropdownMenuItem>,
+                                <DropdownMenuItem
+                                    key={3}
+                                    leftIcon={
+                                        <FontAwesomeIcon
+                                            className="header-nav__icon"
+                                            icon={faPencil}
+                                        />
+                                    }
+                                    link="/"
+                                    open={open}
+                                    setOpen={setOpen}
+                                >
+                                    Manage Quizzes
+                                </DropdownMenuItem>,
+                            ]}
+                            menuTitle="Menu"
                         />
-                    }
-                    tooltip
-                    tooltipId="menu"
-                    tooltipText={"Menu"}
-                    rotate
-                >
-                    <DropdownMenu
-                        main={[
-                            <DropdownMenuItem
-                                key={4}
-                                leftIcon={
-                                    <FontAwesomeIcon
-                                        className="header-nav__icon"
-                                        icon={faChalkboard}
-                                    />
-                                }
-                            >
-                                View All Problems
-                            </DropdownMenuItem>,
-                            <DropdownMenuItem
-                                key={5}
-                                leftIcon={
-                                    <FontAwesomeIcon
-                                        className="header-nav__icon"
-                                        icon={faChalkboardUser}
-                                    />
-                                }
-                            >
-                                View Your Problems
-                            </DropdownMenuItem>,
-                            <DropdownMenuItem
-                                key={6}
-                                leftIcon={
-                                    <FontAwesomeIcon
-                                        className="header-nav__icon"
-                                        icon={faPlus}
-                                    />
-                                }
-                            >
-                                Add a Problem
-                            </DropdownMenuItem>,
-                        ]}
+                    </NavItem>
+                )}
 
-                        menuTitle="Menu"
-                    />
-                </NavItem>}
-
-                {isLoggedIn && <NavItemUser loadedUserImage={loadedUserImage} name={userName}></NavItemUser>}
+                {isLoggedIn && (
+                    <NavItemUser
+                        loadedUserImage={loadedUserImage}
+                        name={userName}
+                        tooltipId="viewProfile"
+                        tooltipText="View Profile"
+                    ></NavItemUser>
+                )}
                 {!isLoggedIn && (
                     <NavItem
                         icon={
