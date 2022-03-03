@@ -110,7 +110,7 @@ const NavItem = ({
             >
                 {/* If there is a tooltip  */}
                 {tooltip && (
-                    <a
+                    <button
                         href="#"
                         className="icon-button"
                         onClick={() => setOpen(!open)}
@@ -118,7 +118,7 @@ const NavItem = ({
                         data-for={tooltipId}
                     >
                         {icon}
-                    </a>
+                    </button>
                 )}
                 {/* If there is not a tooltip  */}
                 {!tooltip && (

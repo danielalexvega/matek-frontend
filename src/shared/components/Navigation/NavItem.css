@@ -20,6 +20,11 @@
     align-items: center;
     justify-content: center;
     transition: filter 300ms;
+    border: 1px solid var(--secondary);
+}
+
+button.icon-button .svg-inline--fa {
+    color: var(--light);
 }
 
 .icon-button:hover {
@@ -54,6 +59,13 @@
     position: absolute;
     top: 65px;
     right: 0;
+}
+
+.nav-item-children-exit-done {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    display: none;
 }
 
 .nav-item .icon-button .svg-inline--fa:first-child {
