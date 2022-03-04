@@ -15,13 +15,13 @@ const DropdownMenuItem = ({
         <>
             {link && (
                 <NavLink to={link} className="menu-item">
-                    <span className="icon-left">{leftIcon}</span>
                     <button
                         className="menu-item__button"
                         onClick={() => {
                             setOpen(!open);
                         }}
                     >
+                        <span className="icon-left">{leftIcon}</span>
                         {children}
                     </button>
                     <span className="icon-right">{rightIcon}</span>

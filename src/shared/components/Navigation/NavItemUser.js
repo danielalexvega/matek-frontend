@@ -10,12 +10,6 @@ const NavItemUser = ({ loadedUserImage, name, tooltipId, tooltipText}) => {
         firstName = name.split(" ")[0];
     }
 
-    if (loadedUserImage) {
-        console.log(
-            `${process.env.REACT_APP_ASSET_URL}/images/${loadedUserImage}`
-        );
-    }
-
     return (
         <>
             {loadedUserImage && (
