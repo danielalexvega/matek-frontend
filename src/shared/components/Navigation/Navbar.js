@@ -12,7 +12,7 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { faKey } from "@fortawesome/free-solid-svg-icons";
-import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { faChalkboard } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
@@ -65,7 +65,7 @@ const Navbar = () => {
                         icon={
                             <FontAwesomeIcon
                                 className="header-nav__icon"
-                                icon={faChevronUp}
+                                icon={faChevronDown}
                             />
                         }
                         tooltip

@@ -19,7 +19,7 @@ const NavItemUser = ({ loadedUserImage, name, tooltipId, tooltipText}) => {
                         image={`${process.env.REACT_APP_ASSET_URL}/images/${loadedUserImage}`}
                         alt="Daniel Vega"
                     />
-                    <span className="nav-item-user__name">{firstName}</span>
+                    {/* <span className="nav-item-user__name">{firstName}</span> */}
                 </li>
             )}
             <ReactTooltip
