@@ -11,6 +11,7 @@ import KatexPreview from "../components/KatexPreview";
 import Card from "../../shared/components/UIElements/Card";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import ReactTooltip from "react-tooltip";
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
@@ -46,14 +47,18 @@ const NewProblem = () => {
     ] = useForm(
         {
             course: {
-                value: "Course",
+                value: "",
                 isValid: false,
             },
             subjectContent: {
-                value: "Content Domain",
+                value: "",
                 isValid: false,
             },
             subdomain: {
+                value: "",
+                isValid: false,
+            },
+            katexText: {
                 value: "",
                 isValid: false,
             },
@@ -212,6 +217,7 @@ const NewProblem = () => {
                         course: formState.inputs.course.value,
                         subjectContent: formState.inputs.subjectContent.value,
                         subdomain: formState.inputs.subdomain.value,
+                        katexText: formState.inputs.katexText.value,
                         katex: formState.inputs.katex.value,
                         solution: formState.inputs.solution.value,
                         isMultipleChoice:
@@ -237,6 +243,7 @@ const NewProblem = () => {
                     "subjectContent",
                     formState.inputs.subjectContent.value
                 );
+                formData.append("katexText", formState.inputs.katexText.value);
                 formData.append("katex", formState.inputs.katex.value);
                 formData.append("solution", formState.inputs.solution.value);
                 formData.append(
@@ -294,7 +301,7 @@ const NewProblem = () => {
                                     label="Please select a course."
                                     options={courses}
                                     validators={[VALIDATOR_MATCH(courseTitles)]}
-                                    errorText="Please select a course."
+                                    errorText="Please select a valid course."
                                     onInput={inputHandler}
                                     type="text"
                                     placeholder="Courses"
@@ -331,8 +338,8 @@ const NewProblem = () => {
                                 {/* Problem  */}
                                 <Input
                                     element="textarea"
-                                    id="katex"
-                                    label="Problem - Written in Katex"
+                                    id="katexText"
+                                    label="Problem Text- Written in Katex"
                                     validators={[VALIDATOR_REQUIRE()]}
                                     errorText="Please enter a valid problem"
                                     onInput={inputHandler}
@@ -342,7 +349,7 @@ const NewProblem = () => {
                                     element="textarea"
                                     id="katex"
                                     label="Problem - Written in Katex"
-                                    validators={[VALIDATOR_REQUIRE()]}
+                                    validators={[]}
                                     errorText="Please enter a valid problem"
                                     onInput={inputHandler}
                                 />
@@ -352,7 +359,7 @@ const NewProblem = () => {
                                     id="solution"
                                     label="Solution - Written in Katex"
                                     validators={[VALIDATOR_REQUIRE()]}
-                                    errorText="Please enter a valid problem"
+                                    errorText="Please enter a valid solution"
                                     onInput={inputHandler}
                                 />
                                 <label
@@ -414,9 +421,13 @@ const NewProblem = () => {
                                     {isLoading && <LoadingSpinner asOverlay />}
                                     {formState.inputs.hasImage.value && (
                                         <div className="problem-item__image">
-                                            {formState.inputs.hasImage.value && (
+                                            {formState.inputs.hasImage
+                                                .value && (
                                                 <img
-                                                    src={formState.inputs.image.value}
+                                                    src={
+                                                        formState.inputs.image
+                                                            .value
+                                                    }
                                                     alt="problem"
                                                 />
                                             )}
@@ -425,20 +436,48 @@ const NewProblem = () => {
                                     <div className="problem-item__problem">
                                         <div className="problem__course">
                                             <span className="course__title">
-                                                {formState.inputs.course.value}
+                                                {formState.inputs.course
+                                                    .value === ""
+                                                    ? "Algebra 1"
+                                                    : formState.inputs.course
+                                                          .value}
                                             </span>{" "}
-                                            | {formState.inputs.subjectContent.value}
+                                            |{" "}
+                                            {formState.inputs.subjectContent
+                                                .value === ""
+                                                ? "Solving One Variable Equations"
+                                                : formState.inputs
+                                                      .subjectContent.value}
                                         </div>
                                         <div className="problem__subdomain">
-                                            {formState.inputs.subdomain.value}
+                                            {formState.inputs.subdomain
+                                                .value === ""
+                                                ? "Two Step Equations"
+                                                : formState.inputs.subdomain
+                                                      .value}
                                         </div>
-                                        <p className="problem__katex">
-                                            <InlineTex
-                                                texContent={
-                                                    formState.inputs.katex.value
-                                                }
-                                            />
-                                        </p>
+                                        <div className="problem__katex-container"> 
+                                            <p className="problem__katex">
+                                                <InlineTex
+                                                    texContent={
+                                                        formState.inputs.katexText
+                                                            .value === ""
+                                                            ? "Solve for $$b$$."
+                                                            : formState.inputs.katexText.value
+                                                    }
+                                                />
+                                            </p>
+                                            <p className="problem__katex center">
+                                                <InlineTex
+                                                    texContent={
+                                                        formState.inputs.katexText
+                                                            .value === ""
+                                                            ? "$$-32+10b=-22$$"
+                                                            : formState.inputs.katex.value
+                                                    }
+                                                />
+                                            </p>
+                                        </div>
                                     </div>
                                     {/* <ul className="problem-item__choices">
                         {choices.map((choice, index) => (
