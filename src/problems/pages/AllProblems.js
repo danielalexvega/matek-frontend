@@ -5,7 +5,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import ProblemList from "../components/ProblemList";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import Button from "../../shared/components/FormElements/Button";
+// import Button from "../../shared/components/FormElements/Button";
 import Dropdown from "../../shared/components/UIElements/Dropdown";
 
 import "./AllProblems.css";

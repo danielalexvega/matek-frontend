@@ -1,0 +1,27 @@
+.label-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tooltip-icon {
+    margin: 0 0.5rem;
+    /* cursor: help; */
+    height: 1.2rem;
+    color: var(--secondary);
+}
+
+.tooltip-icon:hover {
+    color: var(--secondary-light1);
+}
+
+.label-container .tooltip-text {
+    display: flex;
+    width: 250px;
+}
+
+.errorText {
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 0;
+}

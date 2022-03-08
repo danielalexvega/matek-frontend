@@ -1,6 +1,6 @@
 import React from "react";
 import FullWidthContainer from "../../homepage/components/FullWidthContainer";
-import { Tex, InlineTex } from "react-tex";
+// import { Tex, InlineTex } from "react-tex";
 
 import "./LearnMore.css";
 

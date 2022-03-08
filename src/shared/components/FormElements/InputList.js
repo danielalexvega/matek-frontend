@@ -1,4 +1,8 @@
 import React, { useReducer, useEffect } from "react";
+import ReactTooltip from "react-tooltip";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 import { validate } from "../../util/validators";
 import "./InputList.css";
@@ -70,7 +74,27 @@ const InputList = (props) => {
                 "form-control--invalid"
             }`}
         >
-            <label htmlFor={props.id}>{props.label}</label>
+            <div className="label-container">
+                <label htmlFor={props.id}>{props.label}</label>
+                {props.tooltip && (
+                    <>
+                        <span data-tip data-for={props.tooltipId}>
+                            <FontAwesomeIcon
+                                className="tooltip-icon"
+                                icon={faCircleInfo}
+                            />
+                        </span>
+                        <ReactTooltip
+                            id={props.tooltipId}
+                            type="info"
+                            effects="solid"
+                            delayShow={100}
+                        >
+                            <span className="tooltip-text">{props.tooltipText}</span>
+                        </ReactTooltip>
+                    </>
+                )}
+            </div>
             <input
                 id={props.id}
                 type={props.type}
@@ -87,7 +111,7 @@ const InputList = (props) => {
                 ))}
             </datalist>
             {!inputState.isValid && inputState.isTouched && (
-                <p>{props.errorText}</p>
+                <p className="errorText">{props.errorText}</p>
             )}
         </div>
     );

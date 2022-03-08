@@ -7,11 +7,11 @@ import Button from "../../shared/components/FormElements/Button";
 import InputList from "../../shared/components/FormElements/InputList";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 import InputChoices from "../components/InputChoices";
-import KatexPreview from "../components/KatexPreview";
+// import KatexPreview from "../components/KatexPreview";
 import Card from "../../shared/components/UIElements/Card";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import ReactTooltip from "react-tooltip";
+// import ReactTooltip from "react-tooltip";
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
@@ -304,9 +304,12 @@ const NewProblem = () => {
                                     errorText="Please select a valid course."
                                     onInput={inputHandler}
                                     type="text"
-                                    placeholder="Courses"
+                                    placeholder="Algebra 1"
                                     listTitle="courseList"
                                     updateSelection={updateCourseDomains}
+                                    tooltip
+                                    tooltipId="courseHelp"
+                                    tooltipText="You can use the drop down menu, or you can type a course. It must be one of the approved courses; you can't just go making up courses."
                                 />
                                 <InputList
                                     id="subjectContent"
@@ -320,6 +323,9 @@ const NewProblem = () => {
                                     placeholder="Content Domains"
                                     listTitle="contentList"
                                     updateSelection={updateCourseSubdomains}
+                                    tooltip
+                                    tooltipId="subjectContentHelp"
+                                    tooltipText="Use the drop down menu to select the appropriate subject content."
                                 />
                                 <InputList
                                     id="subdomain"
@@ -334,24 +340,35 @@ const NewProblem = () => {
                                     type="text"
                                     placeholder="Content Subdomain"
                                     listTitle="subdomainList"
+                                    tooltip
+                                    tooltipId="subdomainHelp"
+                                    tooltipText="Use the drop down menu to select the appropriate subdomain."
                                 />
                                 {/* Problem  */}
                                 <Input
                                     element="textarea"
                                     id="katexText"
-                                    label="Problem Text- Written in Katex"
+                                    label="Problem Text - Written in Katex"
                                     validators={[VALIDATOR_REQUIRE()]}
                                     errorText="Please enter a valid problem"
                                     onInput={inputHandler}
+                                    tooltip
+                                    tooltipId="problemHelp"
+                                    tooltipText="This is where you write the problem text and any expressions that belong in the text."
+                                    placeholder="Write your problem here."
                                 />
                                 {/* Problem  */}
                                 <Input
                                     element="textarea"
                                     id="katex"
-                                    label="Problem - Written in Katex"
+                                    label="Equation - Written in Katex"
+                                    sublabel="Only if needed"
                                     validators={[]}
-                                    errorText="Please enter a valid problem"
                                     onInput={inputHandler}
+                                    tooltip
+                                    tooltipId="equationHelp"
+                                    tooltipText="If you need to have a seperate expression, you can write that here. It's not required."
+                                    initialValid={true}
                                 />
                                 <Input
                                     element="input"

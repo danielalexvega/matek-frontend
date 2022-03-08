@@ -81,4 +81,8 @@
   .multipleChoiceSelection input {
       margin-left: 1rem;
   }
+
+  .sublevel {
+      margin-bottom: 0.5rem;
+  }
   
