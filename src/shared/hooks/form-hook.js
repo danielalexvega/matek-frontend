@@ -194,7 +194,7 @@ export const useForm = (initialInputs, initialFormValidity) => {
         });
     };
     const removeChoiceHandler = (event) => {
-        // event.preventDefault();
+        event.preventDefault();
         dispatch({
             type: "REMOVE_CHOICE",
         });
