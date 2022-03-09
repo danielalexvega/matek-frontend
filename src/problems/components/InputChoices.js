@@ -19,7 +19,7 @@ const InputChoices = ({
   return (
     <React.Fragment>
       <div className="input-choices__title-container">
-        <p>Add or Remove choices for multiple choice problems.</p>
+        <p className="title-container__title">Add or Remove choices for multiple choice problems.</p>
         <div className="button-container">
           <Button onClick={addChoiceHandler} size="round">
             +
@@ -31,8 +31,8 @@ const InputChoices = ({
       </div>
       <div className="input-choices__choices-container">
         <div className="choices-container">
-          {choicesArray.map((choice) => (
-            <div className="multiple-choice__container">
+          {choicesArray.map((choice, index) => (
+            <div className="multiple-choice__container" key={index}>
               <Input
                 key={choice.label}
                 element="input"
@@ -40,7 +40,7 @@ const InputChoices = ({
                 id={choice.id}
                 label={choice.label}
                 validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid problem"
+                errorText="Please enter a valid choice"
                 onInput={inputHandler}
                 initialValue={choice.value}
                 initialValid={choice.isValid}

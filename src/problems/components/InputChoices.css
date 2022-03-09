@@ -2,10 +2,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.title-container__title {
+    font-size: 16px;
+}
+
+.button-container {
+    display: flex;
+    margin: 0 0.5rem;
 }
 
 .input-choices__choices-container {
-    display: flex;
+    /* display: flex; */
 }
 
 .choices-container {
@@ -27,4 +37,26 @@
 
 .choices-container .form-control input {
     width: 50%;
+}
+
+.multiple-choice__container {
+    display: flex;
+}
+
+.multiple-choice__container .form-control {
+    flex: 1;
+    display: flex;
+}
+
+.multiple-choice__container .problem-form__katex-display-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.multiple-choice__container .problem-form__katex-display-container .katex {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--primary-light2);
+    border-radius: 15px;
 }

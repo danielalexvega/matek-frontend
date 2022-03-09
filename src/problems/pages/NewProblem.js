@@ -40,6 +40,7 @@ const NewProblem = () => {
     const [
         formState,
         inputHandler,
+        setFormData,
         addChoiceHandler,
         removeChoiceHandler,
         multipleChoiceHandler,
@@ -64,7 +65,7 @@ const NewProblem = () => {
             },
             katex: {
                 value: "",
-                isValid: false,
+                isValid: true,
             },
             solution: {
                 value: "",
@@ -379,17 +380,20 @@ const NewProblem = () => {
                                     errorText="Please enter a valid solution"
                                     onInput={inputHandler}
                                 />
-                                <label
-                                    htmlFor="multipleChoiceSelection"
-                                    className="multipleChoiceSelection"
-                                >
-                                    Is this a multiple choice question?
+                                <div>
+                                    <label
+                                        htmlFor="multipleChoiceSelection"
+                                        className="multipleChoiceSelection"
+                                    >
+                                        Is this a multiple choice question?
                                     <input
                                         type="checkbox"
                                         id="multipleChoiceSelection"
-                                        onClick={multipleChoiceHandler}
+                                        name="multipleChoiceSelection"
+                                        onClick={() => multipleChoiceHandler()}
                                     />
-                                </label>
+                                    </label>
+                                </div>
                                 {formState.inputs.isMultipleChoice.value && (
                                     <InputChoices
                                         choicesArray={
@@ -407,9 +411,9 @@ const NewProblem = () => {
                                     element="textarea"
                                     id="description"
                                     label="Description"
-                                    validators={[VALIDATOR_REQUIRE()]}
-                                    errorText="Please enter a valid problem"
+                                    validators={[]}
                                     onInput={inputHandler}
+                                    initialValid={true}
                                 />
                                 <label
                                     htmlFor="imageSelection"
@@ -420,16 +424,18 @@ const NewProblem = () => {
                                     <input
                                         type="checkbox"
                                         id="imageSelection"
+                                        nanme="imageSelection"
                                         onClick={imageSelectionHandler}
+                                        // onClick={()=>{console.log("FUCK OFF")}}
                                     />
                                 </label>
-                                {formState.inputs.hasImage.value && (
+                                {/* {formState.inputs.hasImage.value && (
                                     <ImageUpload
                                         id="image"
                                         center
                                         onInput={inputHandler}
                                     />
-                                )}
+                                )} */}
                             </div>
 
                             <div className="columns__left">
@@ -473,24 +479,29 @@ const NewProblem = () => {
                                                 : formState.inputs.subdomain
                                                       .value}
                                         </div>
-                                        <div className="problem__katex-container"> 
+                                        <div className="problem__katex-container">
                                             <p className="problem__katex">
                                                 <InlineTex
                                                     texContent={
-                                                        formState.inputs.katexText
-                                                            .value === ""
+                                                        formState.inputs
+                                                            .katexText.value ===
+                                                        ""
                                                             ? "Solve for $$b$$."
-                                                            : formState.inputs.katexText.value
+                                                            : formState.inputs
+                                                                  .katexText
+                                                                  .value
                                                     }
                                                 />
                                             </p>
                                             <p className="problem__katex center">
                                                 <InlineTex
                                                     texContent={
-                                                        formState.inputs.katexText
-                                                            .value === ""
+                                                        formState.inputs
+                                                            .katexText.value ===
+                                                        ""
                                                             ? "$$-32+10b=-22$$"
-                                                            : formState.inputs.katex.value
+                                                            : formState.inputs
+                                                                  .katex.value
                                                     }
                                                 />
                                             </p>
@@ -516,16 +527,6 @@ const NewProblem = () => {
                                         </p>
                                     </div>
                                 </Card>
-                                {/* <KatexPreview
-                                title="KaTex Preview"
-                                texContent={formState.inputs.katex.value}
-                                katexClassName="katex-preview"
-                            />
-                            <KatexPreview
-                                title="Katex Preview for Solution"
-                                texContent={formState.inputs.solution.value}
-                                katexClassName="katex-solution"
-                            /> */}
                             </div>
                         </div>
                         <div className="container__submitbutton">

@@ -194,23 +194,25 @@ export const useForm = (initialInputs, initialFormValidity) => {
         });
     };
     const removeChoiceHandler = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         dispatch({
             type: "REMOVE_CHOICE",
         });
     };
 
     const multipleChoiceHandler = () => {
+        console.log("test");
         dispatch({
             type: "SELECT_MULTIPLE_CHOICE",
         });
     };
 
-    const imageSelectionHandler = () => {
-        dispatch({
-            type: "SELECT_IMAGE_CHOICE",
-        });
-    };
+    // const imageSelectionHandler = () => {
+    //     console.log("MOS DEF FOREVER");
+    //     dispatch({
+    //         type: "SELECT_IMAGE_CHOICE",
+    //     });
+    // };
 
     const setFormData = useCallback((inputData, formValidity) => {
         dispatch({
@@ -227,6 +229,6 @@ export const useForm = (initialInputs, initialFormValidity) => {
         addChoiceHandler,
         removeChoiceHandler,
         multipleChoiceHandler,
-        imageSelectionHandler,
+        // imageSelectionHandler,
     ];
 };
