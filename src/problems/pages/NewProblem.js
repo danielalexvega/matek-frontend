@@ -531,11 +531,15 @@ const NewProblem = () => {
                                         </div>
                                     )}
                                     <div className="problem-item__solution">
-                                        <InlineTex
-                                            texContent={
-                                                formState.inputs.solution.value
-                                            }
-                                        />
+                                        {formState.inputs.solution.value && <div className="solution__container">
+                                            <span>Solution: </span>
+                                            <InlineTex
+                                                texContent={
+                                                    formState.inputs.solution
+                                                        .value
+                                                }
+                                            />
+                                        </div>}
                                     </div>
                                     <div className="problem-item__info">
                                         <p className="info__author">

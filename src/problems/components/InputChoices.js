@@ -49,6 +49,10 @@ const InputChoices = ({
             </div>
             <div className="input-choices__choices-container">
                 <div className="choices-container">
+                    <div className="multiple-choice__titles">
+                        <span>Choices in Katex</span>
+                        <span>Choice Preview</span>
+                    </div>
                     {choicesArray.map((choice, index) => (
                         <div className="multiple-choice__container" key={index}>
                             <Input

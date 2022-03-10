@@ -85,4 +85,16 @@
   .sublevel {
       margin-bottom: 0.5rem;
   }
+
+  .problem-item__solution {
+      display: flex;
+      justify-content: center;
+  }
+
+  .solution__container {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--primary);
+      border-radius: 25px;
+      margin-top: 2rem;
+  }
   

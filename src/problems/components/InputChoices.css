@@ -21,6 +21,7 @@
 .choices-container {
     display: flex;
     flex-flow: column;
+    margin-top: 1rem;
 }
 
 
@@ -39,6 +40,11 @@
     width: 50%;
 }
 
+.multiple-choice__titles {
+    display: flex;
+    justify-content: space-around;
+}
+
 .multiple-choice__container {
     display: flex;
 }
@@ -46,12 +52,13 @@
 .multiple-choice__container .form-control {
     flex: 1;
     display: flex;
+    justify-content: center;
 }
 
 .multiple-choice__container .problem-form__katex-display-container {
     flex: 1;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
 }
 

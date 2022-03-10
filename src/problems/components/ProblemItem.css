@@ -57,6 +57,10 @@
   line-height: 32px;
 }
 
+.problem-item__choices li span:first-of-type {
+    padding-left: 0.25rem;
+}
+
 .info__author {
   font-size: 14px;
 }
