@@ -57,12 +57,12 @@
   .container__columns {
       display: flex;
   }
-  .columns__right {
+  .columns__left {
       flex: 1;
       margin-right: 1rem;
   }
 
-  .columns__left {
+  .columns__right {
       flex: 1;
       margin-left: 1rem;
   }

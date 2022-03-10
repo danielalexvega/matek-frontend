@@ -59,11 +59,11 @@ const NewProblem = () => {
                 value: "",
                 isValid: false,
             },
-            katexText: {
+            katex: {
                 value: "",
                 isValid: false,
             },
-            katex: {
+            katexEquation: {
                 value: "",
                 isValid: true,
             },
@@ -218,8 +218,8 @@ const NewProblem = () => {
                         course: formState.inputs.course.value,
                         subjectContent: formState.inputs.subjectContent.value,
                         subdomain: formState.inputs.subdomain.value,
-                        katexText: formState.inputs.katexText.value,
                         katex: formState.inputs.katex.value,
+                        katexEquation: formState.inputs.katexEquation.value,
                         solution: formState.inputs.solution.value,
                         isMultipleChoice:
                             formState.inputs.isMultipleChoice.value,
@@ -244,8 +244,11 @@ const NewProblem = () => {
                     "subjectContent",
                     formState.inputs.subjectContent.value
                 );
-                formData.append("katexText", formState.inputs.katexText.value);
                 formData.append("katex", formState.inputs.katex.value);
+                formData.append(
+                    "katexEquation",
+                    formState.inputs.katexEquation.value
+                );
                 formData.append("solution", formState.inputs.solution.value);
                 formData.append(
                     "isMultipleChoice",
@@ -295,7 +298,7 @@ const NewProblem = () => {
                 {!isLoading && courses !== [] && (
                     <div className="problem-form__container">
                         <div className="container__columns">
-                            <div className="columns__right">
+                            <div className="columns__left">
                                 <InputList
                                     id="course"
                                     selectName="course"
@@ -348,7 +351,7 @@ const NewProblem = () => {
                                 {/* Problem  */}
                                 <Input
                                     element="textarea"
-                                    id="katexText"
+                                    id="katex"
                                     label="Problem Text - Written in Katex"
                                     validators={[VALIDATOR_REQUIRE()]}
                                     errorText="Please enter a valid problem"
@@ -358,10 +361,10 @@ const NewProblem = () => {
                                     tooltipText="This is where you write the problem text and any expressions that belong in the text."
                                     placeholder="Write your problem here."
                                 />
-                                {/* Problem  */}
+                                {/* Problem  - additonal equation*/}
                                 <Input
                                     element="textarea"
-                                    id="katex"
+                                    id="katexEquation"
                                     label="Equation - Written in Katex"
                                     sublabel="Only if needed"
                                     validators={[]}
@@ -379,6 +382,9 @@ const NewProblem = () => {
                                     validators={[VALIDATOR_REQUIRE()]}
                                     errorText="Please enter a valid solution"
                                     onInput={inputHandler}
+                                    tooltip
+                                    tooltipId="solution"
+                                    tooltipText="Make sure to write your solution in Katex (Use $$)"
                                 />
                                 <div>
                                     <label
@@ -386,12 +392,14 @@ const NewProblem = () => {
                                         className="multipleChoiceSelection"
                                     >
                                         Is this a multiple choice question?
-                                    <input
-                                        type="checkbox"
-                                        id="multipleChoiceSelection"
-                                        name="multipleChoiceSelection"
-                                        onClick={() => multipleChoiceHandler()}
-                                    />
+                                        <input
+                                            type="checkbox"
+                                            id="multipleChoiceSelection"
+                                            name="multipleChoiceSelection"
+                                            onClick={() =>
+                                                multipleChoiceHandler()
+                                            }
+                                        />
                                     </label>
                                 </div>
                                 {formState.inputs.isMultipleChoice.value && (
@@ -426,7 +434,6 @@ const NewProblem = () => {
                                         id="imageSelection"
                                         nanme="imageSelection"
                                         onClick={imageSelectionHandler}
-                                        // onClick={()=>{console.log("FUCK OFF")}}
                                     />
                                 </label>
                                 {/* {formState.inputs.hasImage.value && (
@@ -438,7 +445,7 @@ const NewProblem = () => {
                                 )} */}
                             </div>
 
-                            <div className="columns__left">
+                            <div className="columns__right">
                                 <p>Problem Preview</p>
                                 <Card className="problem-item__content">
                                     {isLoading && <LoadingSpinner asOverlay />}
@@ -483,37 +490,46 @@ const NewProblem = () => {
                                             <p className="problem__katex">
                                                 <InlineTex
                                                     texContent={
-                                                        formState.inputs
-                                                            .katexText.value ===
-                                                        ""
+                                                        formState.inputs.katex
+                                                            .value === ""
                                                             ? "Solve for $$b$$."
                                                             : formState.inputs
-                                                                  .katexText
-                                                                  .value
+                                                                  .katex.value
                                                     }
                                                 />
                                             </p>
                                             <p className="problem__katex center">
                                                 <InlineTex
                                                     texContent={
-                                                        formState.inputs
-                                                            .katexText.value ===
-                                                        ""
+                                                        formState.inputs.katex
+                                                            .value === ""
                                                             ? "$$-32+10b=-22$$"
                                                             : formState.inputs
-                                                                  .katex.value
+                                                                  .katexEquation
+                                                                  .value
                                                     }
                                                 />
                                             </p>
                                         </div>
                                     </div>
-                                    {/* <ul className="problem-item__choices">
-                        {choices.map((choice, index) => (
-                            <li key={index}>
-                                <InlineTex texContent={choice.value} />
-                            </li>
-                        ))}
-                    </ul> */}
+                                    {formState.inputs.choices.value.length >
+                                        0 && (
+                                        <div className="problem-item__choices-container">
+                                            <ul className="problem-item__choices">
+                                                {formState.inputs.choices.value.map(
+                                                    (choice, index) => (
+                                                        <li key={index}>
+                                                            <InlineTex
+                                                                texContent={
+                                                                    choice.value
+                                                                }
+                                                            />
+                                                        </li>
+                                                    )
+                                                )}
+                                            </ul>
+                                        </div>
+                                    )}
                                     <div className="problem-item__solution">
                                         <InlineTex
                                             texContent={

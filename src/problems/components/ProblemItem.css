@@ -48,6 +48,7 @@
 
 .problem-item__choices {
   list-style: lower-alpha;
+  list-style-position: inside;
   display: flex;
   flex-flow: column;
   justify-content: space-between;

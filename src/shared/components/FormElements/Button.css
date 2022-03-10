@@ -4,12 +4,22 @@
     border: 1px solid var(--secondary);
     border-radius: 4px;
     background: var(--secondary);
-    color: white;
+    color: var(--light);
     cursor: pointer;
     margin-right: 1rem;
     text-decoration: none;
     display: inline-block;
+    transition: filter 300ms;
   }
+
+  .button .svg-inline--fa {
+      color: var(--light);
+  }
+
+
+  .button .svg-inline--fa:hover {
+    color: var(--light);
+}
   
   .button:focus {
     outline: none;
@@ -17,8 +27,7 @@
   
   .button:hover,
   .button:active {
-    background: var(--secondary-dark1);
-    border-color:var(--secondary-dark1);
+    filter: brightness(1.2);
   }
   
   .button--primary {
@@ -28,13 +37,13 @@
   
   .button--primary:hover,
   .button--primary:active {
-    background: var(--primary-dark1);
+    background: var(--primary-light1);
   }
 
   .button--round {
     padding: 0;
-    width: 35px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
     border-radius: 50px;
     font-size: 24px;
     font-weight: 600;
@@ -46,6 +55,7 @@
   .button--danger {
     background: var(--danger);
     border-color: var(--danger);
+    transition: filter 300ms;
   }
 
   .button--warning {
@@ -55,8 +65,9 @@
   
   .button--danger:hover,
   .button--danger:active {
-    background: var(--danger-dark);
-    border-color: var(--danger-dark);
+    background: var(--danger-light);
+    border-color: var(--danger-light);
+    filter: brightness(1.2);
   }
 
   .button--warning:hover,
