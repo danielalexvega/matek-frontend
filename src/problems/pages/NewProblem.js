@@ -7,14 +7,17 @@ import Button from "../../shared/components/FormElements/Button";
 import InputList from "../../shared/components/FormElements/InputList";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 import InputChoices from "../components/InputChoices";
-// import KatexPreview from "../components/KatexPreview";
 import Card from "../../shared/components/UIElements/Card";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-// import ReactTooltip from "react-tooltip";
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+
+import ReactTooltip from "react-tooltip";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 // Add validators here
 import {
@@ -446,7 +449,25 @@ const NewProblem = () => {
                             </div>
 
                             <div className="columns__right">
-                                <p>Problem Preview</p>
+                                <div className="preview-title__container">
+                                    <p>Problem Preview</p>
+                                    <span data-tip data-for="preview-tooltip">
+                                        <FontAwesomeIcon
+                                            className="tooltip-icon"
+                                            icon={faCircleInfo}
+                                        />
+                                    </span>
+                                    <ReactTooltip
+                                        id="preview-tooltip"
+                                        type="info"
+                                        effects="solid"
+                                        delayShow={100}
+                                    >
+                                        <span className="tooltip-text">
+                                            This is the preview of how this problem will appear. 
+                                        </span>
+                                    </ReactTooltip>
+                                </div>
                                 <Card className="problem-item__content">
                                     {isLoading && <LoadingSpinner asOverlay />}
                                     {formState.inputs.hasImage.value && (
@@ -531,15 +552,17 @@ const NewProblem = () => {
                                         </div>
                                     )}
                                     <div className="problem-item__solution">
-                                        {formState.inputs.solution.value && <div className="solution__container">
-                                            <span>Solution: </span>
-                                            <InlineTex
-                                                texContent={
-                                                    formState.inputs.solution
-                                                        .value
-                                                }
-                                            />
-                                        </div>}
+                                        {formState.inputs.solution.value && (
+                                            <div className="solution__container">
+                                                <span>Solution: </span>
+                                                <InlineTex
+                                                    texContent={
+                                                        formState.inputs
+                                                            .solution.value
+                                                    }
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="problem-item__info">
                                         <p className="info__author">

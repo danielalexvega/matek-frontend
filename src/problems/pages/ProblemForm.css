@@ -67,6 +67,12 @@
       margin-left: 1rem;
   }
 
+  .preview-title__container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  }
+
   .container__submitbutton {
       display: flex;
       justify-content: flex-end;
