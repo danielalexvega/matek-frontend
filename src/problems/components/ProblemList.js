@@ -44,6 +44,7 @@ const ProblemList = ({ problems, onDeleteProblem, problemsUserId, className, sel
           id={problem.id}
           image={`${process.env.REACT_APP_ASSET_URL}/${problem.image}`}
           katex={problem.katex}
+          katexEquation={problem.katexEquation}
           author={problem.author}
           authorId={problem.authorId}
           solution={problem.solution}

@@ -15,6 +15,7 @@ const ProblemItem = ({
     id,
     image,
     katex,
+    katexEquation,
     author,
     authorId,
     choices,
@@ -90,6 +91,9 @@ const ProblemItem = ({
                         <p className="problem__katex">
                             <InlineTex texContent={katex} />
                         </p>
+                        {katexEquation && <p className="problem__katexEquation center">
+                            <InlineTex texContent={katexEquation} />
+                        </p>}
                     </div>
                     <ul className="problem-item__choices">
                         {choices.map((choice, index) => (
@@ -116,7 +120,7 @@ const ProblemItem = ({
                             </Button>
                         )}
                         {isLoggedIn && authorId === userId && (
-                            <Button warning className="clone-button" to={`/problems/${id}/clone`}>Clone</Button>
+                            <Button primary className="clone-button" to={`/problems/${id}/clone`}>Clone</Button>
                         )}
                     </div>
                 </Card>

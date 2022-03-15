@@ -13,6 +13,7 @@ import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import Footer from "./shared/components/Navigation/Footer";
 import LearnMore from "./learn-more/pages/LearnMore";
 import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
+import UserProfile from "./user/pages/UserProfile";
 
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
@@ -39,11 +40,14 @@ const App = () => {
                 <Route path="/problems" exact>
                     <AllProblems />
                 </Route>
-                <Route path="/users">
+                <Route path="/users" exact>
                     <Users />
                 </Route>
                 <Route path="/:userId/problems" exact>
                     <UserProblems />
+                </Route>
+                <Route path="/users/getUser/:userId" exact>
+                    <UserProfile />
                 </Route>
                 <Route path="/problems/new" exact>
                     <NewProblem />
@@ -71,6 +75,9 @@ const App = () => {
                 </Route>
                 <Route path="/problems" exact>
                     <AllProblems />
+                </Route>
+                <Route path="/users/getUser/:userId" exact>
+                    <UserProfile />
                 </Route>
                 <Route path="/auth">
                     <Auth />

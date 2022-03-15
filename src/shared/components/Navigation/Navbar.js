@@ -37,12 +37,6 @@ const Navbar = () => {
         history.push(`/`);
     };
 
-    const problemDropdownItems = [
-        { title: "View All Problems" },
-        { title: "View Your Problems" },
-        { title: "Add Problems" },
-    ];
-
     return (
         <nav className="navbar">
             <ul className="navbar-nav">
@@ -131,6 +125,7 @@ const Navbar = () => {
                         name={userName}
                         tooltipId="viewProfile"
                         tooltipText="View Profile"
+                        navlink={`/users/getUser/${userId}`}
                     ></NavItemUser>
                 )}
                 {!isLoggedIn && (

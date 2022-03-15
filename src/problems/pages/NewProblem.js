@@ -464,7 +464,8 @@ const NewProblem = () => {
                                         delayShow={100}
                                     >
                                         <span className="tooltip-text">
-                                            This is the preview of how this problem will appear. 
+                                            This is the preview of how this
+                                            problem will appear.
                                         </span>
                                     </ReactTooltip>
                                 </div>

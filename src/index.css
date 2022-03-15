@@ -23,12 +23,15 @@
     --secondary-light1: #168d6f; /* Illuminating Emerald */
     --secondary-light2: #1cb08b; /* Jungle Green */
 
-    --danger: #b1271b; /* Carnelian*/
+    /* --danger: #b1271b; /* Carnelian*/
+    --danger: #6A1710; /* Carnelian*/
     --danger-dark: #8e1f15; /* Kobe*/
-    --danger-light: #c22c1e;
+    --danger-light: #8e1f15;
 
-    --warning: #ffb41f; /* Honey Yellow*/
-    --warning-dark: #e09600; /* Gamboge*/
+    /*--warning: #ffb41f; /* Honey Yellow*/
+    /*--warning-dark: #e09600; /* Gamboge*/
+    --warning: #C68F22; /* Dark Goldenrod*/
+    --warning-dark: #AE7E1E; /* Gold*/
 
     --text-color: #061523;
     --bg: #124e78;
