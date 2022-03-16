@@ -1,0 +1,17 @@
+.profile-container {
+    max-width: var(--max-width);
+    margin-top: 5rem;
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 10rem 1fr 10rem;
+}
+
+.title-container {
+    grid-column: 2/-2;
+}
+
+.details-container{
+    grid-column: 2/-2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}

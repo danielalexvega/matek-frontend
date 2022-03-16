@@ -62,6 +62,14 @@ const Auth = () => {
                         value: "",
                         isValid: false,
                     },
+                    schoolDistrict: {
+                        value: "",
+                        isValid: true,
+                    },
+                    school: {
+                        value: "",
+                        isValid: true,
+                    },
                     image: {
                         value: null,
                         isValid: false,
@@ -122,7 +130,7 @@ const Auth = () => {
                     responseData.userId,
                     responseData.userName,
                     responseData.token,
-                    null, 
+                    null,
                     responseData.image
                 );
                 routeChange();
@@ -147,14 +155,7 @@ const Auth = () => {
                             validators={[VALIDATOR_REQUIRE]}
                             errorText={"Please provide a name."}
                             onInput={inputHandler}
-                        />
-                    )}
-                    {!isLoginMode && (
-                        <ImageUpload
-                            id="image"
-                            center
-                            onInput={inputHandler}
-                            errorTest="Please provide an image."
+                            placeholder="Dewey Finn"
                         />
                     )}
                     <Input
@@ -165,6 +166,7 @@ const Auth = () => {
                         validators={[VALIDATOR_EMAIL()]}
                         errorText="Please enter a valid email address."
                         onInput={inputHandler}
+                        placeholder="Dewey.Finn@HoraceGreenPrep.com"
                     />
                     <Input
                         id="password"
@@ -175,6 +177,41 @@ const Auth = () => {
                         errorText="Please enter a valid password with at least 8 characters."
                         onInput={inputHandler}
                     />
+                    {!isLoginMode && (
+                        <Input
+                            element="input"
+                            id="schoolDistrict"
+                            type="text"
+                            label="School District"
+                            validators={[VALIDATOR_REQUIRE]}
+                            errorText={
+                                "Please provide a School District. At this time, Matek is only for teachers."
+                            }
+                            onInput={inputHandler}
+                        />
+                    )}
+                    {!isLoginMode && (
+                        <Input
+                            element="input"
+                            id="school"
+                            type="text"
+                            label="School"
+                            validators={[VALIDATOR_REQUIRE]}
+                            errorText={
+                                "Please provide a School. At this time, Matek is only for teachers."
+                            }
+                            onInput={inputHandler}
+                            placeholder="Horace Green Prep"
+                        />
+                    )}
+                    {!isLoginMode && (
+                        <ImageUpload
+                            id="image"
+                            center
+                            onInput={inputHandler}
+                            errorTest="Please provide an image."
+                        />
+                    )}
                     <Button type="submit" disabled={!formState.isValid}>
                         {isLoginMode ? "LOGIN" : "SIGNUP"}
                     </Button>
