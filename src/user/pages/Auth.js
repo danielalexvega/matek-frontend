@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
@@ -16,10 +16,12 @@ import {
 import { AuthContext } from "../../shared/context/auth-context";
 import { useHistory } from "react-router-dom";
 
+import RANDOM_TEACHERS from "../../shared/RANDOM_TEACHERS";
 import "./Auth.css";
 
 const Auth = () => {
     const [isLoginMode, setIsLoginMode] = useState(true);
+    const [randomPlaceholder, setRandomPlaceholder] = useState();
     const { login } = useContext(AuthContext);
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -42,6 +44,12 @@ const Auth = () => {
         },
         false
     );
+
+    useEffect(() => {
+        let randomTeacher =
+            RANDOM_TEACHERS[Math.floor(Math.random() * RANDOM_TEACHERS.length)];
+        setRandomPlaceholder(randomTeacher);
+    }, []);
 
     const switchModeHandler = () => {
         if (!isLoginMode) {
@@ -124,8 +132,6 @@ const Auth = () => {
                     formData
                 );
 
-                console.log(responseData.image);
-
                 login(
                     responseData.userId,
                     responseData.userName,
@@ -139,88 +145,119 @@ const Auth = () => {
     };
 
     return (
-        <React.Fragment>
+        <div className="auth-container"> 
+            <Button onClick={switchModeHandler} className="login-switch-button">
+                SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
+            </Button>
             <ErrorModal error={error} onClear={clearError} />
-            <Card className="authentication">
+            <Card
+                className={`authentication ${
+                    isLoginMode ? "login-card" : "signup-card"
+                }`}
+            >
                 {isLoading && <LoadingSpinner asOverlay />}
-                <h2>Login Required</h2>
+                <h2>{isLoginMode ? "Login" : "Sign Up"}</h2>
                 <hr />
                 <form onSubmit={authSubmitHandler}>
-                    {!isLoginMode && (
-                        <Input
-                            element="input"
-                            id="name"
-                            type="text"
-                            label="Your Name"
-                            validators={[VALIDATOR_REQUIRE]}
-                            errorText={"Please provide a name."}
-                            onInput={inputHandler}
-                            placeholder="Dewey Finn"
-                        />
-                    )}
-                    <Input
-                        id="email"
-                        element="input"
-                        type="email"
-                        label="Email"
-                        validators={[VALIDATOR_EMAIL()]}
-                        errorText="Please enter a valid email address."
-                        onInput={inputHandler}
-                        placeholder="Dewey.Finn@HoraceGreenPrep.com"
-                    />
-                    <Input
-                        id="password"
-                        element="input"
-                        type="password"
-                        label="Password"
-                        validators={[VALIDATOR_MINLENGTH(8)]}
-                        errorText="Please enter a valid password with at least 8 characters."
-                        onInput={inputHandler}
-                    />
-                    {!isLoginMode && (
-                        <Input
-                            element="input"
-                            id="schoolDistrict"
-                            type="text"
-                            label="School District"
-                            validators={[VALIDATOR_REQUIRE]}
-                            errorText={
-                                "Please provide a School District. At this time, Matek is only for teachers."
-                            }
-                            onInput={inputHandler}
-                        />
+                    {isLoginMode && (
+                        <div className="login-container">
+                            <Input
+                                id="email"
+                                element="input"
+                                type="email"
+                                label="Email"
+                                validators={[VALIDATOR_EMAIL()]}
+                                errorText="Please enter a valid email address."
+                                onInput={inputHandler}
+                            />
+                            <Input
+                                id="password"
+                                element="input"
+                                type="password"
+                                label="Password"
+                                validators={[VALIDATOR_MINLENGTH(8)]}
+                                errorText="Please enter a valid password with at least 8 characters."
+                                onInput={inputHandler}
+                            />
+                        </div>
                     )}
                     {!isLoginMode && (
-                        <Input
-                            element="input"
-                            id="school"
-                            type="text"
-                            label="School"
-                            validators={[VALIDATOR_REQUIRE]}
-                            errorText={
-                                "Please provide a School. At this time, Matek is only for teachers."
-                            }
-                            onInput={inputHandler}
-                            placeholder="Horace Green Prep"
-                        />
-                    )}
-                    {!isLoginMode && (
-                        <ImageUpload
-                            id="image"
-                            center
-                            onInput={inputHandler}
-                            errorTest="Please provide an image."
-                        />
+                        <div className="signup-container">
+                            <div className="signup-container__left-column">
+                                <Input
+                                    element="input"
+                                    id="name"
+                                    type="text"
+                                    label="Your Name"
+                                    validators={[VALIDATOR_REQUIRE]}
+                                    errorText={"Please provide a name."}
+                                    onInput={inputHandler}
+                                    placeholder={randomPlaceholder.name}
+                                />
+                                <Input
+                                    element="input"
+                                    id="school"
+                                    type="text"
+                                    label="School"
+                                    validators={[VALIDATOR_REQUIRE]}
+                                    errorText={
+                                        "Please provide a School. At this time, Matek is only for teachers."
+                                    }
+                                    onInput={inputHandler}
+                                    placeholder={randomPlaceholder.school}
+                                />
+                                <Input
+                                    element="input"
+                                    id="schoolDistrict"
+                                    type="text"
+                                    label="School District"
+                                    validators={[VALIDATOR_REQUIRE]}
+                                    errorText={
+                                        "Please provide a School District. At this time, Matek is only for teachers."
+                                    }
+                                    onInput={inputHandler}
+                                    placeholder={randomPlaceholder.district}
+                                />
+                                <Input
+                                    id="email"
+                                    element="input"
+                                    type="email"
+                                    label="Email"
+                                    validators={[VALIDATOR_EMAIL()]}
+                                    errorText="Please enter a valid email address."
+                                    onInput={inputHandler}
+                                    placeholder={
+                                        isLoginMode
+                                            ? ""
+                                            : randomPlaceholder.email
+                                    }
+                                />
+                                <Input
+                                    id="password"
+                                    element="input"
+                                    type="password"
+                                    label="Password"
+                                    validators={[VALIDATOR_MINLENGTH(8)]}
+                                    errorText="Please enter a valid password with at least 8 characters."
+                                    onInput={inputHandler}
+                                />
+                            </div>
+                            <div className="signup-container__right-column">
+                                <ImageUpload
+                                    id="image"
+                                    center
+                                    onInput={inputHandler}
+                                    errorTest="Please provide an image."
+                                />
+                            </div>
+                        </div>
                     )}
                     <Button type="submit" disabled={!formState.isValid}>
                         {isLoginMode ? "LOGIN" : "SIGNUP"}
                     </Button>
                 </form>
-                <Button primary onClick={switchModeHandler}>
-                    SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
-                </Button>
             </Card>
-        </React.Fragment>
+        </div>
     );
 };
 
