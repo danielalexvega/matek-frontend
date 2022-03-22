@@ -113,8 +113,46 @@ const Input = (props) => {
                         className="togglePassword"
                         onClick={props.togglePassword}
                     >
-                        {props.passwordShown && <FontAwesomeIcon className="password-icon" icon={faEyeSlash}/>}
-                        {!props.passwordShown && <FontAwesomeIcon className="password-icon" icon={faEye}/>}
+                        {props.passwordShown && (
+                            <>
+                                <span data-tip data-for="hide-password">
+                                    <FontAwesomeIcon
+                                        className="password-icon"
+                                        icon={faEyeSlash}
+                                    />
+                                </span>
+                                <ReactTooltip
+                                    id="hide-password"
+                                    type="info"
+                                    effects="solid"
+                                    delayShow={100}
+                                >
+                                    <span className="tooltip-text">
+                                        Hide Password
+                                    </span>
+                                </ReactTooltip>
+                            </>
+                        )}
+                        {!props.passwordShown && (
+                            <>
+                            <span data-tip data-for="show-password">
+                                <FontAwesomeIcon
+                                    className="password-icon"
+                                    icon={faEye}
+                                />
+                            </span>
+                            <ReactTooltip
+                                id="show-password"
+                                type="info"
+                                effects="solid"
+                                delayShow={100}
+                            >
+                                <span className="tooltip-text">
+                                    Show Password
+                                </span>
+                            </ReactTooltip>
+                        </>
+                        )}
                     </button>
                 )}
             </div>
