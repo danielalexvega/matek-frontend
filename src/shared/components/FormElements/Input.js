@@ -3,6 +3,8 @@ import ReactTooltip from "react-tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 import { validate } from "../../util/validators";
 import "./Input.css";
@@ -104,7 +106,18 @@ const Input = (props) => {
                 )}
             </div>
             {props.sublabel && <div className="sublevel">{props.sublabel}</div>}
-            {element}
+            <div className="password__container">
+                {element}
+                {props.togglePassword && (
+                    <button
+                        className="togglePassword"
+                        onClick={props.togglePassword}
+                    >
+                        {props.passwordShown && <FontAwesomeIcon className="password-icon" icon={faEyeSlash}/>}
+                        {!props.passwordShown && <FontAwesomeIcon className="password-icon" icon={faEye}/>}
+                    </button>
+                )}
+            </div>
             {!inputState.isValid && inputState.isTouched && (
                 <p className="errorText">{props.errorText}</p>
             )}

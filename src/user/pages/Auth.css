@@ -32,6 +32,11 @@
     height: 25rem;
 }
 
+.errorText {
+    font-size: 16px;
+    line-height: 20px;
+}
+
 .signup-card {
     width: 50%;
     height: 40rem;
@@ -43,7 +48,7 @@
 
 .signup-container__left-column,
 .signup-container__right-column {
-flex: 1;
+    flex: 1;
 }
 
 .authentication form {

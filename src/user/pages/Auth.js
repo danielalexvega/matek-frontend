@@ -22,6 +22,7 @@ import "./Auth.css";
 const Auth = () => {
     const [isLoginMode, setIsLoginMode] = useState(true);
     const [randomPlaceholder, setRandomPlaceholder] = useState();
+    const [passwordShown, setPasswordShown] = useState(false);
     const { login } = useContext(AuthContext);
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -89,6 +90,11 @@ const Auth = () => {
         setIsLoginMode((prevMode) => !prevMode);
     };
 
+    const togglePassword = (event)=> {
+        event.preventDefault();
+        setPasswordShown(!passwordShown);
+    }
+
     const authSubmitHandler = async (event) => {
         event.preventDefault();
 
@@ -145,7 +151,7 @@ const Auth = () => {
     };
 
     return (
-        <div className="auth-container"> 
+        <div className="auth-container">
             <Button onClick={switchModeHandler} className="login-switch-button">
                 SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
             </Button>
@@ -173,11 +179,13 @@ const Auth = () => {
                             <Input
                                 id="password"
                                 element="input"
-                                type="password"
+                                type={passwordShown ? "text" : "password"}
                                 label="Password"
                                 validators={[VALIDATOR_MINLENGTH(8)]}
                                 errorText="Please enter a valid password with at least 8 characters."
                                 onInput={inputHandler}
+                                togglePassword={togglePassword}
+                                passwordShown={passwordShown}
                             />
                         </div>
                     )}
