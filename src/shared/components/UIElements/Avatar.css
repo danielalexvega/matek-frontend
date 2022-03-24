@@ -1,15 +1,24 @@
 .avatar {
     width: 100%;
     height: 100%;
-    display: flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .avatar img {
+}
+
+.avatar.profile {
+    width: 200px;
+    height: 200px;
+}
+
+.avatar img {
     display: block;
     border-radius: 50%;
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
+}
+
+.avatar.profile img {
+    border: 3px solid var(--secondary-dark2);
+}

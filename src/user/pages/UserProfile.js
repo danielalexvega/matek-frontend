@@ -5,6 +5,7 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import Avatar from "../../shared/components/UIElements/Avatar";
 import Card from "../../shared/components/UIElements/Card";
+import Button from "../../shared/components/FormElements/Button";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 
 import "./UserProfile.css";
@@ -58,14 +59,32 @@ const UserProfile = () => {
                 </div>
                 <div className="details-container">
                     <div className="details-container__left">
-                        <p>Name: {loadedProfile.name}</p>
-                        <p>Email: {loadedProfile.email}</p>
-                        <p>Problem Count: {loadedProfile.problems.length}</p>
+                        <Avatar
+                            className="profile"
+                            image={`${process.env.REACT_APP_ASSET_URL}/images/${loadedProfile.image}`}
+                        ></Avatar>
                     </div>
                     <div className="details-container__right">
-                        <Avatar image={`${process.env.REACT_APP_ASSET_URL}/images/${loadedProfile.image}`}></Avatar>
+                        <div className="profile-details-container">
+                            <p className="profile__name">
+                                {loadedProfile.name}
+                            </p>
+                            <p className="profile__email">
+                                {loadedProfile.email}
+                            </p>
+                        </div>
+                        <div className="profile-details-actions">
+                            <div>
+                                <Button primary>Add a problem</Button>
+                                <Button primary>Edit Profile</Button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                {/* <p className="profile__email">{loadedProfile.school}</p>
+                <p className="profile__problem-count">
+                    Problem Count: {loadedProfile.problems.length}
+                </p> */}
             </div>
         </div>
     );
