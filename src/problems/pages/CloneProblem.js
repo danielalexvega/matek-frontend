@@ -94,7 +94,7 @@ const CloneProblem = () => {
                 isValid: true,
             },
         },
-        false
+        true
     );
 
     useEffect(() => {

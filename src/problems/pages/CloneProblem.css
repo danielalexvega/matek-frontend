@@ -54,6 +54,31 @@
     background: white;
 }
 
+.container__columns {
+    display: flex;
+}
+.columns__left {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.columns__right {
+    flex: 1;
+    margin-left: 1rem;
+}
+
+.preview-title__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container__submitbutton {
+    display: flex;
+    justify-content: flex-end;
+
+}
+
 .multipleChoiceSelection {
     display: flex;
     align-items: flex-end;
@@ -61,6 +86,22 @@
 
 .multipleChoiceSelection input {
     margin-left: 1rem;
+}
+
+.sublevel {
+    margin-bottom: 0.5rem;
+}
+
+.problem-item__solution {
+    display: flex;
+    justify-content: center;
+}
+
+.solution__container {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--primary);
+    border-radius: 25px;
+    margin-top: 2rem;
 }
 
 @media only screen and (min-width: 1400px) {
