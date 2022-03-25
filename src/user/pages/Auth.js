@@ -79,6 +79,14 @@ const Auth = () => {
                         value: "",
                         isValid: true,
                     },
+                    city:{
+                        value: "",
+                        isValid: true
+                    },
+                    state:{
+                        value: "",
+                        isValid: true
+                    },
                     image: {
                         value: null,
                         isValid: false,
@@ -90,10 +98,10 @@ const Auth = () => {
         setIsLoginMode((prevMode) => !prevMode);
     };
 
-    const togglePassword = (event)=> {
+    const togglePassword = (event) => {
         event.preventDefault();
         setPasswordShown(!passwordShown);
-    }
+    };
 
     const authSubmitHandler = async (event) => {
         event.preventDefault();
@@ -132,7 +140,10 @@ const Auth = () => {
                 formData.append("password", formState.inputs.password.value);
                 formData.append("image", formState.inputs.image.value);
                 formData.append("school", formState.inputs.school.value);
-                formData.append("schoolDistrict", formState.inputs.schoolDistrict.value);
+                formData.append(
+                    "schoolDistrict",
+                    formState.inputs.schoolDistrict.value
+                );
 
                 const responseData = await sendRequest(
                     process.env.REACT_APP_BACKEND_URL + "/users/signup",
@@ -245,14 +256,44 @@ const Auth = () => {
                                 <Input
                                     id="password"
                                     element="input"
-                                    type="password"
+                                    type={passwordShown ? "text" : "password"}
                                     label="Password"
                                     validators={[VALIDATOR_MINLENGTH(8)]}
                                     errorText="Please enter a valid password with at least 8 characters."
                                     onInput={inputHandler}
+                                    togglePassword={togglePassword}
+                                    passwordShown={passwordShown}
                                 />
                             </div>
                             <div className="signup-container__right-column">
+                                <Input
+                                    id="city"
+                                    element="input"
+                                    type="test"
+                                    label="City"
+                                    validators={[VALIDATOR_REQUIRE]}
+                                    errorText="Please enter a city."
+                                    onInput={inputHandler}
+                                    placeholder={
+                                        isLoginMode
+                                            ? ""
+                                            : randomPlaceholder.city
+                                    }
+                                />
+                                <Input
+                                    id="state"
+                                    element="input"
+                                    type="test"
+                                    label="State"
+                                    validators={[VALIDATOR_REQUIRE]}
+                                    errorText="Please enter a state."
+                                    onInput={inputHandler}
+                                    placeholder={
+                                        isLoginMode
+                                            ? ""
+                                            : randomPlaceholder.state
+                                    }
+                                />
                                 <ImageUpload
                                     id="image"
                                     center

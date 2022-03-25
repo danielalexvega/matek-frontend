@@ -24,6 +24,7 @@
     background: var(--secondary);
     border-radius: 20px;
     margin-bottom: 1rem;
+    max-height: 270px;
 }
 
 .details-container__left {
@@ -40,6 +41,10 @@
 
 .profile-details-container {
 
+}
+
+.profile-icon {
+    margin-right: 10px;
 }
 
 .profile__name {
@@ -59,4 +64,18 @@
     display: flex;
     align-self: flex-end;
     margin-bottom: 1rem;
+}
+
+.secondary-details-container {
+    grid-column: 2/-2;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    margin-bottom: 2rem;
+}
+
+.secondary-details-container__details {
+    border: 3px solid var(--primary-dark2);
+    border-radius: 20px;
+    background: var(--primary);
+    padding: 10px;
 }

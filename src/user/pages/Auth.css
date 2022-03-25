@@ -51,6 +51,14 @@
     flex: 1;
 }
 
+.signup-container__left-column {
+    margin-right: 10px;
+}
+
+.signup-container__right-column {
+    margin-left: 10px;
+}
+
 .authentication form {
     margin-bottom: 1rem;
 }

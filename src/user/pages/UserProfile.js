@@ -6,6 +6,11 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import Avatar from "../../shared/components/UIElements/Avatar";
 import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/FormElements/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faSchool } from "@fortawesome/free-solid-svg-icons";
+
 import { useHttpClient } from "../../shared/hooks/http-hook";
 
 import "./UserProfile.css";
@@ -75,16 +80,36 @@ const UserProfile = () => {
                         </div>
                         <div className="profile-details-actions">
                             <div>
-                                <Button primary>Add a problem</Button>
-                                <Button primary>Edit Profile</Button>
+                                <Button primary>
+                                    <FontAwesomeIcon
+                                        className="profile-icon"
+                                        icon={faPlus}
+                                    />
+                                    <span>Add a problem</span>
+                                </Button>
+                                <Button primary>
+                                    <FontAwesomeIcon
+                                        className="profile-icon"
+                                        icon={faPencil}
+                                    />
+                                    <span>Edit Profile</span>
+                                </Button>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* <p className="profile__email">{loadedProfile.school}</p>
-                <p className="profile__problem-count">
-                    Problem Count: {loadedProfile.problems.length}
-                </p> */}
+
+                <div className="secondary-details-container">
+                    <div className="secondary-details-container__details">
+                        <p className="profile__email">
+                            <FontAwesomeIcon icon={faSchool} className="profile-icon"/>
+                            <span>{loadedProfile.school}</span>
+                        </p>
+                        <p className="profile__problem-count">
+                            Problem Count: {loadedProfile.problems.length}
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     );
