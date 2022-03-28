@@ -60,6 +60,12 @@
     color: var(--light);
 }
 
+.profile__detail {
+    margin: 10px;
+    color: var(--light);
+    font-size: 20px;
+}
+
 .profile-details-actions {
     display: flex;
     align-self: flex-end;

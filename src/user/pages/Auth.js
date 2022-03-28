@@ -140,6 +140,8 @@ const Auth = () => {
                 formData.append("password", formState.inputs.password.value);
                 formData.append("image", formState.inputs.image.value);
                 formData.append("school", formState.inputs.school.value);
+                formData.append("city", formState.inputs.city.value);
+                formData.append("state", formState.inputs.state.value);
                 formData.append(
                     "schoolDistrict",
                     formState.inputs.schoolDistrict.value
