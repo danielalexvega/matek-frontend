@@ -46,8 +46,8 @@
 
 .togglePassword {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 5px;
+    top: 3px;
     bottom: 0;
     background: none;
     border: none;

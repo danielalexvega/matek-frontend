@@ -109,7 +109,7 @@ const Input = (props) => {
             <div className="password__container">
                 {element}
                 {props.togglePassword && (
-                    <button
+                    <a
                         className="togglePassword"
                         onClick={props.togglePassword}
                     >
@@ -153,7 +153,7 @@ const Input = (props) => {
                             </ReactTooltip>
                         </>
                         )}
-                    </button>
+                    </a>
                 )}
             </div>
             {!inputState.isValid && inputState.isTouched && (
