@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
@@ -36,6 +36,7 @@ const UserProfile = () => {
     const { token } = useContext(AuthContext);
 
     const profileId = useParams().userId;
+    const history = useHistory();
 
     const [formState, inputHandler, setFormData] = useForm(
         {
@@ -155,20 +156,33 @@ const UserProfile = () => {
         setShowConfirmModal(false);
     };
 
-    const confirmUpdateHandler = async () => {
+    const userUpdateHandler = async (event) => {
+        event.preventDefault();
         setShowConfirmModal(false);
-        // try {
-        //     await sendRequest(
-        //         `${process.env.REACT_APP_BACKEND_URL}/problems/${profileId}`,
-        //         "DELETE",
-        //         null,
-        //         { Authorization: "Bearer " + token }
-        //     );
-        //     onDelete(profileId);
-        // } catch (error) {}
-    };
 
-    const onDelete = () => {};
+        let updatedUser;
+
+        try {
+            updatedUser = await sendRequest(
+                `${process.env.REACT_APP_BACKEND_URL}/users/updateUser/${profileId}`,
+                "PATCH",
+                JSON.stringify({
+                    email: formState.inputs.email.value,
+                    name: formState.inputs.name.value,
+                    schoolDistrict: formState.inputs.schoolDistrict.value,
+                    school: formState.inputs.school.value,
+                    city: formState.inputs.city.value,
+                    state: formState.inputs.state.value,
+                }),
+                {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + token,
+                }
+            );
+
+            setLoadedProfile(updatedUser.user);
+        } catch (error) {}
+    };
 
     return (
         <React.Fragment>
@@ -184,7 +198,7 @@ const UserProfile = () => {
                         <Button primary onClick={cancelUpdateHandler}>
                             CANCEL
                         </Button>
-                        <Button danger onClick={confirmUpdateHandler}>
+                        <Button danger onClick={userUpdateHandler}>
                             UPDATE
                         </Button>
                     </React.Fragment>
