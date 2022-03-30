@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useHistory } from "react-router";
+import { useParams } from "react-router";
 
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
@@ -8,6 +8,7 @@ import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/FormElements/Button";
 import Modal from "../../shared/components/UIElements/Modal";
 import Input from "../../shared/components/FormElements/Input";
+import ProblemList from "../../problems/components/ProblemList";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 import {
     VALIDATOR_EMAIL,
@@ -30,13 +31,13 @@ import "./UserProfile.css";
 
 const UserProfile = () => {
     const [loadedProfile, setLoadedProfile] = useState();
+    const [loadedProblems, setLoadedProblems] = useState([]);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const { token } = useContext(AuthContext);
 
     const profileId = useParams().userId;
-    const history = useHistory();
 
     const [formState, inputHandler, setFormData] = useForm(
         {
@@ -127,7 +128,21 @@ const UserProfile = () => {
             } catch (err) {}
         };
 
+        const fetchProblems = async () => {
+            let response;
+            try {
+                response = await sendRequest(
+                    `${process.env.REACT_APP_BACKEND_URL}/problems/user/lastSix/${profileId}`
+                );
+            } catch (err) {
+                console.log(err);
+            }
+
+            setLoadedProblems(response.problems);
+        };
+
         fetchProfile();
+        fetchProblems();
     }, []);
 
     if (isLoading) {
@@ -370,6 +385,12 @@ const UserProfile = () => {
                                     </span>
                                 </p>
                             )}
+                        </div>
+                        <div className="secondary-details-container__problems">
+                            <div className="problems__container">
+                                <ProblemList problems={loadedProblems} className="problems__two-by-two"/>
+
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -84,4 +84,6 @@
     border-radius: 20px;
     background: var(--primary);
     padding: 10px;
+    height: fit-content;
+    margin-top: 1rem;
 }

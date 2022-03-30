@@ -7,4 +7,9 @@
     grid-template-columns: minmax(100px, 33%) minmax(100px, 33%) minmax(100px, 33%);
 
   }
+
+  .problems__two-by-two {
+    grid-template-columns: minmax(100px, 48%) minmax(100px, 48%);
+    margin: 0 auto 2rem;
+  }
   
