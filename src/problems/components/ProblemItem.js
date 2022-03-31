@@ -16,6 +16,10 @@ import ReactTooltip from "react-tooltip";
 import "./ProblemItem.css";
 import "katex/dist/katex.min.css";
 
+import { ReactComponent as Pencil } from "../../assets/pencil-solid.svg";
+import { ReactComponent as CircleX } from "../../assets/circle-xmark-solid.svg";
+import { ReactComponent as Clone } from "../../assets/clone-solid.svg";
+
 const ProblemItem = ({
     id,
     image,
@@ -29,6 +33,7 @@ const ProblemItem = ({
     subdomain,
     onDelete,
     hasImage,
+    showActions,
 }) => {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const { isLoggedIn, userId, token } = useContext(AuthContext);
@@ -115,80 +120,69 @@ const ProblemItem = ({
                         <p className="info__author">Written by {author}</p>
                         {/* <p className="info__rating"> Rating: {rating}</p> */}
                     </div>
-                    <div className="problem-item__actions">
-                        {/* {isLoggedIn && authorId !== userId && (
+                    {showActions && (
+                        <div className="problem-item__actions">
+                            {/* {isLoggedIn && authorId !== userId && (
                             <Button primary>Add to desk</Button>
                         )} */}
-                        {isLoggedIn && authorId === userId && (
-                            <>
-                                <span data-tip data-for="edit-tooltip">
-                                    <Button
-                                        to={`/problems/${id}`}
-                                        className="noBackground secondary"
-                                    >
-                                        {" "}
-                                        <FontAwesomeIcon icon={faPencil} />
-                                    </Button>
-                                </span>
-                                <ReactTooltip
-                                    id="edit-tooltip"
-                                    type="success"
-                                    effects="solid"
-                                    delayShow={100}
-                                >
-                                    <span className="tooltip-text">
-                                        Edit Problem
+                            {isLoggedIn && authorId === userId && (
+                                <>
+                                    <span className="tooltip">
+                                        <Button
+                                            to={`/problems/${id}`}
+                                            className="noBackground secondary"
+                                        >
+                                            <Pencil
+                                                width={"1rem"}
+                                                className="pencil-icon svg-icon"
+                                            />
+                                        </Button>
+                                        <span className="tooltip-text secondary">
+                                            Edit Problem
+                                        </span>
                                     </span>
-                                </ReactTooltip>
-                            </>
-                        )}
-                        {isLoggedIn && authorId === userId && (
-                            <>
-                                <span data-tip data-for="delete-tooltip">
-                                    <Button
-                                        danger
-                                        className="noBackground warning"
-                                        onClick={showDeleteWarningHandler}
-                                    >
-                                        <FontAwesomeIcon icon={faCircleXmark} />
-                                    </Button>
-                                </span>
-                                <ReactTooltip
-                                    id="delete-tooltip"
-                                    type="error"
-                                    effects="solid"
-                                    delayShow={100}
-                                >
-                                    <span className="tooltip-text">
-                                        Delete Problem
+                                </>
+                            )}
+                            {isLoggedIn && authorId === userId && (
+                                <>
+                                    <span className="tooltip">
+                                        <Button
+                                            danger
+                                            className="noBackground warning"
+                                            onClick={showDeleteWarningHandler}
+                                        >
+                                            <CircleX
+                                                width="1rem"
+                                                className="circleX-icon svg-icon"
+                                            />
+                                        </Button>
+                                        <span className="tooltip-text danger">
+                                            Delete Problem
+                                        </span>
                                     </span>
-                                </ReactTooltip>
-                            </>
-                        )}
-                        {isLoggedIn && authorId === userId && (
-                            <>
-                                <span data-tip data-for="clone-tooltip">
-                                    <Button
-                                        primary
-                                        className="clone-button noBackground primary"
-                                        to={`/problems/${id}/clone`}
-                                    >
-                                        <FontAwesomeIcon icon={faClone} />
-                                    </Button>
-                                </span>
-                                <ReactTooltip
-                                    id="clone-tooltip"
-                                    type="info"
-                                    effects="solid"
-                                    delayShow={100}
-                                >
-                                    <span className="tooltip-text">
-                                        Clone Problem
+                                </>
+                            )}
+                            {isLoggedIn && authorId === userId && (
+                                <>
+                                    <span className="tooltip">
+                                        <Button
+                                            primary
+                                            className="clone-button noBackground"
+                                            to={`/problems/${id}/clone`}
+                                        >
+                                            <Clone
+                                                width="1rem"
+                                                className="clone-icon svg-icon"
+                                            />
+                                        </Button>
+                                        <span className="tooltip-text primary">
+                                            Clone Problem
+                                        </span>
                                     </span>
-                                </ReactTooltip>
-                            </>
-                        )}
-                    </div>
+                                </>
+                            )}
+                        </div>
+                    )}
                 </Card>
             </li>
         </React.Fragment>

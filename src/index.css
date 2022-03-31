@@ -24,14 +24,14 @@
     --secondary-light2: #1cb08b; /* Jungle Green */
 
     /* --danger: #b1271b; /* Carnelian*/
-    --danger: #6A1710; /* Carnelian*/
+    --danger: #6a1710; /* Carnelian*/
     --danger-dark: #8e1f15; /* Kobe*/
     --danger-light: #8e1f15;
 
     /*--warning: #ffb41f; /* Honey Yellow*/
     /*--warning-dark: #e09600; /* Gamboge*/
-    --warning: #C68F22; /* Dark Goldenrod*/
-    --warning-dark: #AE7E1E; /* Gold*/
+    --warning: #c68f22; /* Dark Goldenrod*/
+    --warning-dark: #ae7e1e; /* Gold*/
 
     --text-color: #061523;
     --bg: #124e78;
@@ -150,4 +150,20 @@ body {
 
 .primary-light2 {
     color: var(--primary-light2);
+}
+
+.svg-icon path {
+    fill: currentColor;
+}
+
+.clone-icon {
+    color: var(--primary);
+}
+
+.pencil-icon {
+    color: var(--secondary);
+}
+
+.circleX-icon {
+    color: var(--danger);
 }

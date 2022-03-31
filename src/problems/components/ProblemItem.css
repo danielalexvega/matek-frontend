@@ -1,21 +1,21 @@
 .problem-item {
-  margin: 1rem;
+    margin: 1rem;
 }
 
 .problem-item__image {
-  height: 300px; 
-  margin-bottom: 15px;
+    height: 300px;
+    margin-bottom: 15px;
 }
 
 .problem-item__image img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  object-position: center;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 .problem__content {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .course__title {
@@ -23,7 +23,8 @@
     letter-spacing: 1px;
 }
 
-.problem__subdomain {}
+.problem__subdomain {
+}
 
 .problem__katex {
     font-size: 18px;
@@ -34,11 +35,11 @@
 }
 
 .problem-item__problem .katex .katex-html {
-    width:100%;
+    width: 100%;
     line-break: anywhere;
 }
 
-.problem-item__problem .katex .katex-html .base{
+.problem-item__problem .katex .katex-html .base {
     width: 100%;
     /* line-break: anywhere; */
     hyphens: auto;
@@ -47,14 +48,14 @@
 }
 
 .problem-item__choices {
-  list-style: lower-alpha;
-  list-style-position: inside;
-  display: flex;
-  flex-flow: column;
-  justify-content: space-between;
-  margin-top: 1rem;
-  font-size: 18px;
-  line-height: 32px;
+    list-style: lower-alpha;
+    list-style-position: inside;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    margin-top: 1rem;
+    font-size: 18px;
+    line-height: 32px;
 }
 
 .problem-item__choices li span:first-of-type {
@@ -62,20 +63,20 @@
 }
 
 .info__author {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 .info__rating {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 .info__courses-container {
-  font-size: 14px;
-  margin-bottom: 1rem;
+    font-size: 14px;
+    margin-bottom: 1rem;
 }
 
 .info__courses li:last-child:after {
-  display: none;
+    display: none;
 }
 
 .problem-item__actions {
@@ -83,6 +84,41 @@
     justify-content: center;
 }
 
-@media (min-width: 768px) {
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
 
+.tooltip .tooltip-text {
+    opacity: 0;
+    width: 120px;
+    background-color: black;
+    color: var(--light);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    transition: opacity 500ms ease-in-out;
+    position: absolute;
+    z-index: 1;
+    top: -30px;
+    left: -80%;
+}
+
+.tooltip .tooltip-text.secondary {
+    background-color: var(--secondary);
+}
+
+.tooltip .tooltip-text.danger {
+    background-color: var(--danger);
+}
+
+.tooltip .tooltip-text.primary {
+    background-color: var(--primary);
+}
+
+.tooltip:hover .tooltip-text {
+    opacity: 0.9;
+}
+
+@media (min-width: 768px) {
 }
