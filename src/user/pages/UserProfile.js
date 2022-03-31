@@ -320,7 +320,7 @@ const UserProfile = () => {
                             </div>
                             <div className="profile-details-actions">
                                 <div>
-                                    <Button primary>
+                                    <Button primary to="/problems/new">
                                         <FontAwesomeIcon
                                             className="profile-icon"
                                             icon={faPlus}
@@ -341,55 +341,64 @@ const UserProfile = () => {
                             </div>
                         </div>
                     </div>
-
                     <div className="secondary-details-container">
-                        <div className="secondary-details-container__details">
-                            <p className="profile__detail">
-                                <FontAwesomeIcon
-                                    icon={faSchool}
-                                    className="profile-icon"
-                                />
-                                <span>{loadedProfile.school}</span>
-                            </p>
-                            {loadedProfile.schoolDistrict !== "" && (
+                        <div className="secondary-details-container__details-container">
+                            <h3 className="deatails-container__title">User Details</h3>
+                            <div className="secondary-details-container__details">
                                 <p className="profile__detail">
                                     <FontAwesomeIcon
-                                        icon={faCity}
+                                        icon={faSchool}
                                         className="profile-icon"
                                     />
-
-                                    <span>{loadedProfile.schoolDistrict}</span>
+                                    <span>{loadedProfile.school}</span>
                                 </p>
-                            )}
-                            <p className="profile__detail">
-                                <FontAwesomeIcon
-                                    icon={faToolbox}
-                                    className="profile-icon"
-                                />
-                                <span>
-                                    {loadedProfile.problems.length} problems{" "}
-                                </span>
-                            </p>
-                            {loadedProfile.city !== "" && (
+                                {loadedProfile.schoolDistrict !== "" && (
+                                    <p className="profile__detail">
+                                        <FontAwesomeIcon
+                                            icon={faCity}
+                                            className="profile-icon"
+                                        />
+
+                                        <span>
+                                            {loadedProfile.schoolDistrict}
+                                        </span>
+                                    </p>
+                                )}
                                 <p className="profile__detail">
                                     <FontAwesomeIcon
-                                        icon={faLocationDot}
+                                        icon={faToolbox}
                                         className="profile-icon"
                                     />
-
                                     <span>
-                                        {loadedProfile.city}
-                                        {loadedProfile.state !== "" && (
-                                            <span>, {loadedProfile.state}</span>
-                                        )}
+                                        {loadedProfile.problems.length} problems{" "}
                                     </span>
                                 </p>
-                            )}
+                                {loadedProfile.city !== "" && (
+                                    <p className="profile__detail">
+                                        <FontAwesomeIcon
+                                            icon={faLocationDot}
+                                            className="profile-icon"
+                                        />
+
+                                        <span>
+                                            {loadedProfile.city}
+                                            {loadedProfile.state !== "" && (
+                                                <span>
+                                                    , {loadedProfile.state}
+                                                </span>
+                                            )}
+                                        </span>
+                                    </p>
+                                )}
+                            </div>
                         </div>
                         <div className="secondary-details-container__problems">
+                            <h3 className="problems__title">Most Recent Problems</h3>
                             <div className="problems__container">
-                                <ProblemList problems={loadedProblems} className="problems__two-by-two"/>
-
+                                <ProblemList
+                                    problems={loadedProblems}
+                                    className="problems__two-by-two"
+                                />
                             </div>
                         </div>
                     </div>

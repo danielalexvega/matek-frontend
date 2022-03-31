@@ -6,7 +6,7 @@ import Button from "../../shared/components/FormElements/Button";
 import { AuthContext } from "../../shared/context/auth-context";
 import "./ProblemList.css";
 
-const ProblemList = ({ problems, onDeleteProblem, problemsUserId, className, selectAll }) => {
+const ProblemList = ({ problems, onDeleteProblem, problemsUserId, className, selectAll, showActions }) => {
   const { userId } = useContext(AuthContext);
 
   // if problems array is empty
@@ -54,6 +54,7 @@ const ProblemList = ({ problems, onDeleteProblem, problemsUserId, className, sel
           subdomain={problem.subdomain}
           hasImage={problem.hasImage}
           onDelete={onDeleteProblem}
+          showActions={showActions}
         />
       ))}
     </ul>

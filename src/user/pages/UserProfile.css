@@ -90,3 +90,15 @@
     margin-top: 1rem;
     box-shadow: 0 2px 8px rgb(0 0 0 / 26%);
 }
+
+.deatails-container__title {
+    display: flex;
+    justify-content: flex-start;
+    margin: 1rem 1rem 0 0;
+}
+
+.problems__title {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem 0 0 1rem;
+}

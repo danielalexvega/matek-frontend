@@ -97,7 +97,10 @@ const UserProblems = () => {
             <ErrorModal error={error} onClear={clearError} />
             <div className="container__title-container">
                 <h1>Your Desk</h1>
-                <p>This is where your saved problems live. You can edit, delete, and clone all of these problems.</p>
+                <p>
+                    This is where your saved problems live. You can edit,
+                    delete, and clone all of these problems.
+                </p>
             </div>
             {isLoading && (
                 <div className="center">
@@ -121,6 +124,7 @@ const UserProblems = () => {
                         problemsUserId={userId}
                         className="userProblems"
                         selectAll={selectAllCourses}
+                        showActions
                     />
                 </>
             )}
