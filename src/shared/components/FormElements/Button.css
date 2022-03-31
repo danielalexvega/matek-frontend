@@ -16,7 +16,6 @@
       color: var(--light);
   }
 
-
   .button .svg-inline--fa:hover {
     color: var(--light);
 }
@@ -92,3 +91,24 @@
   .button--big {
     font-size: 1.5rem;
   }
+
+  .button.center {
+
+  }
+
+  .button.noBackground {
+      background: none;
+      border: none;
+      margin-right: 0;
+      padding: 0.5rem 1rem;
+  }
+
+  .button.noBackground.secondary .svg-inline--fa {
+    color: var(--secondary);
+}
+  .button.noBackground.warning .svg-inline--fa {
+    color: var(--danger);
+}
+  .button.noBackground.primary .svg-inline--fa {
+    color: var(--primary);
+}

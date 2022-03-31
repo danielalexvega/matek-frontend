@@ -8,6 +8,11 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faClone } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import ReactTooltip from "react-tooltip";
 import "./ProblemItem.css";
 import "katex/dist/katex.min.css";
 
@@ -85,15 +90,18 @@ const ProblemItem = ({
                     )}
                     <div className="problem-item__problem">
                         <div className="problem__course">
-                            <span className="course__title">{course}</span> | {content}
+                            <span className="course__title">{course}</span> |{" "}
+                            {content}
                         </div>
                         <div className="problem__subdomain">{subdomain}</div>
                         <p className="problem__katex">
                             <InlineTex texContent={katex} />
                         </p>
-                        {katexEquation && <p className="problem__katexEquation center">
-                            <InlineTex texContent={katexEquation} />
-                        </p>}
+                        {katexEquation && (
+                            <p className="problem__katexEquation center">
+                                <InlineTex texContent={katexEquation} />
+                            </p>
+                        )}
                     </div>
                     <ul className="problem-item__choices">
                         {choices.map((choice, index) => (
@@ -112,15 +120,73 @@ const ProblemItem = ({
                             <Button primary>Add to desk</Button>
                         )} */}
                         {isLoggedIn && authorId === userId && (
-                            <Button to={`/problems/${id}`}>Edit</Button>
+                            <>
+                                <span data-tip data-for="edit-tooltip">
+                                    <Button
+                                        to={`/problems/${id}`}
+                                        className="noBackground secondary"
+                                    >
+                                        {" "}
+                                        <FontAwesomeIcon icon={faPencil} />
+                                    </Button>
+                                </span>
+                                <ReactTooltip
+                                    id="edit-tooltip"
+                                    type="success"
+                                    effects="solid"
+                                    delayShow={100}
+                                >
+                                    <span className="tooltip-text">
+                                        Edit Problem
+                                    </span>
+                                </ReactTooltip>
+                            </>
                         )}
                         {isLoggedIn && authorId === userId && (
-                            <Button danger onClick={showDeleteWarningHandler}>
-                                Delete
-                            </Button>
+                            <>
+                                <span data-tip data-for="delete-tooltip">
+                                    <Button
+                                        danger
+                                        className="noBackground warning"
+                                        onClick={showDeleteWarningHandler}
+                                    >
+                                        <FontAwesomeIcon icon={faCircleXmark} />
+                                    </Button>
+                                </span>
+                                <ReactTooltip
+                                    id="delete-tooltip"
+                                    type="error"
+                                    effects="solid"
+                                    delayShow={100}
+                                >
+                                    <span className="tooltip-text">
+                                        Delete Problem
+                                    </span>
+                                </ReactTooltip>
+                            </>
                         )}
                         {isLoggedIn && authorId === userId && (
-                            <Button primary className="clone-button" to={`/problems/${id}/clone`}>Clone</Button>
+                            <>
+                                <span data-tip data-for="clone-tooltip">
+                                    <Button
+                                        primary
+                                        className="clone-button noBackground primary"
+                                        to={`/problems/${id}/clone`}
+                                    >
+                                        <FontAwesomeIcon icon={faClone} />
+                                    </Button>
+                                </span>
+                                <ReactTooltip
+                                    id="clone-tooltip"
+                                    type="info"
+                                    effects="solid"
+                                    delayShow={100}
+                                >
+                                    <span className="tooltip-text">
+                                        Clone Problem
+                                    </span>
+                                </ReactTooltip>
+                            </>
                         )}
                     </div>
                 </Card>

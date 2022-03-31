@@ -77,6 +77,12 @@
 .info__courses li:last-child:after {
   display: none;
 }
+
+.problem-item__actions {
+    display: flex;
+    justify-content: center;
+}
+
 @media (min-width: 768px) {
 
 }

@@ -20,11 +20,13 @@
     grid-column: 2/-2;
     display: grid;
     grid-template-columns: 1fr 4fr;
-    border: 3px solid var(--secondary-dark2);
+    /* border: 3px solid var(--secondary-dark2); */
     background: var(--secondary);
-    border-radius: 20px;
+    border-radius: 15px;
     margin-bottom: 1rem;
     max-height: 270px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 26%);
 }
 
 .details-container__left {
@@ -80,10 +82,11 @@
 }
 
 .secondary-details-container__details {
-    border: 3px solid var(--primary-dark2);
-    border-radius: 20px;
+    /* border: 2px solid var(--primary-dark2); */
+    border-radius: 15px;
     background: var(--primary);
     padding: 10px;
     height: fit-content;
     margin-top: 1rem;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 26%);
 }

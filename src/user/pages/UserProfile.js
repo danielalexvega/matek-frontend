@@ -210,10 +210,10 @@ const UserProfile = () => {
                 className="update-profile__modal"
                 footer={
                     <React.Fragment>
-                        <Button primary onClick={cancelUpdateHandler}>
+                        <Button danger onClick={cancelUpdateHandler}>
                             CANCEL
                         </Button>
-                        <Button danger onClick={userUpdateHandler}>
+                        <Button secondary onClick={userUpdateHandler}>
                             UPDATE
                         </Button>
                     </React.Fragment>
