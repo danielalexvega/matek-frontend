@@ -398,6 +398,7 @@ const UserProfile = () => {
                                 <ProblemList
                                     problems={loadedProblems}
                                     className="problems__two-by-two"
+                                    showActions
                                 />
                             </div>
                         </div>
